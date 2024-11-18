@@ -8,6 +8,7 @@ async function getCategories () {
         }
         const getCategoriesData = await getCategories.json();
         console.log('Données récupérées :', getCategoriesData);
+        return getCategoriesData;
     } catch (error)
     {
         console.error('Il y a eu un problème avec la requête fetch :', error);
@@ -16,6 +17,8 @@ async function getCategories () {
 
 // Appelle la fonction pour récupérer et afficher les catégories
 getCategories();
+
+// créer filtre de catégories
 
 async function getWorks () {
     try
