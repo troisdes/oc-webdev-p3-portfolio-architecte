@@ -2,3 +2,4 @@
 .vscode
 .history
 .settings.json
+node_modules
