@@ -14,6 +14,9 @@ async function getCategories () {
     }
 }
 
+// Appelle la fonction pour récupérer et afficher les catégories
+getCategories();
+
 async function getWorks () {
     try
     {
