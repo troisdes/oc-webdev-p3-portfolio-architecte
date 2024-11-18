@@ -1,4 +1,16 @@
 {
   "liveServer.settings.ignoreFiles": ["Backend/**"], // Ignore Backend folder
-  "terminal.integrated.fontFamily": "Hack Nerd Font" // Hack Nerd Font is my installed font name
+  "terminal.integrated.fontFamily": "Hack Nerd Font", // Hack Nerd Font is my installed font name
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "shell_integration": true,
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": [
+        "-NoExit",
+        "-Command",
+        "oh-my-posh init pwsh | Invoke-Expression"
+      ]
+    }
+  }
 }
