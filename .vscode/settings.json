@@ -1,3 +1,4 @@
-{ 
-    "liveServer.settings.ignoreFiles": ["Backend/**"] 
+{
+  "liveServer.settings.ignoreFiles": ["Backend/**"], // Ignore Backend folder
+  "terminal.integrated.fontFamily": "Hack Nerd Font" // Hack Nerd Font is my installed font name
 }
