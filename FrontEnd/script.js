@@ -1,73 +1,115 @@
+async function getWorks () {
+    try
+    {
+        const response = await fetch("http://localhost:5678/api/works");
+
+        if (!response.ok)
+        {
+            throw new Error('Erreur réseau : ' + response.status);
+        }
+
+        const getWorksData = await response.json();
+        console.log('Données récupérées :', getWorksData);
+
+        const getWorksGallery = document.querySelector(".gallery");
+        if (!getWorksGallery)
+        {
+            throw new Error('Element with class "gallery" not found');
+        }
+
+        getWorksGallery.innerHTML = "";
+
+        getWorksData.forEach(work => {
+            const figure = document.createElement("figure");
+            figure.dataset.categoryId = work.categoryId.toString();
+
+            const img = document.createElement("img");
+            img.src = work.imageUrl;
+            img.alt = work.title;
+
+            const figCaption = document.createElement("figcaption");
+            figCaption.textContent = work.title;
+
+            figure.appendChild(img);
+            figure.appendChild(figCaption);
+
+            getWorksGallery.appendChild(figure);
+        });
+        return getWorksData;
+    } catch (error)
+    {
+        console.error('Il y a eu un problème avec la requête fetch :', error);
+    }
+}
+getWorks();
+
 async function getCategories () {
     try
     {
-        const getCategories = await fetch("http://localhost:5678/api/categories");
-        if (!getCategories.ok)
+        const response = await fetch("http://localhost:5678/api/categories");
+
+        if (!response.ok)
         {
-            throw new Error('Erreur réseau : ' + getCategories.status);
+            throw new Error('Erreur réseau : ' + response.status);
         }
-        const getCategoriesData = await getCategories.json();
+
+        const getCategoriesData = await response.json();
         console.log('Données récupérées :', getCategoriesData);
+
         return getCategoriesData;
     } catch (error)
     {
         console.error('Il y a eu un problème avec la requête fetch :', error);
     }
 }
-
-// Appelle la fonction pour récupérer et afficher les catégories
 getCategories();
 
-// créer filtre de catégories
+function createFilterButtons (categories) {
+    const filterContainer = document.querySelector('.category');
 
-async function getWorks () {
-    try
-    {
-        // Effectue une requête HTTP GET vers l'URL spécifiée
-        const getWorks = await fetch("http://localhost:5678/api/works");
+    const btnTous = document.createElement('button');
+    btnTous.textContent = 'Tous';
+    btnTous.classList.add('filter-btn', 'active');
+    filterContainer.appendChild(btnTous);
 
-        // Vérifie si la réponse est correcte (status code 200-299)
-        if (!getWorks.ok)
-        {
-            // Si la réponse n'est pas correcte, lance une erreur avec le status de la réponse
-            throw new Error('Erreur réseau : ' + getWorks.status);
-        }
+    categories.forEach(category => {
+        const bouton = document.createElement('button');
+        bouton.textContent = category.name;
+        bouton.classList.add('filter-btn');
+        bouton.dataset.categoryId = category.id;
+        filterContainer.appendChild(bouton);
+    });
 
-        // Convertit la réponse en format JSON
-        const getWorksData = await getWorks.json();
-        console.log('Données récupérées :', getWorksData);
-        // Mettre à jour l'interface avec les données
+    const boutons = document.querySelectorAll('.filter-btn');
+    boutons.forEach(bouton => {
+        bouton.addEventListener('click', (e) => {
+            boutons.forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
 
-        // Sélectionne l'élément avec la classe "gallery" dans le DOM
-        const getWorksGallery = document.querySelector(".gallery");
-        // Vide le contenu actuel de la galerie
-        getWorksGallery.innerHTML = "";
-
-        // Parcourt chaque élément de données récupérées
-        getWorksData.forEach(work => {
-            // Crée un élément <figure>
-            const figure = document.createElement("figure");
-            // Crée un élément <img> et définit ses attributs src et alt
-            const img = document.createElement("img");
-            img.src = work.imageUrl;
-            img.alt = work.title;
-            // Crée un élément <figcaption> et définit son contenu texte
-            const figCaption = document.createElement("figcaption");
-            figCaption.textContent = work.title;
-
-            // Ajoute l'image et la légende à la figure
-            figure.appendChild(img);
-            figure.appendChild(figCaption);
-            // Ajoute la figure à la galerie
-            getWorksGallery.appendChild(figure);
+            const categoryId = e.target.dataset.categoryId;
+            filterWorks(categoryId);
         });
-    } catch (error)
-    {
-        // Affiche une erreur dans la console si la requête échoue
-        console.error('Il y a eu un problème avec la requête fetch :', error);
-        // Gérer l'erreur (par exemple, afficher un message à l'utilisateur)
-    }
+    });
 }
 
-// Appelle la fonction pour récupérer et afficher les travaux
-getWorks();
+function filterWorks (categoryId) {
+    const works = document.querySelectorAll('.gallery figure');
+
+    if (!works.length)
+    {
+        console.error('No works found to filter');
+        return;
+    }
+
+    works.forEach(work => {
+        if (!categoryId || work.dataset.categoryId === categoryId.toString())
+        {
+            work.style.display = 'block';
+        } else
+        {
+            work.style.display = 'none';
+        }
+    });
+}
+
+getCategories().then(createFilterButtons);
