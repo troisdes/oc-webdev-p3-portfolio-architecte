@@ -1,0 +1,21 @@
+# Server API : http://localhost:5678/api
+
+###
+# User login
+POST http://localhost:5678/api/users/login
+Content-Type: application/json
+
+{
+  "email": "sophie.bluel@test.tld",
+  "password": "S0phie"
+}
+
+###
+# User works
+GET http://localhost:5678/api/works
+Authorization: Bearer {{eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMjQ1MTg0NywiZXhwIjoxNzMyNTM4MjQ3fQ.e6VSoK2diL8DxsTdlMElnqAQo7bDO0JdN53C44r9FoI}}
+
+
+###
+# User categories
+GET http://localhost:5678/api/categories
