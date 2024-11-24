@@ -7,12 +7,12 @@ async function getWorks() {
     }
     // Analyser les données JSON
     const worksData = await response.json();
-    console.log("Données récupérées :", worksData);
+    console.log('Données de "getWorks" récupérées :', worksData);
 
     // Sélectionner l'élément de la galerie
     const galleryElement = document.querySelector(".gallery");
     if (!galleryElement) {
-      throw new Error('Élément avec la classe "gallery" non trouvé');
+      throw new Error("Élément avec la classe gallery non trouvé");
     }
 
     // Vider le contenu de la galerie
@@ -49,3 +49,21 @@ async function getWorks() {
 
 // Appeler la fonction pour récupérer et afficher les travaux
 getWorks();
+
+async function getCategories() {
+  try {
+    // Récupérer les données de l'API
+    const response = await fetch("http://localhost:5678/api/categories");
+    if (!response.ok) {
+      throw new Error("La réponse du réseau n'était pas correcte");
+    }
+    // Analyser les données JSON
+    const categoriesData = await response.json();
+    console.log('Données de "getCategories" récupérées :', categoriesData);
+  } catch (error) {
+    console.error(" Il y eu un problème pour récupérer les données :", error);
+  }
+}
+
+// Appeler la fonction pour récupérer les catégories
+getCategories();
