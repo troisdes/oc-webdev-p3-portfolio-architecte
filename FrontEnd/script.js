@@ -82,6 +82,8 @@ async function getCategories() {
       );
       catFilters.appendChild(button);
     });
+
+    console.log("Chargement complet :", catFilters);
   } catch (error) {
     console.error("Il y eu un problème pour récupérer les données :", error);
   }
