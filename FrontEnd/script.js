@@ -70,7 +70,7 @@ async function getCategories() {
     const tousButton = document.createElement("button");
     tousButton.textContent = "Tous";
     tousButton.classList.add("filter-btn", "active");
-    tousButton.addEventListener("click", () => filterWorks("Tous"));
+    tousButton.addEventListener("click", (event) => filterWorks(event, "Tous"));
     catFilters.appendChild(tousButton);
 
     categoriesData.forEach((category) => {
