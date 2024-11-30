@@ -1,3 +1,5 @@
-{ 
-    "liveServer.settings.ignoreFiles": ["Backend/**"] 
+{
+  "liveServer.settings.ignoreFiles": ["Backend/**"],
+  "spellright.language": ["en", "fr"],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext", "html"]
 }
