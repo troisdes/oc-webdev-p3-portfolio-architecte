@@ -1,6 +1,36 @@
 # Sophie Bluel Portfolio API Documentation
 @baseUrl = http://localhost:5678/api
 
+# Securely store the user token in an environment variable
+@userToken = {{userTokenEnv}}
+
+### Authentication
+# @name login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+  "email": "sophie.bluel@test.tld",
+  "password": "S0phie" // spell-checker: disable-line
+}
+
+### Works
+# Get all works
+GET {{baseUrl}}/works
+
+### Categories
+# Get all categories
+GET {{baseUrl}}/categories
+
+### Works Management
+# Add new work
+POST {{baseUrl}}/works
+Authorization: Bearer {{userTokenEnv}}
+
+# Delete work
+DELETE {{baseUrl}}/works/:id
+Authorization: Bearer {{login.response.body.token}}
+
 ### Authentication
 # @name login
 POST {{baseUrl}}/users/login
@@ -8,23 +38,21 @@ Content-Type: application/json
 
 {
     "email": "sophie.bluel@test.tld",
-    "password": "S0phie"
+    "password": "S0phie" // spell-checker: disable-line
 }
 
 ### Works
 # Get all works
 GET {{baseUrl}}/works
-Authorization: Bearer {{login.response.body.token}}
 
-### Categories 
+### Categories
 # Get all categories
 GET {{baseUrl}}/categories
 
 ### Works Management
 # Add new work
 POST {{baseUrl}}/works
-Authorization: Bearer {{login.response.body.token}}
-Content-Type: multipart/form-data
+Authorization: Bearer {{userToken}}
 
 # Delete work
 DELETE {{baseUrl}}/works/:id
