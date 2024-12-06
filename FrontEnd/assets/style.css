@@ -415,4 +415,18 @@ body {
   font-size: 14px;
 }
 
+#login-footer {
+  display: block;
+  background-color: white;
+  color: #000;
+  text-align: center;
+  padding: 1em;
+}
+
+#login-footer nav ul {
+  display: flex;
+  justify-content: flex-end;
+  margin: 2em;
+}
+
 /* media queries */
