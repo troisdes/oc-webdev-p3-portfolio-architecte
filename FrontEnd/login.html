@@ -14,8 +14,8 @@
     <script src="script.js" defer></script>
 </head>
 
-<body class="login">
-    <form action="login.php" method="post" class="login">
+<body class="login-page">
+    <form action="login.js" method="post" class="login">
         <label for="username">E-mail</label>
         <input type="email" name="email" id="email">
         <label for="password">Mot de passe</label>
@@ -23,6 +23,8 @@
         <button type="submit">Se connecter</button>
         <a href="forgot-password.html">Mot de passe oublié ?</a>
     </form>
+    <p id="errorMessage" class="error" style="display: none;">Invalid email or password</p>
+
 </body>
 </body>
 
