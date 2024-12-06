@@ -38,7 +38,7 @@ Content-Type: application/json
 
 {
     "email": "sophie.bluel@test.tld",
-    "password": "S0phie" // spell-checker: disable-line
+    "password": "S0phie"
 }
 
 ### Works
