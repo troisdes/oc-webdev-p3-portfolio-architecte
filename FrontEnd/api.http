@@ -2,7 +2,7 @@
 @baseUrl = http://localhost:5678/api
 
 # Securely store the user token in an environment variable
-@userToken = {{userTokenEnv}}
+@userToken = {{$processEnv USER_TOKEN}}
 
 ### Authentication
 # @name login
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
   "email": "sophie.bluel@test.tld",
-  "password": "S0phie" // spell-checker: disable-line
+  "password": "S0phie" 
 }
 
 ### Works
