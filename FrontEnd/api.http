@@ -4,35 +4,8 @@
 # Securely store the user token in an environment variable
 @userToken = {{$processEnv USER_TOKEN}}
 
-### Authentication
-# @name login
-POST {{baseUrl}}/users/login
-Content-Type: application/json
+### POST Authentication
 
-{
-  "email": "sophie.bluel@test.tld",
-  "password": "S0phie"
-}
-
-### Works
-# Get all works
-GET {{baseUrl}}/works
-
-### Categories
-# Get all categories
-GET {{baseUrl}}/categories
-
-### Works Management
-# Add new work
-POST {{baseUrl}}/works
-Authorization: Bearer {{userTokenEnv}}
-
-# Delete work
-DELETE {{baseUrl}}/works/:id
-Authorization: Bearer {{login.response.body.token}}
-
-### Authentication
-# @name login
 POST {{baseUrl}}/users/login
 Content-Type: application/json
 
@@ -41,19 +14,27 @@ Content-Type: application/json
     "password": "S0phie"
 }
 
-### Works
-# Get all works
+### GET all works
 GET {{baseUrl}}/works
+Authorization: Bearer {{$processEnv USER_TOKEN}}
 
-### Categories
-# Get all categories
+### GET all categories
 GET {{baseUrl}}/categories
 
-### Works Management
-# Add new work
-POST {{baseUrl}}/works
-Authorization: Bearer {{userToken}}
+### GET all works by category
+GET {{baseUrl}}/works/category/:id
+Authorization: Bearer {{$processEnv USER_TOKEN}}
 
-# Delete work
+### GET work by id
+GET {{baseUrl}}/works/:id
+Authorization: Bearer {{$processEnv USER_TOKEN}}
+
+### POST Add new work
+POST {{baseUrl}}/works
+Authorization: Bearer {{$processEnv USER_TOKEN}}
+
+### DELETE work
 DELETE {{baseUrl}}/works/:id
-Authorization: Bearer {{login.response.body.token}}
+Authorization: Bearer {{$processEnv USER_TOKEN}}
+
+
