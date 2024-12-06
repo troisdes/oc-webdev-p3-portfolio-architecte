@@ -296,23 +296,18 @@ footer nav ul {
 }
 
 /* login */
-.login-page {
-  font-family: "Work Sans", sans-serif;
+
+#login-main {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  background-color: #f0f0f0;
+  background-color: #fffef8;
 }
 
-.login form {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-  max-width: 400px;
-  width: 100%;
+.login {
+  width: 50%;
+  margin: auto;
 }
 
 .login label {
@@ -322,6 +317,7 @@ footer nav ul {
 }
 
 .login input {
+  color: #ffffff;
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -331,16 +327,9 @@ footer nav ul {
 }
 
 .login button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #1d6154;
-  color: white;
-  border: none;
-  border-radius: 60px;
-  font-size: 1rem;
-  cursor: pointer;
-  font-family: "Syne";
-  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login button:hover {
@@ -353,41 +342,40 @@ footer nav ul {
   margin-top: 1rem;
 }
 
-/* Login page styles */
-.login-form {
-  width: 50%;
-  margin: auto;
-  padding: 50px 0;
-}
-
-.login-form h2 {
-  color: #1d6154;
+.login > * {
   text-align: center;
-  margin-bottom: 30px;
 }
 
-#login-form {
+.login h2 {
+  margin-bottom: 20px;
+}
+
+.login form {
+  text-align: left;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
-  width: 100%;
 }
 
-#login-form label {
-  margin: 2em 0 1em 0;
-  font-family: "Work Sans";
-  font-size: 14px;
-}
-
-#login-form input {
+.login input {
   height: 50px;
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+.login label {
+  margin: 2em 0 1em 0;
+}
+
+.login textarea {
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
 #login-form button {
   font-family: "Syne";
-  font-weight: 700;
+  font-weight: 00;
   font-size: 14px;
   color: white;
   background-color: #1d6154;
@@ -398,7 +386,7 @@ footer nav ul {
   border-radius: 60px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  /* transition: background-color 0.3s ease; */
 }
 
 #login-form button:hover {
