@@ -297,12 +297,15 @@ footer nav ul {
 
 /* login */
 
+body {
+  background-color: #fffef8;
+}
+
 #login-main {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #fffef8;
 }
 
 .login {
