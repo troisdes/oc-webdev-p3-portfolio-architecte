@@ -1,5 +1,5 @@
 * {
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -369,21 +369,34 @@ body {
 }
 
 .login > * {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  margin-bottom: 20px;
 }
 
 .login h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .login form {
-  text-align: left;
-  margin-top: 30px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
+  align-content: center;
+  margin-top: 30px;
+  margin: 0 16%;
 }
 
 .login input {
+  display: flex;
+  justify-content: center;
+  align-content: center
+  max-width: 70%;
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -392,7 +405,8 @@ body {
 }
 
 .login label {
-  margin: 2em 0 1em 0;
+  margin: 2em 0 0.5em 0;
+  /* text-align: left; */
 }
 
 .login textarea {
