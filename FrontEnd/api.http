@@ -1,21 +1,31 @@
-# Server API: http://localhost:5678/api
+# Sophie Bluel Portfolio API Documentation
+@baseUrl = http://localhost:5678/api
 
-###
-# User login
-POST http://localhost:5678/api/users/login
+### Authentication
+# @name login
+POST {{baseUrl}}/users/login
 Content-Type: application/json
 
 {
-  "email": "sophie.bluel@test.tld",
-  "password": "S0phie"
+    "email": "sophie.bluel@test.tld",
+    "password": "S0phie"
 }
 
-###
-# User works
-GET http://localhost:5678/api/works
-Authorization: Bearer {{TOKEN}}
+### Works
+# Get all works
+GET {{baseUrl}}/works
+Authorization: Bearer {{login.response.body.token}}
 
+### Categories 
+# Get all categories
+GET {{baseUrl}}/categories
 
-###
-# User categories
-GET http://localhost:5678/api/categories
+### Works Management
+# Add new work
+POST {{baseUrl}}/works
+Authorization: Bearer {{login.response.body.token}}
+Content-Type: multipart/form-data
+
+# Delete work
+DELETE {{baseUrl}}/works/:id
+Authorization: Bearer {{login.response.body.token}}
