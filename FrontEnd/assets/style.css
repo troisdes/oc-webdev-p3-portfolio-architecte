@@ -232,6 +232,7 @@ li:hover {
 .gallery img {
   width: 100%;
 }
+
 #contact {
   display: flex;
   flex-direction: column;
@@ -240,6 +241,8 @@ li:hover {
   width: 50%;
   margin: auto;
 }
+
+#login-form,
 #contact > * {
   display: flex;
   justify-content: center;
@@ -249,13 +252,13 @@ li:hover {
 #contact h2 {
   margin-bottom: 20px;
 }
+
 #contact form {
   text-align: left;
   margin-top: 30px;
   display: flex;
-  /* justify-content: center; */
   flex-direction: column;
-  max-width: 380px;
+  width: 100%;
 }
 
 #contact input {
