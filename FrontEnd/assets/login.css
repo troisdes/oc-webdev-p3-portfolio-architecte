@@ -116,6 +116,16 @@ nav ul {
   list-style-type: none;
 }
 
+nav ul li a {
+  text-decoration: none;
+  color: #000000; /* Keep text black */
+}
+
+/* Optional: style for hover state */
+nav ul li a:hover {
+  color: #b1663c; /* Change color on hover - using the project's accent color */
+}
+
 nav li {
   font-size: 1.2em;
   padding: 0 10px;
