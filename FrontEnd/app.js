@@ -107,6 +107,8 @@ document.addEventListener("DOMContentLoaded", function () {
   if (token) {
     createEditionBanner();
     document.body.classList.add("edit-mode");
+    updateLoginLogoutButton();
+    updateEditionMode();
   }
 });
 
@@ -128,4 +130,55 @@ function createEditionBanner() {
   banner.appendChild(bannerContent);
 
   document.body.insertBefore(banner, document.body.firstChild);
+}
+
+function updateLoginLogoutButton() {
+  const token = localStorage.getItem("token");
+  const loginButton = document.querySelector('nav ul li a[href="login.html"]');
+
+  if (token && loginButton) {
+    loginButton.textContent = "logout";
+    loginButton.href = "#";
+    loginButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      localStorage.removeItem("token");
+      window.location.href = "index.html";
+    });
+  }
+}
+
+function updateEditionMode() {
+  const token = localStorage.getItem("token");
+  const filterBar = document.querySelector(".category-filters");
+  const portfolioTitle = document.querySelector("#portfolio h2");
+
+  if (token) {
+    // Hide filter bar
+    if (filterBar) {
+      filterBar.style.display = "none";
+    }
+
+    // Add modifier button if not already present
+    if (!document.querySelector(".modifier-btn")) {
+      const modifierContainer = document.createElement("div");
+      modifierContainer.classList.add("title-modifier-container");
+
+      const modifierBtn = document.createElement("button");
+      modifierBtn.classList.add("modifier-btn");
+
+      const icon = document.createElement("i");
+      icon.classList.add("fa-regular", "fa-pen-to-square");
+
+      const text = document.createElement("span");
+      text.textContent = "modifier";
+
+      modifierBtn.appendChild(icon);
+      modifierBtn.appendChild(text);
+
+      // Replace h2 with container
+      portfolioTitle.parentNode.insertBefore(modifierContainer, portfolioTitle);
+      modifierContainer.appendChild(portfolioTitle);
+      modifierContainer.appendChild(modifierBtn);
+    }
+  }
 }
