@@ -100,3 +100,32 @@ function filterWorks(event, categoryId) {
 
 getWorks(); // Appeler les fonctions pour afficher les travaux
 getCategories(); // Appeler les fonctions pour afficher les catégories
+
+document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    createEditionBanner();
+    document.body.classList.add("edit-mode");
+  }
+});
+
+function createEditionBanner() {
+  const banner = document.createElement("div");
+  banner.classList.add("edition-banner");
+
+  const bannerContent = document.createElement("div");
+  bannerContent.classList.add("banner-content");
+
+  const icon = document.createElement("i");
+  icon.classList.add("fa-regular", "fa-pen-to-square");
+
+  const text = document.createElement("span");
+  text.textContent = "Mode édition";
+
+  bannerContent.appendChild(icon);
+  bannerContent.appendChild(text);
+  banner.appendChild(bannerContent);
+
+  document.body.insertBefore(banner, document.body.firstChild);
+}
