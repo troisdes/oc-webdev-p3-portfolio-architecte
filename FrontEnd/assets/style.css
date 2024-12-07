@@ -232,7 +232,7 @@ li:hover {
 }
 #portfolio h2 {
   text-align: center;
-  margin-bottom: 1em;
+  margin: 0;
 }
 .gallery {
   width: 100%;
@@ -360,4 +360,31 @@ body {
 
 .edit-mode header {
   margin-top: 60px;
+}
+
+.title-modifier-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 6.5em;
+  width: 100%;
+}
+
+.modifier-btn {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Work Sans";
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.modifier-btn i {
+  font-size: 16px;
 }
