@@ -144,7 +144,10 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  margin: 50px 0;
+  margin: 0 0 50px 0;
+  padding: 38px 0;
+  position: relative;
+  z-index: 999;
 }
 section {
   margin: 50px 0;
@@ -204,7 +207,7 @@ li:hover {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 140px 0;
+  margin: 100px 0 140px 0;
 }
 #introduction figure {
   flex: 1;
@@ -329,4 +332,32 @@ footer nav ul {
 
 body {
   background-color: #fffef8;
+}
+
+.edition-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: black;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.banner-content i {
+  font-size: 16px;
+}
+
+.edit-mode header {
+  margin-top: 60px;
 }
