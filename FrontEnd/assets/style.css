@@ -197,7 +197,8 @@ nav ul li a {
 
 /* Optional: style for hover state */
 nav ul li a:hover {
-  color: #b1663c; /* Change color on hover - using the project's accent color */
+  color: #000;
+  font-weight: bold; /* Change color on hover - using the project's accent color */
 }
 
 li:hover {
