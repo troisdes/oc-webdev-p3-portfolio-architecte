@@ -28,14 +28,20 @@
 	<main>
 		<section id="login">
 			<h2>Login</h2>
-			<p>Vous avez un projet ? Discutons-en !</p>
-			<form action="#" method="post">
-				<label for="email">E-mail</label>
-				<input type="email" name="email" id="email">
-				<label for="password">Mot de passe</label>
-				<input type="password" name="password" id="password">
-				<input type="submit" value="Se connecter">
-				<a href="#">Mot de passe oublié</a>
+			<form action="#" method="post" class="form">
+				<div class="email-container">
+					<label for="email">E-mail</label>
+					<input type="email" name="email" id="email">
+				</div>
+				<div class="password-container">
+					<label for="password">Mot de passe</label>
+					<input type="password" name="password" id="password">
+				</div>
+				<div id="connecter">
+					<input type="submit" value="Se connecter" id="seConnecter">
+					<a href="#" id="oublié">Mot de passe oublié</a>
+				</div>
+
 			</form>
 		</section>
 	</main>
