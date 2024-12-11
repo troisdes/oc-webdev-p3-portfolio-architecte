@@ -211,20 +211,19 @@ li:hover {
 
 #introduction {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding-bottom: 100px;
-  gap: 70px;
+  gap: 72px;
 }
 
 #introduction figure {
   flex: 1;
+  margin-left: 95px;
 }
 
 #introduction img {
   display: flex;
-  /* width: 80%; */
   max-width: 474px;
-  margin-left: 95px;
 }
 
 #introduction article {
