@@ -208,6 +208,7 @@ li:hover {
 #introduction {
   display: flex;
   align-items: center;
+  margin: 0;
 }
 
 #introduction figure {
@@ -215,13 +216,18 @@ li:hover {
 }
 
 #introduction img {
-  display: block;
-  margin: auto;
+  display: flex;
   width: 80%;
+  margin-left: 95px;
 }
 
 #introduction article {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 70px;
 }
 
 #introduction h2 {
@@ -229,6 +235,11 @@ li:hover {
 }
 
 #introduction p {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
   margin-bottom: 0.5em;
 }
 
