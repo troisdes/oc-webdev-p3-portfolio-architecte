@@ -2,3 +2,4 @@
 .history
 .vscode
 *:[Zz]one.Identifier
+.env
