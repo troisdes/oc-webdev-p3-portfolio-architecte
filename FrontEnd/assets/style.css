@@ -144,7 +144,6 @@ body {
   background-color: #fffef8;
 }
 
-
 header {
   display: flex;
   justify-content: space-between;
@@ -276,7 +275,7 @@ li:hover {
 }
 
 #contact h2 {
-	margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #contact form {
@@ -332,7 +331,7 @@ li:hover {
 }
 
 #envoyerMessage:hover {
-  background-color: #0e2f28
+  background-color: #0e2f28;
 }
 
 #login > * {
@@ -351,9 +350,8 @@ li:hover {
   width: 380px;
   margin: auto;
   margin-top: 150px;
-  margin-bottom: 355px
+  margin-bottom: 355px;
 }
-
 
 #login form {
   display: flex;
@@ -362,7 +360,6 @@ li:hover {
   text-align: left;
   width: 100%;
 }
-
 
 #connecter {
   display: flex;
@@ -398,21 +395,25 @@ li:hover {
 }
 
 #seConnecter:hover {
-  background-color: #0e2f28
+  background-color: #0e2f28;
 }
 
 footer {
-	background-color: white;
-	margin: 0;
-	padding: 0;
-	width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 60px;
+  background-color: white;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 footer nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 95px;
-  padding: auto;
-  width 100%;
-  height: 60px;
+  margin-right: 95px;
+}
+
+footer nav ul li {
+  margin: 0;
+  padding: 0;
 }
