@@ -1,0 +1,48 @@
+# Sophie Bluel Portfolio API
+@baseUrl = http://localhost:5678/api
+
+# Securely store the user token in an environment variable
+@userToken = {{$processEnv USER_TOKEN}}
+
+### POST Authentication
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+  {
+    "email": "sophie.bluel@test.tld",
+    "password": "S0phie"
+  }
+
+### GET all categories
+GET {{baseUrl}}/categories
+Accept: application/json
+
+### GET all works
+GET {{baseUrl}}/works
+Accept: application/json
+
+### POST Add new work
+POST {{baseUrl}}/works
+Authorization: Bearer {{$processEnv USER_TOKEN}}
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="path/to/image.jpg"
+Content-Type: image/jpeg
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+New Work Title
+--boundary
+Content-Disposition: form-data; name="category"
+
+Category ID
+--boundary--
+
+### DELETE work
+DELETE {{baseUrl}}/works/{id}
+Accept: */*
+Authorization: Bearer {{$processEnv USER_TOKEN}}
+
+
