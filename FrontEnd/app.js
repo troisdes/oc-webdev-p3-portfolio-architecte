@@ -44,4 +44,68 @@ async function getWorks() {
   }
 }
 
+async function getCategories() {
+  try {
+    const response = await fetch("http://localhost:5678/api/categories"); // Fetch API data
+    if (!response.ok) {
+      throw new Error("La réponse du réseau n'était pas correcte");
+    }
+    const categoriesData = await response.json(); // Parse JSON
+    console.log('Données de "getCategories" récupérées :', categoriesData);
+
+    const catFilters = document.querySelector(".category-filters"); // Get the container
+    if (!catFilters) {
+      throw new Error("Élément avec la classe category-filters non trouvé");
+    }
+
+    catFilters.innerHTML = ""; // Clear previous content
+
+    // Create the "Tous" button
+    const allWorksButton = document.createElement("button");
+    allWorksButton.textContent = "Tous";
+    allWorksButton.classList.add("filter-btn", "active");
+    allWorksButton.addEventListener("click", (event) =>
+      filterWorks(event, "Tous")
+    );
+    catFilters.appendChild(allWorksButton);
+
+    // Iterate over categoriesData to create buttons for each category
+    categoriesData.forEach((category) => {
+      console.log("Ajout d'un bouton de filtre:", category); // Debug log
+      const categoryButton = document.createElement("button");
+      categoryButton.textContent = category.name; // Set button label
+      categoryButton.classList.add("filter-btn");
+      categoryButton.addEventListener("click", (event) =>
+        filterWorks(event, category.id)
+      );
+      catFilters.appendChild(categoryButton); // Append to container
+    });
+
+    console.log("Filtres de catégories chargés :", catFilters);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des catégories :", error); // Handle errors
+  }
+}
+
+// Fonction pour filtrer les travaux
+function filterWorks(event, categoryId) {
+  const figures = document.querySelectorAll(".gallery figure");
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  buttons.forEach((button) => button.classList.remove("active")); // Update active button
+  event.currentTarget.classList.add("active");
+
+  figures.forEach((figure) => {
+    if (
+      categoryId === "Tous" ||
+      figure.dataset.categoryId === categoryId.toString()
+    ) {
+      figure.style.display = "block";
+    } else {
+      figure.style.display = "none";
+    }
+  });
+}
+
 getWorks();
+getCategories();
