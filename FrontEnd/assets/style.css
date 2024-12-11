@@ -145,6 +145,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 50px 0;
 }
 
@@ -184,12 +185,23 @@ nav ul {
 }
 
 nav li {
-  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 44px;
   font-size: 1.2em;
+  font-weight: 400;
+}
+
+.logo-insta {
+  width: 22px;
+  height: 22px;
 }
 
 li:hover {
-  color: #b1663c;
+  color: #000;
+  font-weight: 700;
 }
 
 #introduction {
