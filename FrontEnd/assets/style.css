@@ -139,6 +139,7 @@ body {
   line-height: 1;
   max-width: 1140px;
   margin: auto;
+  margin-top: 50px;
   font-family: "Work Sans";
   font-size: 14px;
   background-color: #fffef8;
@@ -316,8 +317,7 @@ li:hover {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   height: 175px;
 }
-
-input[type="submit"] {
+#envoyerMessage {
   font-family: "Syne";
   font-weight: 700;
   font-size: 14px;
@@ -330,8 +330,16 @@ input[type="submit"] {
   border-radius: 60px;
 }
 
-input[type="submit"]:hover {
+#envoyerMessage:hover {
   background-color: #0e2f28
+}
+
+#login > * {
+  text-align: center;
+}
+
+#login h2 {
+  margin-bottom: 40px;
 }
 
 #login {
@@ -341,7 +349,55 @@ input[type="submit"]:hover {
   align-items: center;
   width: 380px;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 150px;
+  margin-bottom: 355px
+}
+
+
+#login form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: left;
+  width: 100%;
+}
+
+
+#connecter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 37px;
+  width: 380px;
+  gap: 28px;
+}
+
+.email-container,
+.password-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.password-container {
+  margin-top: 52px;
+}
+
+#seConnecter {
+  font-family: "Syne";
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+  background-color: #1d6154;
+  width: 180px;
+  height: 36px;
+  text-align: center;
+  border-radius: 60px;
+}
+
+#seConnecter:hover {
+  background-color: #0e2f28
 }
 
 footer nav ul {
