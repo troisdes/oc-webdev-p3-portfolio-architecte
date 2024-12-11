@@ -135,6 +135,10 @@ table {
 }
 
 /** end reset css**/
+* {
+  outline: 1px solid red;
+}
+
 body {
   max-width: 1140px;
   margin: auto;
@@ -208,8 +212,7 @@ li:hover {
 #introduction {
   display: flex;
   align-items: center;
-  margin: 0;
-  padding-bottom: 140px;
+  padding-bottom: 100px;
   gap: 70px;
 }
 
@@ -219,7 +222,8 @@ li:hover {
 
 #introduction img {
   display: flex;
-  width: 80%;
+  /* width: 80%; */
+  max-width: 474px;
   margin-left: 95px;
 }
 
@@ -229,7 +233,7 @@ li:hover {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-right: 95px;
+  margin-right: 95px;
 }
 
 #introduction h2 {
@@ -241,8 +245,7 @@ li:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
 }
 
 #portfolio h2 {
@@ -251,7 +254,7 @@ li:hover {
 }
 
 .gallery {
-  width: 100%;
+  padding: 0 95px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
