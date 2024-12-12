@@ -3,4 +3,5 @@
 .vscode
 *:[Zz]one.Identifier
 .env
-old.js
+old-app.js
+old-login.js
