@@ -248,6 +248,7 @@ a:hover {
 
 #portfolio h2 {
   text-align: center;
+  margin-top: 140px;
 }
 
 .category-filters {
@@ -430,7 +431,9 @@ a:hover {
   position: relative;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
   height: 60px;
   background-color: black;
   color: white;
