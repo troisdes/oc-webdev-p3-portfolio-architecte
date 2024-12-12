@@ -113,12 +113,14 @@ getCategories();
 
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
+  console.log("Token récupéré:", "création de la bannière d'édition");
 
   if (token) {
     createEditionBanner();
-    document.body.classList.add("edit-mode");
+    // document.body.classList.add("edit-mode");
     updateLoginLogoutButton();
     hideFilterBar();
+    addButtonModifier();
     // updateEditionMode();
   }
 });
@@ -144,12 +146,13 @@ function createEditionBanner() {
 
   const header = document.querySelector("header");
   if (header) {
-    header.classList.add("with-banner");
+    header.classList.add("header-with-banner");
   }
 }
 
 function updateLoginLogoutButton() {
   const token = localStorage.getItem("token");
+  console.log("Token récupéré:", "mise à jour du bouton de connexion");
   const loginButton = document.getElementById("loginBtn");
 
   if (loginButton) {
@@ -164,9 +167,34 @@ function updateLoginLogoutButton() {
 
 function hideFilterBar() {
   const token = localStorage.getItem("token");
+  console.log("Token récupéré:", "masquage de la barre de filtres");
   const filterBar = document.querySelector(".category-filters");
 
   if (filterBar) {
     filterBar.classList.add("category-filters-with-banner");
+  }
+}
+
+function addButtonModifier() {
+  const token = localStorage.getItem("token");
+  console.log("Token récupéré:", "ajout du bouton de modification");
+
+  const portfolioTitle = document.querySelector("#portfolio h2");
+  console.log("Titre du portfolio trouvé:", portfolioTitle);
+
+  if (portfolioTitle) {
+    const modifierBtn = document.createElement("button");
+    console.log("Bouton de modification créé:", modifierBtn);
+
+    if (modifierBtn) {
+      const icon = document.createElement("i");
+      icon.classList.add("fa-regular", "fa-pen-to-square");
+      const text = document.createElement("span");
+      text.textContent = "Modifier";
+      portfolioTitle.appendChild(modifierBtn);
+      modifierBtn.appendChild(icon);
+      modifierBtn.appendChild(text);
+      console.log("Bouton de modification ajouté:", modifierBtn);
+    }
   }
 }
