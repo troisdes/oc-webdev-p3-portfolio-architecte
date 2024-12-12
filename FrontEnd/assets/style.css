@@ -429,6 +429,69 @@ a:hover {
   background-color: #0e2f28;
 }
 
+.edition-banner {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: black;
+  color: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.banner-content i {
+  font-size: 16px;
+}
+
+.edit-mode header {
+  margin-top: 60px;
+}
+
+header.with-banner {
+  margin-top: 40px; /* Adjust this value to match the height of the banner */
+}
+
+.category-filters {
+  display: none;
+}
+
+.title-modifier-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 6.5em;
+  width: 100%;
+}
+
+.modifier-btn {
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Work Sans";
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.modifier-btn i {
+  font-size: 16px;
+}
+
 footer {
   display: flex;
   justify-content: flex-end;
