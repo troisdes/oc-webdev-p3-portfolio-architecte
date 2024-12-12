@@ -183,18 +183,25 @@ function addButtonModifier() {
   console.log("Titre du portfolio trouvé:", portfolioTitle);
 
   if (portfolioTitle) {
+    const modifierContainer = document.createElement("div");
+    modifierContainer.classList.add("title-modifier-container");
+    console.log("Conteneur de modification créé:", modifierContainer);
+
     const modifierBtn = document.createElement("button");
+    modifierBtn.classList.add("modifier-btn");
     console.log("Bouton de modification créé:", modifierBtn);
 
-    if (modifierBtn) {
-      const icon = document.createElement("i");
-      icon.classList.add("fa-regular", "fa-pen-to-square");
-      const text = document.createElement("span");
-      text.textContent = "Modifier";
-      portfolioTitle.appendChild(modifierBtn);
-      modifierBtn.appendChild(icon);
-      modifierBtn.appendChild(text);
-      console.log("Bouton de modification ajouté:", modifierBtn);
-    }
+    const icon = document.createElement("i");
+    icon.classList.add("fa-regular", "fa-pen-to-square");
+
+    const text = document.createElement("span");
+    text.textContent = "Modifier";
+
+    modifierBtn.appendChild(icon);
+    modifierBtn.appendChild(text);
+    modifierContainer.appendChild(modifierBtn);
+    portfolioTitle.appendChild(modifierContainer);
+
+    console.log("Bouton de modification ajouté:", modifierBtn);
   }
 }
