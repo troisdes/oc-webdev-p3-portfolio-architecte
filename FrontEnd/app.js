@@ -118,7 +118,8 @@ document.addEventListener("DOMContentLoaded", function () {
     createEditionBanner();
     document.body.classList.add("edit-mode");
     updateLoginLogoutButton();
-    updateEditionMode();
+    hideFilterBar();
+    // updateEditionMode();
   }
 });
 
@@ -158,5 +159,14 @@ function updateLoginLogoutButton() {
       localStorage.removeItem("token");
       window.location.reload();
     });
+  }
+}
+
+function hideFilterBar() {
+  const token = localStorage.getItem("token");
+  const filterBar = document.querySelector(".category-filters");
+
+  if (filterBar) {
+    filterBar.classList.add("category-filters-with-banner");
   }
 }
