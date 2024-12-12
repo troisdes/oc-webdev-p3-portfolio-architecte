@@ -366,7 +366,7 @@ a:hover {
 }
 
 #login > * {
-  text-align: center;
+  text-align: left;
 }
 
 #login h2 {
@@ -384,11 +384,9 @@ a:hover {
   margin-bottom: 355px;
 }
 
-#login form {
+#login-form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  text-align: left;
   width: 100%;
 }
 
@@ -407,6 +405,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-weight: bolder;
 }
 
 .password-container {
@@ -423,6 +422,7 @@ a:hover {
   height: 36px;
   text-align: center;
   border-radius: 60px;
+  border: none; /* Removes the border */
 }
 
 #seConnecter:hover {
