@@ -107,5 +107,6 @@ function filterWorks(event, categoryId) {
   });
 }
 
+// Appeler les fonctions pour récupérer les travaux et les catégories
 getWorks();
 getCategories();
