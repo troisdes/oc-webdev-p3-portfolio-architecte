@@ -145,14 +145,18 @@ function createEditionBanner() {
   if (header) {
     header.classList.add("with-banner");
   }
+}
 
+function updateLoginLogoutButton() {
+  const token = localStorage.getItem("token");
   const loginButton = document.getElementById("loginBtn");
+
   if (loginButton) {
     loginButton.textContent = "logout";
-  }
-
-  const catFilters = document.querySelector(".category-filters");
-  if (catFilters) {
-    catFilters.classList.add("with-banner");
+    loginButton.href = "login.html";
+    loginButton.addEventListener("click", function () {
+      localStorage.removeItem("token");
+      window.location.reload();
+    });
   }
 }
