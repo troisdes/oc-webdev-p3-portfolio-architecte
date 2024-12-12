@@ -457,11 +457,11 @@ a:hover {
   margin-top: 60px;
 }
 
-header.with-banner {
+.header-with-banner {
   margin-top: 40px; /* Adjust this value to match the height of the banner */
 }
 
-.category-filters {
+.category-filters-with-banner {
   display: none;
 }
 
