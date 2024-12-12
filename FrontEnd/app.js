@@ -184,6 +184,9 @@ function addButtonModifier() {
   console.log("Titre du portfolio trouvé:", portfolioTitle);
 
   if (portfolioTitle) {
+    // Réinitialiser la marge du titre
+    portfolioTitle.style.marginTop = "0";
+
     // Créer le conteneur
     const modifierContainer = document.createElement("div");
     modifierContainer.classList.add("title-modifier-container");
