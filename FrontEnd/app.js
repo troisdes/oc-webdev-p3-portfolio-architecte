@@ -110,3 +110,49 @@ function filterWorks(event, categoryId) {
 // Appeler les fonctions pour récupérer les travaux et les catégories
 getWorks();
 getCategories();
+
+document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    createEditionBanner();
+    document.body.classList.add("edit-mode");
+    updateLoginLogoutButton();
+    updateEditionMode();
+  }
+});
+
+function createEditionBanner() {
+  const banner = document.createElement("div");
+  banner.classList.add("edition-banner");
+
+  const bannerContent = document.createElement("div");
+  bannerContent.classList.add("banner-content");
+
+  const icon = document.createElement("i");
+  icon.classList.add("fa-regular", "fa-pen-to-square");
+
+  const text = document.createElement("span");
+  text.textContent = "Mode édition";
+
+  bannerContent.appendChild(icon);
+  bannerContent.appendChild(text);
+  banner.appendChild(bannerContent);
+
+  document.body.insertBefore(banner, document.body.firstChild);
+
+  const header = document.querySelector("header");
+  if (header) {
+    header.classList.add("with-banner");
+  }
+
+  const loginButton = document.getElementById("loginBtn");
+  if (loginButton) {
+    loginButton.textContent = "logout";
+  }
+
+  const catFilters = document.querySelector(".category-filters");
+  if (catFilters) {
+    catFilters.classList.add("with-banner");
+  }
+}
