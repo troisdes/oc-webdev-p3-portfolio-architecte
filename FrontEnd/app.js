@@ -167,41 +167,58 @@ function updateLoginLogoutButton() {
 
 function hideFilterBar() {
   const token = localStorage.getItem("token");
-  console.log("Token récupéré:", "masquage de la barre de filtres");
+  console.log("Token récupéré", "masquage de la barre de filtres");
   const filterBar = document.querySelector(".category-filters");
 
   if (filterBar) {
-    filterBar.classList.add("category-filters-with-banner");
+    filterBar.style.display = "none";
+    console.log("La barre de filtres est cachée");
   }
 }
 
 function addButtonModifier() {
   const token = localStorage.getItem("token");
-  console.log("Token récupéré:", "ajout du bouton de modification");
+  console.log("Token récupéré");
 
   const portfolioTitle = document.querySelector("#portfolio h2");
   console.log("Titre du portfolio trouvé:", portfolioTitle);
 
   if (portfolioTitle) {
+    // Créer le conteneur
     const modifierContainer = document.createElement("div");
     modifierContainer.classList.add("title-modifier-container");
     console.log("Conteneur de modification créé:", modifierContainer);
 
+    // Déplacer le titre h2 dans le conteneur
+    portfolioTitle.parentNode.insertBefore(modifierContainer, portfolioTitle);
+    modifierContainer.appendChild(portfolioTitle);
+    console.log(
+      "Titre du portfolio déplacé dans le conteneur de modification."
+    );
+
+    // Créer le bouton de modification
     const modifierBtn = document.createElement("button");
     modifierBtn.classList.add("modifier-btn");
     console.log("Bouton de modification créé:", modifierBtn);
 
+    // Créer l'icône
     const icon = document.createElement("i");
     icon.classList.add("fa-regular", "fa-pen-to-square");
 
+    // Créer le texte
     const text = document.createElement("span");
-    text.textContent = "Modifier";
+    text.textContent = "modifier";
 
+    // Ajouter l'icône et le texte au bouton
     modifierBtn.appendChild(icon);
     modifierBtn.appendChild(text);
-    modifierContainer.appendChild(modifierBtn);
-    portfolioTitle.appendChild(modifierContainer);
 
-    console.log("Bouton de modification ajouté:", modifierBtn);
+    // Ajouter le bouton au conteneur
+    modifierContainer.appendChild(modifierBtn);
+
+    console.log(
+      "Bouton de modification ajouté au conteneur:",
+      modifierContainer
+    );
   }
 }
