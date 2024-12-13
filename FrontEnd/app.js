@@ -196,9 +196,6 @@ function addButtonModifier() {
     const icon = document.createElement("i");
     icon.classList.add("fa-regular", "fa-pen-to-square");
 
-    // Créer le texte
-    // const text = document.createElement("span");
-
     // Ajouter l'icône et le texte au bouton
     modifierBtn.appendChild(icon);
     modifierBtn.appendChild(href);
@@ -219,6 +216,24 @@ function addButtonModifier() {
     });
   }
 }
+
+function createModal() {
+  const modal = document.createElement("aside");
+  modal.id = "modal1";
+  modal.classList.add("modal");
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content");
+
+  const modalText = document.createElement("p");
+  modalText.textContent = "Contenu du modal";
+
+  modal.appendChild(modalContent);
+
+  document.body.appendChild(modal);
+}
+
+createModal();
 
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
