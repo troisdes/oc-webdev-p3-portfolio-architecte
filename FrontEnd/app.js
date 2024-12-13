@@ -111,20 +111,6 @@ function filterWorks(event, categoryId) {
 getWorks();
 getCategories();
 
-document.addEventListener("DOMContentLoaded", function () {
-  const token = localStorage.getItem("token");
-  console.log("Token récupéré:", "création de la bannière d'édition");
-
-  if (token) {
-    createEditionBanner();
-    // document.body.classList.add("edit-mode");
-    updateLoginLogoutButton();
-    hideFilterBar();
-    addButtonModifier();
-    // updateEditionMode();
-  }
-});
-
 function createEditionBanner() {
   const banner = document.createElement("div");
   banner.classList.add("edition-banner");
@@ -189,21 +175,18 @@ function addButtonModifier() {
 
     // Créer le conteneur
     const modifierContainer = document.createElement("div");
-    modifierContainer.classList.add("title-modifier-container");
-    console.log("Conteneur de modification créé:", modifierContainer);
+    modifierContainer.classList.add("modifier-container");
 
     // Déplacer le titre h2 dans le conteneur
     portfolioTitle.parentNode.insertBefore(modifierContainer, portfolioTitle);
     modifierContainer.appendChild(portfolioTitle);
-    console.log(
-      "Titre du portfolio déplacé dans le conteneur de modification."
-    );
 
     // Créer le bouton de modification
     const modifierBtn = document.createElement("button");
     modifierBtn.classList.add("modifier-btn");
-    console.log("Bouton de modification créé:", modifierBtn);
+    console.log("Bouton de modification créé:");
 
+    modifierBtn.href = "#modal1";
     // Créer l'icône
     const icon = document.createElement("i");
     icon.classList.add("fa-regular", "fa-pen-to-square");
@@ -219,9 +202,18 @@ function addButtonModifier() {
     // Ajouter le bouton au conteneur
     modifierContainer.appendChild(modifierBtn);
 
-    console.log(
-      "Bouton de modification ajouté au conteneur:",
-      modifierContainer
-    );
+    console.log("Conteneur de modification créé:", modifierContainer);
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const token = localStorage.getItem("token");
+  console.log("Token récupéré:", "Mode édition activé");
+
+  if (token) {
+    createEditionBanner();
+    updateLoginLogoutButton();
+    hideFilterBar();
+    addButtonModifier();
+  }
+});
