@@ -251,6 +251,15 @@ a:hover {
   margin-top: 140px;
 }
 
+.submit-btn {
+  padding: 10px 20px;
+  background-color: #007b5e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 .category-filters {
   display: flex;
   justify-content: center;
@@ -457,7 +466,7 @@ a:hover {
   margin-top: 40px;
 }
 
-.title-modifier-container {
+.modifier-container {
   display: flex;
   justify-content: center;
   margin-top: 140px;
