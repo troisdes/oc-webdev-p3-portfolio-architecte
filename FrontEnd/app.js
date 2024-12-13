@@ -186,23 +186,37 @@ function addButtonModifier() {
     modifierBtn.classList.add("modifier-btn");
     console.log("Bouton de modification créé:");
 
-    modifierBtn.href = "#modal1";
+    // Créer le lien
+    const href = document.createElement("a");
+    href.classList.add("modifier-btn");
+    href.href = "#modal1";
+    href.textContent = "modifier";
+
     // Créer l'icône
     const icon = document.createElement("i");
     icon.classList.add("fa-regular", "fa-pen-to-square");
 
     // Créer le texte
-    const text = document.createElement("span");
-    text.textContent = "modifier";
+    // const text = document.createElement("span");
 
     // Ajouter l'icône et le texte au bouton
     modifierBtn.appendChild(icon);
-    modifierBtn.appendChild(text);
+    modifierBtn.appendChild(href);
 
     // Ajouter le bouton au conteneur
     modifierContainer.appendChild(modifierBtn);
 
     console.log("Conteneur de modification créé:", modifierContainer);
+
+    // Ajouter l'écouteur d'événement pour le bouton de modification
+    modifierBtn.addEventListener("click", function () {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        document.getElementById("modal1").style.display = "block";
+      }
+      console.log("Token récupéré:", "Mode édition activé");
+    });
   }
 }
 
