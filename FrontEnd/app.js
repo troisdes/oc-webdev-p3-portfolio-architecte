@@ -432,4 +432,5 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", () => {
   createModal1();
   createModal2();
+  createModal3();
 });
