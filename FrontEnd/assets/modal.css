@@ -59,6 +59,37 @@
   border-radius: 2px;
 }
 
+.modal-separator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  margin-top: 68px;
+}
+
+/* Add Photo Section */
+.add-photo {
+  display: flex;
+}
+
+.add-photo-btn {
+  background-color: #1d6154;
+  color: white;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 50px;
+  margin-top: 38px;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: "Syne";
+  cursor: pointer;
+}
+
+.add-photo-btn:hover {
+  background-color: #0e2f28;
+}
+
 .modal-footer {
   margin-top: 15px;
   display: flex;
