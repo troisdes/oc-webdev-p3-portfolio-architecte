@@ -266,6 +266,15 @@ function createModal() {
       });
     });
 
+  const separator = document.createElement("div");
+  separator.classList.add("modal-separator");
+  modalContent.appendChild(separator);
+
+  const addPhotoBtn = document.createElement("button");
+  addPhotoBtn.classList.add("add-photo-btn");
+  addPhotoBtn.textContent = "Ajouter une photo";
+  separator.appendChild(addPhotoBtn);
+
   document.body.appendChild(modal);
 }
 
