@@ -268,7 +268,7 @@ function createModal() {
 
   const separator = document.createElement("div");
   separator.classList.add("modal-separator");
-  modalContent.appendChild(separator);
+  galleryContainer.appendChild(separator);
 
   const addPhotoBtn = document.createElement("button");
   addPhotoBtn.classList.add("add-photo-btn");
