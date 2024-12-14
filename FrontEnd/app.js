@@ -224,16 +224,50 @@ function createModal() {
 
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content");
-
-  const modalText = document.createElement("p");
-  modalText.textContent = "Contenu du modal";
-
   modal.appendChild(modalContent);
+
+  const closeBtn = document.createElement("button");
+  closeBtn.classList.add("close-btn");
+  closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  closeBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+  modalContent.appendChild(closeBtn);
+
+  const modalHeader = document.createElement("header");
+  modalHeader.classList.add("modal-header");
+  modalHeader.innerHTML = "<h2>Galerie photo</h2>";
+  modalContent.appendChild(modalHeader);
+
+  const galleryContainer = document.createElement("div");
+  galleryContainer.classList.add("modal-gallery-box");
+  modalContent.appendChild(galleryContainer);
+
+  const galleryGrid = document.createElement("div");
+  galleryGrid.classList.add("modal-gallery");
+  galleryContainer.appendChild(galleryGrid);
+  // Fetch and display works in modal
+  fetch("http://localhost:5678/api/works")
+    .then((response) => response.json())
+    .then((works) => {
+      works.forEach((work) => {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = work.imageUrl;
+        img.alt = work.title;
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+        deleteBtn.classList.add("delete-btn");
+
+        figure.appendChild(img);
+        figure.appendChild(deleteBtn);
+        galleryGrid.appendChild(figure);
+      });
+    });
 
   document.body.appendChild(modal);
 }
-
-createModal();
 
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
@@ -244,5 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
     updateLoginLogoutButton();
     hideFilterBar();
     addButtonModifier();
+    createModal();
   }
 });
