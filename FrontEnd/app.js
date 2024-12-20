@@ -176,6 +176,7 @@ function addButtonModifier() {
 
     const modifierBtn = document.createElement("button");
     modifierBtn.classList.add("modifier-btn");
+    modifierBtn.classList.add("modal-trigger");
     console.log("Bouton de modification créé:");
 
     const href = document.createElement("a");
@@ -192,15 +193,6 @@ function addButtonModifier() {
     modifierContainer.appendChild(modifierBtn);
 
     console.log("Conteneur de modification créé:", modifierContainer);
-
-    modifierBtn.addEventListener("click", function () {
-      const token = localStorage.getItem("token");
-
-      if (token) {
-        document.getElementById("modal1").style.display = "block";
-      }
-      console.log("Token récupéré:", "Mode édition activé");
-    });
   }
 }
 
@@ -208,3 +200,110 @@ createEditionBanner();
 updateLoginLogoutButton();
 hideFilterBar();
 addButtonModifier();
+
+function populateModalGallery(works) {
+  const modalGallery = document.getElementById("modal-gallery");
+  modalGallery.innerHTML = ""; // Clear existing content
+
+  works.forEach((work) => {
+    const figure = document.createElement("figure");
+    figure.className = "gallery-item";
+
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-btn";
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    deleteBtn.setAttribute("data-id", work.id);
+
+    figure.appendChild(img);
+    figure.appendChild(deleteBtn);
+    modalGallery.appendChild(figure);
+  });
+}
+
+function toggleModal() {
+  const modalContainer = document.querySelector(".modal-container");
+  const modalTriggers = document.querySelectorAll(".modal-trigger");
+
+  modalTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", async () => {
+      modalContainer.classList.toggle("active");
+      if (modalContainer.classList.contains("active")) {
+        // Fetch works data and populate gallery when modal opens
+        const response = await fetch("http://localhost:5678/api/works");
+        const works = await response.json();
+        populateModalGallery(works);
+      }
+    });
+  });
+}
+
+function switchModal() {
+  const galleryModal = document.querySelector("#gallery-modal");
+  const uploadModal = document.querySelector("#upload-modal");
+  const addPhotoBtn = document.querySelector(".btn-add-photo");
+  const backModalBtn = document.querySelector(".back-modal");
+  const closeModalBtn = document.querySelectorAll(".close-modal");
+  const overlays = document.querySelectorAll(".overlay");
+
+  // Add overlay click handlers
+  overlays.forEach((overlay) => {
+    overlay.addEventListener("click", () => {
+      galleryModal.classList.remove("active");
+      uploadModal.classList.remove("active");
+    });
+  });
+
+  addPhotoBtn.addEventListener("click", () => {
+    galleryModal.classList.remove("active");
+    uploadModal.classList.add("active");
+  });
+
+  backModalBtn.addEventListener("click", () => {
+    uploadModal.classList.remove("active");
+    galleryModal.classList.add("active");
+  });
+
+  closeModalBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      galleryModal.classList.remove("active");
+      uploadModal.classList.remove("active");
+    });
+  });
+}
+
+function uploadPhotoModal() {
+  const uploadForm = document.getElementById("upload-form");
+
+  uploadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(uploadForm);
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        document.querySelector("#upload-modal").classList.remove("active");
+        document.querySelector("#gallery-modal").classList.add("active");
+        // Refresh gallery
+        const works = await fetchWorks();
+        populateModalGallery(works);
+      }
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+    }
+  });
+}
+
+toggleModal();
+switchModal();
+uploadPhotoModal();
