@@ -1,9 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html,
+/* http://meyerweb.com/eric/tools/css/reset/1   v2.0 | 201101261   License: none (public domain)/*/
 body,
 div,
 span,
@@ -512,46 +507,50 @@ footer nav ul li {
   padding: 0;
 }
 
-/* Modal body */
+/* Modal styles */
 
-.back-btn,
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+.modal-container {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: visibility 0.4s;
 }
 
-.back-btn:hover,
-.close-btn:hover {
-  color: #666;
+.modal-container.active {
+  visibility: visible;
 }
 
-.modal {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-#modal1 {
-  display: none;
+.modal h2 {
+  font-family: work sans;
+  font-size: 26px;
+  font-weight: 400;
+  color: #000;
+  padding: 0;
+  margin: 0;
 }
 
-#modal2 {
-  display: block;
-}
-
-.modal-content {
-  position: relative;
-  background: white;
-  width: 630px;
-  margin: 50px auto;
+.modal {
+  width: 95%;
+  max-width: 630px;
+  min-width: 300px;
   padding: 30px;
+  background: white;
   border-radius: 10px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .modal-header {
@@ -561,23 +560,28 @@ footer nav ul li {
   margin-bottom: 30px;
 }
 
-.modal-header h2 {
-  font-family: work sans;
-  font-size: 26px;
-  font-weight: 400;
-  color: #000;
+.close-modal,
+.back-modal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-/* Modal1 */
-
-.gallery-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
+/* Add to existing modal styles */
+.modal-container[aria-hidden="true"] {
+  display: none;
 }
 
-.gallery-grid {
+#upload-modal.active {
+  display: block;
+}
+
+#gallery-modal.active {
+  display: block;
+}
+
+#gallery-modal .gallery-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
@@ -585,20 +589,20 @@ footer nav ul li {
   padding: 0;
 }
 
-.gallery-grid figure {
+#gallery-modal .gallery-grid figure {
   position: relative;
   width: 100%;
   margin: 0;
 }
 
-.gallery-grid img {
+#gallery-modal .gallery-grid img {
   width: 100%;
   height: auto;
   object-fit: cover;
   border-radius: 2px;
 }
 
-.gallery-item img .delete-btn {
+.gallery-item .delete-btn {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -626,12 +630,7 @@ footer nav ul li {
   margin: 20px 0;
 }
 
-.add-photo {
-  display: flex;
-}
-
-.submit-btn,
-.add-photo-btn {
+.btn-add-photo {
   background: #1d6154;
   color: white;
   border: none;
@@ -642,42 +641,43 @@ footer nav ul li {
   display: block;
 }
 
-.submit-btn:hover,
-.add-photo-btn:hover {
+.btn-add-photo:hover {
   background-color: #0e2f28;
 }
 
-/* modal2 */
-
-.upload-preview {
+/* Upload modal specific */
+#upload-modal .upload-area {
   display: flex;
   flex-direction: column;
+  align-items: center;
   background-color: #e6eef4;
   width: 100%;
   height: 200px;
-  display: flex;
   justify-content: center;
-  align-items: center;
   border-radius: 5px;
   margin-bottom: 15px;
 }
 
-.upload-preview .fa-image {
+#upload-modal .fa-image {
   font-size: 48px;
   color: #b7c2c9;
 }
 
-.upload-btn {
-  background-color: #c9d2d8;
-  color: #385d82;
+.btn-upload {
+  background-color: #cbd6e2;
+  color: #306685;
   border: none;
   border-radius: 60px;
-  padding: 10px 50px;
-  margin-top: 38px;
-  font-weight: 700;
-  font-size: 14px;
-  font-family: "Syne";
+  padding: 10px 33px;
+  margin: 15px 0;
   cursor: pointer;
+  font-family: "Work Sans";
+  font-weight: 500;
+}
+
+.upload-info {
+  color: #444444;
+  font-size: 10px;
 }
 
 .form-group {
@@ -688,12 +688,32 @@ footer nav ul li {
 .form-group select {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   border-radius: 5px;
 }
 
 .form-group label {
   display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-family: "Work Sans";
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #3d3d3d;
+}
+
+.btn-submit {
+  background: #a7a7a7;
+  color: white;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  font-family: "Syne";
+  font-weight: 700;
+}
+
+.btn-submit:hover {
+  background-color: #1d6154;
 }
