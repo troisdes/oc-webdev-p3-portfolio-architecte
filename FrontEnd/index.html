@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<link rel="stylesheet" href="./assets/modal.css">
 	<script src="app.js" defer></script>
 </head>
 
@@ -63,12 +62,61 @@
 				<input type="submit" value="Envoyer" id="envoyerMessage">
 			</form>
 		</section>
-		<aside>
-			<div id="modal" class="modal">
-				<button type="button" id="closeModal">Close</button>
-				<div id="galleryPage"></div>
-				<div id="uploadPage"></div>
-				<div id="labelSavePage"></div>
+		<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gallery-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2>Galerie photo</h2>
+					<button type="button" class="close-btn">&times;</button>
+				</div>
+				<div id="gallery-modal" class="gallery-box">
+					<div class="gallery-grid">
+						<!-- Works will be populated here -->
+						<div class="gallery-item">
+							<img src="https://via.placeholder.com/150" alt="Photo 1">
+							<button class="delete-btn">&#x1F5D1;</button>
+						</div>
+						<!-- Add more gallery items as needed -->
+					</div>
+					<div class="modal-separator">
+					</div>
+					<div class="add-photo">
+						<button class="add-photo-btn">Ajouter une photo</button>
+					</div>
+				</div>
+			</div>
+		</aside>
+		<aside id="modal2" class="modal" aria-hidden="true" role="dialog" aria-labelledby="add-photo-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+					<h2>Ajout photo</h2>
+					<button type="button" class="close-btn">&times;</button>
+				</div>
+				<div id="add-photo-modal">
+					<form id="photoUploadForm" class="upload-form">
+						<div class="upload-preview">
+							<i class="far fa-image"></i>
+							<button type="submit" class="upload-btn">+ Ajouter photo</button>
+							<input type="file" id="photoInput" accept="image/*" hidden>
+							<p>jpg, png : 4mo max</p>
+						</div>
+						<div class="form-group">
+							<label for="photoTitle">Titre</label>
+							<input type="text" id="photoTitle" required>
+						</div>
+						<div class="form-group">
+							<label for="category">Catégorie</label>
+							<select id="category" name="category">
+								<option value="category1">Objets</option>
+								<option value="category2">Appartements</option>
+								<option value="category3">Hotels & restaurants</option>
+							</select>
+						</div>
+						<div class="modal-separator">
+						</div>
+						<button type="submit" class="submit-btn">Valider</button>
+					</form>
+				</div>
 			</div>
 		</aside>
 	</main>
