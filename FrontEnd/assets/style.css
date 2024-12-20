@@ -511,3 +511,189 @@ footer nav ul li {
   margin: 0;
   padding: 0;
 }
+
+/* Modal body */
+
+.back-btn,
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.back-btn:hover,
+.close-btn:hover {
+  color: #666;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+#modal1 {
+  display: none;
+}
+
+#modal2 {
+  display: block;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  width: 630px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.modal-header h2 {
+  font-family: work sans;
+  font-size: 26px;
+  font-weight: 400;
+  color: #000;
+}
+
+/* Modal1 */
+
+.gallery-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+}
+
+.gallery-grid figure {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.gallery-item img .delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 17px;
+  height: 17px;
+  background: black;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-item .delete-btn:hover {
+  background-color: #333;
+}
+
+.modal-separator {
+  width: 100%;
+  height: 1px;
+  background: #b3b3b3;
+  margin: 20px 0;
+}
+
+.add-photo {
+  display: flex;
+}
+
+.submit-btn,
+.add-photo-btn {
+  background: #1d6154;
+  color: white;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+.submit-btn:hover,
+.add-photo-btn:hover {
+  background-color: #0e2f28;
+}
+
+/* modal2 */
+
+.upload-preview {
+  display: flex;
+  flex-direction: column;
+  background-color: #e6eef4;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.upload-preview .fa-image {
+  font-size: 48px;
+  color: #b7c2c9;
+}
+
+.upload-btn {
+  background-color: #c9d2d8;
+  color: #385d82;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 50px;
+  margin-top: 38px;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: "Syne";
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
