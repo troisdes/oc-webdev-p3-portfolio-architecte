@@ -5,6 +5,9 @@ async function getWorks() {
   const galleryElement = document.querySelector(".gallery");
 
   try {
+    if (!galleryElement) {
+      throw new Error("Élément avec la classe gallery non trouvé");
+    }
     galleryElement.innerHTML = "<p>Chargement en cours...</p>";
     const response = await fetch("http://localhost:5678/api/works");
     if (!response.ok) {
@@ -13,13 +16,10 @@ async function getWorks() {
     const worksData = await response.json();
     console.log('Données de "getWorks" récupérées :', worksData);
 
-    if (!galleryElement) {
-      throw new Error("Élément avec la classe gallery non trouvé");
-    }
-
     galleryElement.innerHTML = "";
     console.log("Chargement...");
-
+    worksData.forEach((work) => {
+    const fragment = document.createDocumentFragment();
     worksData.forEach((work) => {
       const figure = document.createElement("figure");
       figure.dataset.categoryId = work.categoryId.toString();
@@ -33,16 +33,21 @@ async function getWorks() {
       figcaption.textContent = work.title;
       figure.appendChild(figcaption);
 
-      galleryElement.appendChild(figure);
-    });
-
+      fragment.appendChild(figure);
+      });
+    }
+    galleryElement.appendChild(fragment);
     console.log("Chargement complet :", galleryElement);
-  } catch (error) {
-    console.error("Erreur lors de la récupération des travaux :", error);
     galleryElement.innerHTML = `
       <div class="error-message">
         <p>Une erreur s'est produite: ${error.message}</p>
-        <button onclick="getWorks()">Réessayer</button>
+        <button id="retryButton">Réessayer</button>
+      </div>`;
+    const retryButton = document.getElementById("retryButton");
+    if (retryButton) {
+      retryButton.addEventListener("click", getWorks);
+    }
+  }
       </div>`;
   }
 }
@@ -77,7 +82,7 @@ async function getCategories() {
       categoryButton.textContent = category.name;
       categoryButton.classList.add("filter-btn");
       categoryButton.addEventListener("click", (event) =>
-        filterWorks(event, category.id)
+        filterWorks(event, category.id.toString())
       );
       catFilters.appendChild(categoryButton);
     });
@@ -92,18 +97,15 @@ function filterWorks(event, categoryId) {
   const figures = document.querySelectorAll(".gallery figure");
   const buttons = document.querySelectorAll(".filter-btn");
 
-  buttons.forEach((button) => button.classList.remove("active"));
-  event.currentTarget.classList.add("active");
+  buttons.forEach((button) => {
+    button.classList.toggle("active", button === event.currentTarget);
+  });
 
   figures.forEach((figure) => {
-    if (
-      categoryId === "Tous" ||
-      figure.dataset.categoryId === categoryId.toString()
-    ) {
-      figure.style.display = "block";
-    } else {
-      figure.style.display = "none";
-    }
+    figure.style.display =
+      categoryId === "Tous" || figure.dataset.categoryId === categoryId.toString()
+        ? "block"
+        : "none";
   });
 }
 
@@ -140,20 +142,25 @@ function updateLoginLogoutButton() {
   console.log("Token récupéré:", "mise à jour du bouton de connexion");
   const loginButton = document.getElementById("loginBtn");
 
-  if (loginButton) {
-    loginButton.textContent = "logout";
-    loginButton.href = "login.html";
-    loginButton.addEventListener("click", function () {
-      localStorage.removeItem("token");
-      window.location.reload();
-    });
-  }
-}
+  console.log("Token récupéré:", "mise à jour du bouton de connexion");
+  const loginButton = document.getElementById("loginBtn");
 
-function hideFilterBar() {
-  const token = localStorage.getItem("token");
-  console.log("Token récupéré", "masquage de la barre de filtres");
-  const filterBar = document.querySelector(".category-filters");
+  if (loginButton) {
+    if (token) {
+      loginButton.textContent = "Logout";
+      loginButton.href = "#";
+      loginButton.addEventListener("click", function () {
+        localStorage.removeItem("token");
+        window.location.reload();
+      });
+    } else {
+      loginButton.textContent = "Login";
+      loginButton.href = "login.html";
+    }
+  if (token && filterBar) {
+    filterBar.style.display = "none";
+    console.log("La barre de filtres est cachée");
+  }
 
   if (filterBar) {
     filterBar.style.display = "none";
@@ -174,8 +181,10 @@ function addButtonModifier() {
     const modifierContainer = document.createElement("div");
     modifierContainer.classList.add("modifier-container");
 
-    portfolioTitle.parentNode.insertBefore(modifierContainer, portfolioTitle);
-    modifierContainer.appendChild(portfolioTitle);
+    if (portfolioTitle.parentNode) {
+      portfolioTitle.parentNode.insertBefore(modifierContainer, portfolioTitle);
+      modifierContainer.appendChild(portfolioTitle);
+    }
 
     const modifierBtn = document.createElement("button");
     modifierBtn.classList.add("modifier-btn");
@@ -342,27 +351,31 @@ function addRevertButton() {
       getWorks();
 
       if (deletedWorks.length === 0) {
-        revertBtn.remove();
-      }
     });
-
-    document.querySelector(".modal-gallery-container").appendChild(revertBtn);
+    const modalGalleryContainer = document.querySelector(".modal-gallery-container");
+    if (modalGalleryContainer) {
+      modalGalleryContainer.appendChild(revertBtn);
+    }
+  }
+}
   }
 }
 
 function toggleModal() {
   const modalContainer = document.querySelector(".modal-container");
-  const modalTriggers = document.querySelectorAll(".modal-trigger");
-
   modalTriggers.forEach((trigger) => {
     trigger.addEventListener("click", async () => {
-      modalContainer.classList.toggle("active");
-      if (modalContainer.classList.contains("active")) {
-        // Fetch works data and populate gallery when modal opens
-        const response = await fetch("http://localhost:5678/api/works");
-        const works = await response.json();
-        populateModalGallery(works);
+      if (modalContainer) {
+        modalContainer.classList.toggle("active");
+        if (modalContainer.classList.contains("active")) {
+          // Fetch works data and populate gallery when modal opens
+          const response = await fetch("http://localhost:5678/api/works");
+          const works = await response.json();
+          populateModalGallery(works);
+        }
       }
+    });
+  });
     });
   });
 }
@@ -383,26 +396,35 @@ function switchModal() {
     });
   });
 
-  addPhotoBtn.addEventListener("click", () => {
-    galleryModal.classList.remove("active");
-    uploadModal.classList.add("active");
-  });
-
-  backModalBtn.addEventListener("click", () => {
-    uploadModal.classList.remove("active");
-    galleryModal.classList.add("active");
-  });
-
-  closeModalBtn.forEach((btn) => {
-    btn.addEventListener("click", () => {
+  if (addPhotoBtn) {
+    addPhotoBtn.addEventListener("click", () => {
       galleryModal.classList.remove("active");
+      uploadModal.classList.add("active");
+    });
+  }
+
+  if (backModalBtn) {
+    backModalBtn.addEventListener("click", () => {
       uploadModal.classList.remove("active");
+      galleryModal.classList.add("active");
+    });
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        galleryModal.classList.remove("active");
+        uploadModal.classList.remove("active");
+      });
+    });
+  }
     });
   });
 }
 
 function uploadPhotoModal() {
-  const uploadForm = document.getElementById("upload-form");
+  if (uploadForm) {
+    uploadForm.addEventListener("submit", async (e) => {
 
   uploadForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -426,28 +448,43 @@ function uploadPhotoModal() {
       console.error("Error uploading photo:", error);
     }
   });
-}
-
 async function fetchWorks() {
-  const response = await fetch("http://localhost:5678/api/works");
-  currentWorks = await response.json();
-  return currentWorks;
+  try {
+    const response = await fetch("http://localhost:5678/api/works");
+    if (!response.ok) {
+      throw new Error("La réponse du réseau n'était pas correcte");
+    }
+    currentWorks = await response.json();
+    return currentWorks;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des travaux :", error);
+    return [];
+  }
 }
-
-async function refreshGalleries() {
-  const works = await fetchWorks();
-  updateMainGallery(works);
+  return currentWorks;
+function updateMainGallery(works) {
+  const gallery = document.querySelector(".gallery");
+  if (!gallery) {
+    console.error("Gallery element not found");
+    return;
+  }
+  gallery.innerHTML = "";
+  works.forEach((work) => createWorkElement(work, gallery));
+}
   updateModalGallery(works);
 }
 
 function updateMainGallery(works) {
   const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = "";
-  works.forEach((work) => createWorkElement(work, gallery));
-}
-
 function updateModalGallery(works) {
   const modalGallery = document.querySelector("#modal-gallery");
+  if (!modalGallery) {
+    console.warn("Modal gallery element not found");
+    return;
+  }
+  modalGallery.innerHTML = "";
+  works.forEach((work) => createModalWorkElement(work, modalGallery));
+}
   if (!modalGallery) return;
   modalGallery.innerHTML = "";
   works.forEach((work) => createModalWorkElement(work, modalGallery));
@@ -496,4 +533,6 @@ toggleModal();
 switchModal();
 uploadPhotoModal();
 fetchWorks();
-initializeUploadForm();
+    initializeUploadForm();
+  }
+}
