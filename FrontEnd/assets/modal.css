@@ -63,10 +63,12 @@
 
 #upload-modal.active {
   display: block;
+  /* Specific styles for upload view */
 }
 
 #gallery-modal.active {
   display: block;
+  /* Specific styles for gallery view */
 }
 
 #gallery-modal .gallery-grid {
