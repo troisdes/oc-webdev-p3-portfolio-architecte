@@ -1,3 +1,5 @@
+let currentWorks = []; // Add at top of file
+
 async function getWorks() {
   const galleryElement = document.querySelector(".gallery");
 
@@ -417,11 +419,9 @@ function uploadPhotoModal() {
       });
 
       if (response.ok) {
+        await refreshGalleries();
         document.querySelector("#upload-modal").classList.remove("active");
         document.querySelector("#gallery-modal").classList.add("active");
-        // Refresh gallery
-        const works = await fetchWorks();
-        populateModalGallery(works);
       }
     } catch (error) {
       console.error("Error uploading photo:", error);
@@ -431,8 +431,42 @@ function uploadPhotoModal() {
 
 async function fetchWorks() {
   const response = await fetch("http://localhost:5678/api/works");
-  const works = await response.json();
-  return works;
+  currentWorks = await response.json();
+  return currentWorks;
+}
+
+async function refreshGalleries() {
+  const works = await fetchWorks();
+  // Update main gallery
+  const mainGallery = document.querySelector(".gallery");
+  mainGallery.innerHTML = "";
+  works.forEach((work) => {
+    const figure = createWorkFigure(work);
+    mainGallery.appendChild(figure);
+  });
+
+  // Update modal gallery
+  const modalGallery = document.querySelector("#modal-gallery");
+  if (modalGallery) {
+    modalGallery.innerHTML = "";
+    populateModalGallery(works);
+  }
+}
+
+async function deleteWork(id) {
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (response.ok) {
+      await refreshGalleries();
+    }
+  } catch (error) {
+    console.error("Delete failed:", error);
+  }
 }
 
 toggleModal();
