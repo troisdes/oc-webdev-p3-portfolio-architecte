@@ -211,12 +211,22 @@ function uploadPhotoModal() {
       });
 
       if (response.ok) {
-        await refreshGalleries();
+        const newWork = await response.json();
+        // Dynamically update both galleries
+        updateMainGallery([newWork]);
+        updateModalGallery([newWork]);
+
         document.querySelector("#upload-modal").classList.remove("active");
         document.querySelector("#gallery-modal").classList.add("active");
+      } else {
+        // Handle error response
+        const errorData = await response.json();
+        console.error("Error uploading photo:", errorData.message);
+        alert("Error uploading photo: " + errorData.message);
       }
     } catch (error) {
       console.error("Error uploading photo:", error);
+      alert("Error uploading photo: " + error.message);
     }
   });
 }
