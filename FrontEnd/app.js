@@ -438,4 +438,4 @@ async function fetchWorks() {
 toggleModal();
 switchModal();
 uploadPhotoModal();
-etchWorks();
+fetchWorks();
