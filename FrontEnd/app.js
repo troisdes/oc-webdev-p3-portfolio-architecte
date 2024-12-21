@@ -1,7 +1,6 @@
-// Add these utility functions at the top
 function validateElement(element, name) {
   if (!element) {
-    throw new Error(`${name} element not found in DOM`);
+    throw new Error(`${name} élément absent du DOM`);
   }
   return element;
 }
@@ -9,13 +8,12 @@ function validateElement(element, name) {
 function checkAuthState() {
   const token = localStorage.getItem("token");
   if (!token) {
-    console.log("No authentication token found");
+    console.log("Pas de token trouvé");
     return false;
   }
   return true;
 }
 
-// Modify getWorks()
 async function getWorks() {
   const galleryElement = validateElement(
     document.querySelector(".gallery"),
@@ -23,7 +21,14 @@ async function getWorks() {
   );
 
   try {
-    galleryElement.innerHTML = "<p>Chargement en cours...</p>";
+    galleryElement.innerHTML = "";
+    const loadingDiv = document.createElement("div");
+    loadingDiv.className = "loading";
+    const loadingText = document.createElement("p");
+    loadingText.textContent = "Chargement en cours...";
+    loadingDiv.appendChild(loadingText);
+    galleryElement.innerHTML = "";
+    galleryElement.appendChild(loadingDiv);
     const response = await fetch("http://localhost:5678/api/works");
 
     if (!response.ok) {
@@ -54,11 +59,27 @@ async function getWorks() {
     console.log("Chargement complet :", galleryElement);
   } catch (error) {
     console.error("Erreur lors de la récupération des travaux :", error);
-    galleryElement.innerHTML = `
-            <div class="error-message">
-                <p>Une erreur s'est produite: ${error.message}</p>
-                <button onclick="getWorks()">Réessayer</button>
-            </div>`;
+
+    // Clear existing content
+    galleryElement.textContent = "";
+
+    // Create error message container
+    const errorDiv = document.createElement("div");
+    errorDiv.className = "error-message";
+
+    // Create error text
+    const errorText = document.createElement("p");
+    errorText.textContent = `Une erreur s'est produite: ${error.message}`;
+
+    // Create retry button
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "Réessayer";
+    retryButton.onclick = getWorks;
+
+    // Build structure
+    errorDiv.appendChild(errorText);
+    errorDiv.appendChild(retryButton);
+    galleryElement.appendChild(errorDiv);
   }
 }
 
@@ -236,13 +257,32 @@ function initializeApp() {
     }
   } catch (error) {
     console.error("Application initialization failed:", error);
-    // Show user-friendly error message
-    document.body.innerHTML = `
-            <div class="error-message">
-                <h2>Une erreur est survenue</h2>
-                <p>${error.message}</p>
-                <button onclick="window.location.reload()">Recharger la page</button>
-            </div>`;
+
+    // Clear existing content
+    document.body.textContent = "";
+
+    // Create error container
+    const errorContainer = document.createElement("div");
+    errorContainer.className = "error-message";
+
+    // Create title
+    const title = document.createElement("h2");
+    title.textContent = "Une erreur est survenue";
+
+    // Create message
+    const message = document.createElement("p");
+    message.textContent = error.message;
+
+    // Create reload button
+    const reloadButton = document.createElement("button");
+    reloadButton.textContent = "Recharger la page";
+    reloadButton.addEventListener("click", () => window.location.reload());
+
+    // Build structure
+    errorContainer.appendChild(title);
+    errorContainer.appendChild(message);
+    errorContainer.appendChild(reloadButton);
+    document.body.appendChild(errorContainer);
   }
 }
 
