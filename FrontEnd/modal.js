@@ -1,4 +1,3 @@
-// Helper function to safely create DOM elements
 function createElement(type, attributes = {}, children = []) {
   const element = document.createElement(type);
 
