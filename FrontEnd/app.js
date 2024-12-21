@@ -1,4 +1,5 @@
 let currentWorks = []; // Add at top of file
+let deletedWorks = [];
 
 async function getWorks() {
   const galleryElement = document.querySelector(".gallery");
@@ -271,8 +272,6 @@ function populateModalGallery(works) {
   attachDeleteListeners();
 }
 
-let deletedWorks = []; // Store deleted works for potential revert
-
 function attachDeleteListeners() {
   const deleteButtons = document.querySelectorAll(".delete-btn");
 
@@ -437,20 +436,21 @@ async function fetchWorks() {
 
 async function refreshGalleries() {
   const works = await fetchWorks();
-  // Update main gallery
-  const mainGallery = document.querySelector(".gallery");
-  mainGallery.innerHTML = "";
-  works.forEach((work) => {
-    const figure = createWorkFigure(work);
-    mainGallery.appendChild(figure);
-  });
+  updateMainGallery(works);
+  updateModalGallery(works);
+}
 
-  // Update modal gallery
+function updateMainGallery(works) {
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
+  works.forEach((work) => createWorkElement(work, gallery));
+}
+
+function updateModalGallery(works) {
   const modalGallery = document.querySelector("#modal-gallery");
-  if (modalGallery) {
-    modalGallery.innerHTML = "";
-    populateModalGallery(works);
-  }
+  if (!modalGallery) return;
+  modalGallery.innerHTML = "";
+  works.forEach((work) => createModalWorkElement(work, modalGallery));
 }
 
 async function deleteWork(id) {
@@ -469,7 +469,31 @@ async function deleteWork(id) {
   }
 }
 
+function initializeUploadForm() {
+  const form = document.querySelector("#upload-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    try {
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+      if (response.ok) {
+        await refreshGalleries();
+        closeUploadModal();
+      }
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
+  });
+}
+
 toggleModal();
 switchModal();
 uploadPhotoModal();
 fetchWorks();
+initializeUploadForm();
