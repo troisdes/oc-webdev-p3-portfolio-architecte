@@ -1,4 +1,117 @@
-.modal-container {
+.modal {
+  border: none;
+  max-width: 630px;
+  min-width: 300px;
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+}
+::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal h2 {
+  font-family: work sans;
+  font-size: 26px;
+  font-weight: 400;
+  color: #000;
+  padding: 0;
+  margin: 0;
+}
+
+.close-modal,
+.back-modal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal-separator {
+  border: none;
+  width: 100%;
+  height: 1px;
+  background: #b3b3b3;
+  margin: 20px 0;
+}
+
+.btn-submit,
+.open-add-photo {
+  background: #1d6154;
+  color: white;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 50px;
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-submit:hover,
+.open-add-photo:hover {
+  background-color: #0e2f28;
+}
+
+.add-photo-modal {
+  border: none;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e6eef4;
+  width: 100%;
+  height: 200px;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+#upload-modal .fa-image {
+  font-size: 48px;
+  color: #b7c2c9;
+}
+
+.btn-upload {
+  background-color: #cbd6e2;
+  color: #306685;
+  border: none;
+  border-radius: 60px;
+  padding: 10px 33px;
+  margin: 15px 0;
+  cursor: pointer;
+  font-family: "Work Sans";
+  font-weight: 500;
+}
+
+.upload-info {
+  color: #444444;
+  font-size: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  border-radius: 5px;
+}
+
+.form-group label {
+  display: block;
+  font-family: "Work Sans";
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #3d3d3d;
+}
+
+/* .modal-container { 
   visibility: hidden;
   position: fixed;
   top: 0;
@@ -11,7 +124,7 @@
   visibility: visible;
 }
 
-.overlay {
+#backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -63,12 +176,10 @@
 
 #upload-modal.active {
   display: block;
-  /* Specific styles for upload view */
 }
 
 #gallery-modal.active {
   display: block;
-  /* Specific styles for gallery view */
 }
 
 #gallery-modal .gallery-grid {
@@ -135,7 +246,6 @@
   background-color: #0e2f28;
 }
 
-/* Upload modal specific */
 #upload-modal .upload-area {
   display: flex;
   flex-direction: column;
@@ -230,3 +340,12 @@
   width: 100%;
   padding-bottom: 20px;
 }
+#backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+*/
