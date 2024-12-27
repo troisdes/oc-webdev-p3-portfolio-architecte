@@ -142,6 +142,9 @@ uploadForm.addEventListener("submit", async function (e) {
 
     const newWork = await response.json();
 
+    // Add new work directly to DOM
+    addWorkToDOM(newWork);
+
     // Show success notification
     const notification = document.createElement("div");
     notification.classList.add("notification", "success");
@@ -152,10 +155,6 @@ uploadForm.addEventListener("submit", async function (e) {
     // Reset form and close modal
     uploadForm.reset();
     closeModal();
-
-    // Refresh galleries
-    await displayGalleryWorks();
-    await getWorks();
   } catch (error) {
     console.error("Error uploading work:", error);
     alert(error.message || "Erreur lors de l'ajout du projet");
@@ -269,5 +268,57 @@ async function displayGalleryWorks() {
     console.error("Error displaying works:", error);
     galleryGrid.innerHTML =
       '<p class="error">Erreur lors du chargement des travaux</p>';
+  }
+}
+
+/**
+ * Updates both modal and main galleries with new work
+ * @param {Object} work - The new work object from API
+ */
+function addWorkToDOM(work) {
+  // Update main gallery
+  const mainGallery = document.querySelector("#main-gallery");
+  if (mainGallery) {
+    const figure = document.createElement("figure");
+    figure.dataset.id = work.id;
+
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+
+    const figcaption = document.createElement("figcaption");
+    figcaption.textContent = work.title;
+
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    mainGallery.appendChild(figure);
+  }
+
+  // Update modal gallery
+  const modalGallery = document.querySelector("#gallery-grid");
+  if (modalGallery) {
+    const figure = document.createElement("figure");
+    figure.classList.add("gallery-item");
+    figure.dataset.id = work.id;
+
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.setAttribute("data-id", work.id);
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+    deleteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        await deleteWork(work.id);
+      }
+    });
+
+    figure.appendChild(img);
+    figure.appendChild(deleteBtn);
+    modalGallery.appendChild(figure);
   }
 }
