@@ -68,24 +68,35 @@ uploadModal.addEventListener("click", (e) => {
   }
 });
 
-// Add this helper function
-function removeWorkFromDOM(workId) {
+/**
+ * Removes a work from both modal and main gallery
+ * @param {string|number} id Work ID to remove
+ */
+function removeWorkFromDOM(id) {
   // Remove from modal gallery
-  const modalElement = document.querySelector(
-    `#gallery-grid figure[data-id="${workId}"]`
-  );
-  if (modalElement) modalElement.remove();
+  const modalItem = document.querySelector(`.gallery-item[data-id="${id}"]`);
+  if (modalItem) {
+    modalItem.remove();
+  }
 
   // Remove from main gallery
-  const mainElement = document.querySelector(
-    `.gallery figure[data-id="${workId}"]`
+  const mainGalleryItem = document.querySelector(
+    `.gallery figure[data-id="${id}"]`
   );
-  if (mainElement) mainElement.remove();
+  if (mainGalleryItem) {
+    mainGalleryItem.remove();
+  }
 }
 
-// Modify the deleteWork function
+// Update deleteWork function
 async function deleteWork(id) {
   try {
+    const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
+    if (deleteBtn) {
+      deleteBtn.disabled = true; // Prevent double-clicks
+      deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    }
+
     const token = localStorage.getItem("token");
     if (!token) {
       throw new Error("Authentication required");
@@ -102,11 +113,24 @@ async function deleteWork(id) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // Remove the deleted work from DOM directly instead of refreshing galleries
     removeWorkFromDOM(id);
+
+    // Show success notification
+    const notification = document.createElement("div");
+    notification.classList.add("notification", "success");
+    notification.textContent = "Projet supprimé avec succès";
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
   } catch (error) {
     console.error("Error deleting work:", error);
     alert("Erreur lors de la suppression");
+
+    // Re-enable button if error
+    const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
+    if (deleteBtn) {
+      deleteBtn.disabled = false;
+      deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    }
   }
 }
 
