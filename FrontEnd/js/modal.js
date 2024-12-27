@@ -33,16 +33,21 @@ function closeModal() {
   uploadModal.close();
 }
 
+document.addEventListener("click", (e) => {
+  if (
+    e.target.matches(".close-modal") ||
+    e.target === galleryModal ||
+    e.target === uploadModal
+  ) {
+    closeModal();
+  }
+});
+
 // Gallery modal events
 openGalleryBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   await displayGalleryWorks();
   openModal();
-});
-
-closeGalleryBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeModal();
 });
 
 // Upload modal events
@@ -52,27 +57,10 @@ openUploadBtn.addEventListener("click", (e) => {
   uploadModal.showModal();
 });
 
-closeUploadBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeModal();
-});
-
 backToGalleryBtn.addEventListener("click", (e) => {
   e.preventDefault();
   closeModal();
   openModal();
-});
-
-galleryModal.addEventListener("click", (e) => {
-  if (e.target === galleryModal) {
-    closeModal();
-  }
-});
-
-uploadModal.addEventListener("click", (e) => {
-  if (e.target === uploadModal) {
-    closeModal();
-  }
 });
 
 // Add image preview functionality
@@ -97,23 +85,26 @@ function validateForm() {
   const category = categorySelect.value;
 
   if (!file) {
+    alert("Veuillez sélectionner une image");
     throw new Error("Veuillez sélectionner une image");
   }
   if (!title) {
+    alert("Veuillez entrer un titre");
     throw new Error("Veuillez entrer un titre");
   }
   if (category === "0") {
+    alert("Veuillez sélectionner une catégorie");
     throw new Error("Veuillez sélectionner une catégorie");
   }
 
   if (file.size > 4 * 1024 * 1024) {
-    // 4MB limit
+    alert("L'image ne doit pas dépasser 4Mo");
     throw new Error("L'image ne doit pas dépasser 4Mo");
   }
 }
 
 // Handle form submission
-uploadForm.addEventListener("submit", async function (e) {
+async function handleFormSubmission(e) {
   e.preventDefault();
   submitBtn.disabled = true;
 
@@ -137,22 +128,25 @@ uploadForm.addEventListener("submit", async function (e) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (response.status === 401) {
+        throw new Error("Unauthorized: Please log in again.");
+      } else if (response.status === 500) {
+        throw new Error("Server error: Please try again later.");
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
     }
 
     const newWork = await response.json();
 
-    // Add new work directly to DOM
     addWorkToDOM(newWork);
 
-    // Show success notification
     const notification = document.createElement("div");
     notification.classList.add("notification", "success");
     notification.textContent = "Projet ajouté avec succès";
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 
-    // Reset form and close modal
     uploadForm.reset();
     closeModal();
   } catch (error) {
@@ -161,7 +155,9 @@ uploadForm.addEventListener("submit", async function (e) {
   } finally {
     submitBtn.disabled = false;
   }
-});
+}
+
+uploadForm.addEventListener("submit", handleFormSubmission);
 
 /**
  * Removes a work from both modal and main galleries
@@ -281,6 +277,7 @@ function addWorkToDOM(work) {
   if (mainGallery) {
     const figure = document.createElement("figure");
     figure.dataset.id = work.id;
+    figure.dataset.categoryId = work.categoryId; // Add categoryId
 
     const img = document.createElement("img");
     img.src = work.imageUrl;
@@ -300,6 +297,7 @@ function addWorkToDOM(work) {
     const figure = document.createElement("figure");
     figure.classList.add("gallery-item");
     figure.dataset.id = work.id;
+    figure.dataset.categoryId = work.categoryId; // Add categoryId
 
     const img = document.createElement("img");
     img.src = work.imageUrl;
