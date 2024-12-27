@@ -1,17 +1,29 @@
-.modal {
+.modal,
+.add-photo-modal {
   border: none;
-  max-width: 630px;
+  overflow: auto;
+  width: 630px;
   min-width: 300px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 40px);
   padding: 30px;
   background: white;
   border-radius: 10px;
 }
 ::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0 0 0 /0.5);
 }
 
-.modal h2 {
-  font-family: work sans;
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.modal h2,
+.add-photo-modal h2 {
+  font-family: "Work Sans";
   font-size: 26px;
   font-weight: 400;
   color: #000;
@@ -37,6 +49,7 @@
 
 .btn-submit,
 .open-add-photo {
+  font-family: "Syne";
   background: #1d6154;
   color: white;
   border: none;
@@ -50,10 +63,6 @@
 .btn-submit:hover,
 .open-add-photo:hover {
   background-color: #0e2f28;
-}
-
-.add-photo-modal {
-  border: none;
 }
 
 .upload-area {
@@ -73,6 +82,9 @@
   color: #b7c2c9;
 }
 
+#photo-input {
+  display: none;
+}
 .btn-upload {
   background-color: #cbd6e2;
   color: #306685;
@@ -94,6 +106,14 @@
   margin-bottom: 15px;
 }
 
+.form-group label {
+  display: block;
+  font-family: "Work Sans";
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #3d3d3d;
+}
+
 .form-group input,
 .form-group select {
   width: 100%;
@@ -101,14 +121,6 @@
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   border-radius: 5px;
-}
-
-.form-group label {
-  display: block;
-  font-family: "Work Sans";
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: #3d3d3d;
 }
 
 /* .modal-container { 
