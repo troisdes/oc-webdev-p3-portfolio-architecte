@@ -68,7 +68,22 @@ uploadModal.addEventListener("click", (e) => {
   }
 });
 
-// Delete work handler
+// Add this helper function
+function removeWorkFromDOM(workId) {
+  // Remove from modal gallery
+  const modalElement = document.querySelector(
+    `#gallery-grid figure[data-id="${workId}"]`
+  );
+  if (modalElement) modalElement.remove();
+
+  // Remove from main gallery
+  const mainElement = document.querySelector(
+    `.gallery figure[data-id="${workId}"]`
+  );
+  if (mainElement) mainElement.remove();
+}
+
+// Modify the deleteWork function
 async function deleteWork(id) {
   try {
     const token = localStorage.getItem("token");
@@ -87,9 +102,8 @@ async function deleteWork(id) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // Refresh both galleries
-    await displayGalleryWorks();
-    await getWorks(); // Refresh main gallery
+    // Remove the deleted work from DOM directly instead of refreshing galleries
+    removeWorkFromDOM(id);
   } catch (error) {
     console.error("Error deleting work:", error);
     alert("Erreur lors de la suppression");
@@ -112,6 +126,7 @@ async function displayGalleryWorks() {
     works.forEach((work) => {
       const figure = document.createElement("figure");
       figure.classList.add("gallery-item");
+      figure.dataset.id = work.id; // Add this line
 
       const img = document.createElement("img");
       img.src = work.imageUrl;
