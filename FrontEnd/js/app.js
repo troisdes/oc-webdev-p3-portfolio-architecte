@@ -14,7 +14,7 @@ function checkAuthState() {
   return true;
 }
 
-// Update getWorks function to add data-id to main gallery items
+// Update getWorks function to properly handle categories
 async function getWorks() {
   const galleryElement = validateElement(
     document.querySelector("#main-gallery"),
@@ -30,7 +30,8 @@ async function getWorks() {
 
     works.forEach((work) => {
       const figure = document.createElement("figure");
-      figure.dataset.id = work.id; // Add data-id attribute
+      figure.dataset.id = work.id;
+      figure.dataset.categoryId = work.categoryId; // Ensure categoryId is set
 
       const img = document.createElement("img");
       img.src = work.imageUrl;
@@ -45,6 +46,8 @@ async function getWorks() {
     });
   } catch (error) {
     console.error("Error fetching works:", error);
+    galleryElement.innerHTML =
+      '<p class="error">Erreur lors du chargement des travaux</p>';
   }
 }
 
@@ -89,22 +92,22 @@ async function getCategories() {
   }
 }
 
+// Update filterWorks function to be more robust
 function filterWorks(event, categoryId) {
   const figures = document.querySelectorAll(".gallery figure");
   const buttons = document.querySelectorAll(".filter-btn");
 
+  // Update active button state
   buttons.forEach((button) => button.classList.remove("active"));
   event.currentTarget.classList.add("active");
 
+  // Filter works
   figures.forEach((figure) => {
-    if (
-      categoryId === "Tous" ||
-      figure.dataset.categoryId === categoryId.toString()
-    ) {
-      figure.style.display = "block";
-    } else {
-      figure.style.display = "none";
-    }
+    const figureCategoryId = figure.dataset.categoryId;
+    const shouldShow =
+      categoryId === "Tous" || figureCategoryId === categoryId.toString();
+
+    figure.style.display = shouldShow ? "block" : "none";
   });
 }
 
