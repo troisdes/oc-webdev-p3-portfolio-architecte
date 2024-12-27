@@ -222,8 +222,8 @@ function addButtonModifier() {
     modifierContainer.appendChild(portfolioTitle);
 
     const modifierBtn = document.createElement("button");
-    modifierBtn.classList.add("modifier-btn");
-    modifierBtn.classList.add("modal-trigger");
+    modifierBtn.classList.add("button");
+    modifierBtn.classList.add("open-modal");
     console.log("Bouton de modification créé:");
 
     const href = document.createElement("a");
