@@ -12,25 +12,42 @@ const closeUploadBtn = document.querySelector("#upload-modal .close-modal");
 const backToGalleryBtn = document.querySelector(".back-modal");
 
 // Gallery modal events
-openGalleryBtn.addEventListener("click", () => {
+openGalleryBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   galleryModal.showModal();
 });
 
-closeGalleryBtn.addEventListener("click", () => {
+closeGalleryBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   galleryModal.close();
 });
 
 // Upload modal events
-openUploadBtn.addEventListener("click", () => {
+openUploadBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   galleryModal.close();
   uploadModal.showModal();
 });
 
-closeUploadBtn.addEventListener("click", () => {
+closeUploadBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   uploadModal.close();
 });
 
-backToGalleryBtn.addEventListener("click", () => {
+backToGalleryBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   uploadModal.close();
   galleryModal.showModal();
+});
+
+galleryModal.addEventListener("click", (e) => {
+  if (e.target === galleryModal) {
+    galleryModal.close();
+  }
+});
+
+uploadModal.addEventListener("click", (e) => {
+  if (e.target === uploadModal) {
+    uploadModal.close();
+  }
 });
