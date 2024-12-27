@@ -64,6 +64,48 @@
   max-width: 24px;
 }
 
+#gallery-modal .modal-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+}
+
+#gallery-modal .modal-grid figure {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+
+#gallery-modal .modal-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.gallery-item .delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 17px;
+  height: 17px;
+  background: black;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-item .delete-btn:hover {
+  background-color: #333;
+}
+
 
 .upload-area {
   display: flex;
