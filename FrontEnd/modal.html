@@ -25,27 +25,29 @@
     </div>
 
     <dialog id="gallery-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="gallery-title">
-        <div class="modal-header">
-            <h2 id="gallery-title">Galerie photo</h2>
+        <div class="modal-nav">
             <button class="button close-modal" aria-label="Fermer la galerie">&times;</button>
         </div>
-        <div class="grid-container">
-            <div class="modal-grid" id="gallery-grid" role="grid"></div>
-            <hr class="modal-separator">
-            <div class="modal-button">
-                <button class="button open-add-photo" aria-label="Ajouter une photo">Ajouter une photo</button>
+        <div class="modal-content">
+            <h2 id="gallery-title">Galerie photo</h2>
+            <div class="grid-container">
+                <div class="modal-grid" id="gallery-grid" role="grid"></div>
+                <hr class="modal-separator">
+                <div class="modal-button">
+                    <button class="button open-add-photo" aria-label="Ajouter une photo">Ajouter une photo</button>
+                </div>
             </div>
         </div>
     </dialog>
 
     <dialog id="upload-modal" class="add-photo-modal" aria-hidden="true" role="dialog" aria-labelledby="upload-title">
-        <div class="modal-header">
+        <div class="modal-nav">
             <button class="button back-modal" aria-label="Retour à la galerie">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </button>
-            <h2 id="upload-title">Ajout photo</h2>
             <button class="button close-modal" aria-label="Fermer le formulaire">&times;</button>
         </div>
+        <h2 id="upload-title">Ajout photo</h2>
         <div class="modal-content">
             <form id="upload-form">
                 <div class="upload-area">
@@ -61,6 +63,7 @@
                 <div class="form-group" method=" dialog">
                     <label for="photo-category">Catégorie</label>
                     <select id="photo-category" name="category" required>
+                        <option value="0" selected></option>
                         <option value="1">Objets</option>
                         <option value="2">Appartements</option>
                         <option value="3">Hotels & restaurants</option>
