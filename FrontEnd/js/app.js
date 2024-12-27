@@ -14,72 +14,37 @@ function checkAuthState() {
   return true;
 }
 
+// Update getWorks function to add data-id to main gallery items
 async function getWorks() {
   const galleryElement = validateElement(
-    document.querySelector(".gallery"),
+    document.querySelector("#main-gallery"),
     "Gallery"
   );
 
   try {
-    galleryElement.innerHTML = "";
-    const loadingDiv = document.createElement("div");
-    loadingDiv.className = "loading";
-    const loadingText = document.createElement("p");
-    loadingText.textContent = "Chargement en cours...";
-    loadingDiv.appendChild(loadingText);
-    galleryElement.innerHTML = "";
-    galleryElement.appendChild(loadingDiv);
     const response = await fetch("http://localhost:5678/api/works");
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const worksData = await response.json();
-    console.log('Données de "getWorks" récupérées :', worksData);
-
+    const works = await response.json();
     galleryElement.innerHTML = "";
-    console.log("Chargement...");
 
-    worksData.forEach((work) => {
+    works.forEach((work) => {
       const figure = document.createElement("figure");
-      figure.dataset.categoryId = work.categoryId.toString();
+      figure.dataset.id = work.id; // Add data-id attribute
 
       const img = document.createElement("img");
       img.src = work.imageUrl;
       img.alt = work.title;
-      figure.appendChild(img);
 
       const figcaption = document.createElement("figcaption");
       figcaption.textContent = work.title;
-      figure.appendChild(figcaption);
 
+      figure.appendChild(img);
+      figure.appendChild(figcaption);
       galleryElement.appendChild(figure);
     });
-
-    console.log("Chargement complet :", galleryElement);
   } catch (error) {
-    console.error("Erreur lors de la récupération des travaux :", error);
-
-    // Clear existing content
-    galleryElement.textContent = "";
-
-    // Create error message container
-    const errorDiv = document.createElement("div");
-    errorDiv.className = "error-message";
-
-    // Create error text
-    const errorText = document.createElement("p");
-    errorText.textContent = `Une erreur s'est produite: ${error.message}`;
-
-    // Create retry button
-    const retryButton = document.createElement("button");
-    retryButton.textContent = "Réessayer";
-    retryButton.onclick = getWorks;
-
-    // Build structure
-    errorDiv.appendChild(errorText);
-    errorDiv.appendChild(retryButton);
-    galleryElement.appendChild(errorDiv);
+    console.error("Error fetching works:", error);
   }
 }
 
