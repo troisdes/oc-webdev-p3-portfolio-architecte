@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
 
       const data = await response.json();
       localStorage.setItem("token", data.token);
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
     } catch (error) {
       console.error("Erreur de connexion:", error);
       alert("Erreur lors de la connexion");
