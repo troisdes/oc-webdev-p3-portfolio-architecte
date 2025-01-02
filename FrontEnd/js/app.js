@@ -1,3 +1,4 @@
+// Vérifie si un élément du DOM existe et le renvoie, sinon lance une erreur
 function validateElement(element, name) {
   if (!element) {
     throw new Error(`${name} élément absent du DOM`);
@@ -5,6 +6,7 @@ function validateElement(element, name) {
   return element;
 }
 
+// Vérifie si l'utilisateur est authentifié en vérifiant la présence du token
 function checkAuthState() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -14,7 +16,8 @@ function checkAuthState() {
   return true;
 }
 
-// Update getWorks function to properly handle categories
+// Récupère et affiche les travaux depuis l'API
+// Crée les éléments HTML pour chaque projet dans la galerie principale
 async function getWorks() {
   const galleryElement = validateElement(
     document.querySelector("#main-gallery"),
@@ -31,7 +34,7 @@ async function getWorks() {
     works.forEach((work) => {
       const figure = document.createElement("figure");
       figure.dataset.id = work.id;
-      figure.dataset.categoryId = work.categoryId; // Ensure categoryId is set
+      figure.dataset.categoryId = work.categoryId; // Stocke l'ID de catégorie pour le filtrage
 
       const img = document.createElement("img");
       img.src = work.imageUrl;
@@ -51,6 +54,7 @@ async function getWorks() {
   }
 }
 
+// Récupère les catégories depuis l'API et crée les boutons de filtrage
 async function getCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories");
@@ -67,6 +71,7 @@ async function getCategories() {
 
     catFilters.innerHTML = "";
 
+    // Création du bouton "Tous" qui affiche tous les projets
     const allWorksButton = document.createElement("button");
     allWorksButton.textContent = "Tous";
     allWorksButton.classList.add("filter-btn", "active");
@@ -75,6 +80,7 @@ async function getCategories() {
     );
     catFilters.appendChild(allWorksButton);
 
+    // Création des boutons pour chaque catégorie
     categoriesData.forEach((category) => {
       console.log("Ajout d'un bouton de filtre:", category);
       const categoryButton = document.createElement("button");
@@ -92,16 +98,16 @@ async function getCategories() {
   }
 }
 
-// Update filterWorks function to be more robust
+// Filtre les projets affichés selon la catégorie sélectionnée
 function filterWorks(event, categoryId) {
   const figures = document.querySelectorAll(".gallery figure");
   const buttons = document.querySelectorAll(".filter-btn");
 
-  // Update active button state
+  // Gestion de l'état actif des boutons de filtrage
   buttons.forEach((button) => button.classList.remove("active"));
   event.currentTarget.classList.add("active");
 
-  // Filter works
+  // Affiche ou masque les projets selon la catégorie
   figures.forEach((figure) => {
     const figureCategoryId = figure.dataset.categoryId;
     const shouldShow =
@@ -111,6 +117,7 @@ function filterWorks(event, categoryId) {
   });
 }
 
+// Crée la bannière d'édition pour les utilisateurs authentifiés
 function createEditionBanner() {
   const banner = document.createElement("div");
   banner.classList.add("edition-banner");
@@ -136,7 +143,7 @@ function createEditionBanner() {
   }
 }
 
-// Modify updateLoginLogoutButton()
+// Met à jour le bouton login/logout selon l'état de l'authentification
 function updateLoginLogoutButton() {
   const loginButton = validateElement(
     document.getElementById("loginBtn"),
@@ -151,11 +158,13 @@ function updateLoginLogoutButton() {
   }
 }
 
+// Gère la déconnexion de l'utilisateur
 function handleLogout() {
   localStorage.removeItem("token");
   window.location.reload();
 }
 
+// Cache la barre de filtres pour les utilisateurs authentifiés
 function hideFilterBar() {
   const token = localStorage.getItem("token");
   console.log("Token récupéré", "masquage de la barre de filtres");
@@ -167,10 +176,10 @@ function hideFilterBar() {
   }
 }
 
-// Modify addButtonModifier()
+// Ajoute le bouton modifier pour les utilisateurs authentifiés
 function addButtonModifier() {
   if (!checkAuthState()) {
-    console.log("User not authenticated, skipping modifier button");
+    console.log("Utilisateur non authentifié, bouton modifier ignoré");
     return;
   }
 
@@ -211,7 +220,8 @@ function addButtonModifier() {
   }
 }
 
-// Add initialization wrapper
+// Initialise l'application avec toutes les fonctionnalités nécessaires
+// Gère également l'affichage des erreurs en cas de problème
 function initializeApp() {
   try {
     getWorks();
@@ -224,29 +234,24 @@ function initializeApp() {
       addButtonModifier();
     }
   } catch (error) {
-    console.error("Application initialization failed:", error);
+    console.error("Échec de l'initialisation de l'application:", error);
 
-    // Clear existing content
+    // Affichage d'une page d'erreur conviviale
     document.body.textContent = "";
 
-    // Create error container
     const errorContainer = document.createElement("div");
     errorContainer.className = "error-message";
 
-    // Create title
     const title = document.createElement("h2");
     title.textContent = "Une erreur est survenue";
 
-    // Create message
     const message = document.createElement("p");
     message.textContent = error.message;
 
-    // Create reload button
     const reloadButton = document.createElement("button");
     reloadButton.textContent = "Recharger la page";
     reloadButton.addEventListener("click", () => window.location.reload());
 
-    // Build structure
     errorContainer.appendChild(title);
     errorContainer.appendChild(message);
     errorContainer.appendChild(reloadButton);
@@ -254,5 +259,5 @@ function initializeApp() {
   }
 }
 
-// Replace individual calls with single initialization
+// Démarrage de l'application
 initializeApp();
