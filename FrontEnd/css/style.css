@@ -1,3 +1,4 @@
+/* Réinitialisation des styles par défaut pour divers éléments HTML */
 /* http://meyerweb.com/eric/tools/css/reset/1   v2.0 | 201101261   License: none (public domain)/*/
 body,
 div,
@@ -87,7 +88,7 @@ video {
   vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
+/* Réinitialisation des éléments HTML5 pour les anciens navigateurs */
 article,
 aside,
 details,
@@ -102,11 +103,13 @@ section {
   display: block;
 }
 
+/* Suppression des puces des listes */
 ol,
 ul {
   list-style: none;
 }
 
+/* Suppression des guillemets pour les citations */
 blockquote,
 q {
   quotes: none;
@@ -120,16 +123,18 @@ q:after {
   content: none;
 }
 
+/* Réinitialisation des styles des tables */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/** end reset css**/
+/** Fin de la réinitialisation des styles **/
 * {
   /* outline: 1px solid red; */
 }
 
+/* Styles pour le corps de la page */
 body {
   line-height: 1;
   max-width: 1140px;
@@ -139,6 +144,7 @@ body {
   background-color: #fffef8;
 }
 
+/* Styles pour l'en-tête */
 header {
   display: flex;
   justify-content: space-between;
@@ -146,6 +152,7 @@ header {
   margin: 50px 0;
 }
 
+/* Styles pour le titre principal */
 h1 {
   display: flex;
   flex-direction: column;
@@ -155,6 +162,7 @@ h1 {
   color: #b1663c;
 }
 
+/* Styles pour le sous-titre du h1 */
 h1 > span {
   font-family: "Work Sans";
   font-weight: 400;
@@ -164,6 +172,7 @@ h1 > span {
   text-transform: uppercase;
 }
 
+/* Styles pour les titres de niveau 2 */
 h2 {
   font-family: "Syne";
   font-weight: 700;
@@ -171,6 +180,7 @@ h2 {
   color: #1d6154;
 }
 
+/* Styles pour la navigation */
 nav ul {
   display: flex;
   align-items: center;
@@ -187,11 +197,13 @@ nav li {
   font-weight: 400;
 }
 
+/* Styles pour le logo Instagram */
 .logo-insta {
   width: 22px;
   height: 22px;
 }
 
+/* Styles pour les liens */
 a {
   color: #000;
   text-decoration: none;
@@ -202,6 +214,7 @@ a:hover {
   font-weight: 700;
 }
 
+/* Styles pour la section d'introduction */
 #introduction {
   display: flex;
   justify-content: space-between;
@@ -241,11 +254,13 @@ a:hover {
   margin-bottom: 1em;
 }
 
+/* Styles pour la section portfolio */
 #portfolio h2 {
   text-align: center;
   margin-top: 140px;
 }
 
+/* Styles pour le bouton de soumission */
 .submit-btn {
   padding: 10px 20px;
   background-color: #007b5e;
@@ -255,6 +270,7 @@ a:hover {
   cursor: pointer;
 }
 
+/* Styles pour les filtres de catégories */
 .category-filters {
   display: flex;
   justify-content: center;
@@ -262,6 +278,7 @@ a:hover {
   gap: 10px;
 }
 
+/* Styles pour les boutons de filtre */
 .filter-btn {
   font-family: "Syne";
   font-weight: 700;
@@ -281,6 +298,7 @@ a:hover {
   color: #ffffff;
 }
 
+/* Styles pour la galerie */
 .gallery {
   padding: 0 95px;
   display: grid;
@@ -293,6 +311,7 @@ a:hover {
   width: 100%;
 }
 
+/* Styles pour la section contact */
 #contact {
   display: flex;
   flex-direction: column;
@@ -350,6 +369,8 @@ a:hover {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
   height: 175px;
 }
+
+/* Styles pour le bouton envoyer message */
 #envoyerMessage {
   font-family: "Syne";
   font-weight: 700;
@@ -367,6 +388,7 @@ a:hover {
   background-color: #0e2f28;
 }
 
+/* Styles pour la section login */
 #login > * {
   text-align: left;
 }
@@ -402,6 +424,7 @@ a:hover {
   gap: 28px;
 }
 
+/* Styles pour les conteneurs email et mot de passe */
 .email-container,
 .password-container {
   display: flex;
@@ -414,6 +437,7 @@ a:hover {
   margin-top: 52px;
 }
 
+/* Styles pour le bouton se connecter */
 #seConnecter {
   font-family: "Syne";
   font-weight: 700;
@@ -424,13 +448,14 @@ a:hover {
   height: 36px;
   text-align: center;
   border-radius: 60px;
-  border: none; /* Removes the border */
+  border: none; /* Supprime la bordure */
 }
 
 #seConnecter:hover {
   background-color: #0e2f28;
 }
 
+/* Styles pour la bannière d'édition */
 .edition-banner {
   position: relative;
   top: 0;
@@ -457,10 +482,12 @@ a:hover {
   font-size: 16px;
 }
 
+/* Styles pour l'en-tête avec bannière */
 .header-with-banner {
   margin-top: 40px;
 }
 
+/* Styles pour le conteneur de modification */
 .modifier-container {
   display: flex;
   justify-content: center;
@@ -469,6 +496,7 @@ a:hover {
   gap: 30px;
 }
 
+/* Styles pour le bouton ouvrir modal */
 .open-modal {
   background: none;
   border: none;
@@ -487,6 +515,7 @@ a:hover {
   font-size: 14px;
 }
 
+/* Styles pour le pied de page */
 footer {
   display: flex;
   justify-content: flex-end;
@@ -507,6 +536,7 @@ footer nav ul li {
   padding: 0;
 }
 
+/* Styles pour les notifications */
 .notification {
   position: fixed;
   bottom: 20px;
@@ -521,6 +551,7 @@ footer nav ul li {
   color: white;
 }
 
+/* Animation pour les notifications */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -532,6 +563,7 @@ footer nav ul li {
   }
 }
 
+/* Styles pour le bouton supprimer désactivé */
 .delete-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
