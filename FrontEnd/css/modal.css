@@ -1,4 +1,4 @@
-/* Base Modal Styles */
+/* Styles de base pour les modales */
 .modal,
 .add-photo-modal {
   border: none;
@@ -11,11 +11,12 @@
   overflow: auto;
 }
 
+/* Fond de la modale */
 ::backdrop {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Modal Layout */
+/* Mise en page de la modale */
 .modal-content {
   margin: auto;
   width: 420px;
@@ -31,7 +32,7 @@
   padding: 0;
 }
 
-/* Typography */
+/* Typographie */
 .modal h2,
 .add-photo-modal h2 {
   font-family: "Work Sans";
@@ -43,7 +44,7 @@
   padding: 0;
 }
 
-/* Navigation Buttons */
+/* Boutons de navigation */
 .back-modal,
 .close-modal {
   background: none;
@@ -60,7 +61,7 @@
   margin-left: auto;
 }
 
-/* Gallery Grid */
+/* Grille de la galerie */
 #gallery-modal .modal-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -82,7 +83,7 @@
   border-radius: 2px;
 }
 
-/* Delete Button */
+/* Bouton de suppression */
 .delete-btn {
   position: absolute;
   top: 6px;
@@ -104,7 +105,7 @@
   background-color: #333;
 }
 
-/* Upload Area */
+/* Zone de téléchargement */
 .upload-area {
   display: flex;
   flex-direction: column;
@@ -126,7 +127,7 @@
   color: #b7c2c9;
 }
 
-/* Form Styles */
+/* Styles du formulaire */
 .form-group {
   margin-bottom: 15px;
   width: 100%;
@@ -151,7 +152,7 @@
   box-sizing: border-box;
 }
 
-/* Buttons */
+/* Boutons */
 .btn-upload {
   background-color: #cbd6e2;
   color: #306685;
@@ -183,7 +184,7 @@
   background-color: #1d6154;
 }
 
-/* Utilities */
+/* Utilitaires */
 .modal-separator {
   border: none;
   width: 100%;
@@ -198,7 +199,7 @@
   font-family: "Work Sans";
 }
 
-/* Responsive Design */
+/* Design réactif */
 @media (max-width: 768px) {
   .modal-content {
     width: 100%;
