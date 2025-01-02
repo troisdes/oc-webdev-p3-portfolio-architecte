@@ -159,9 +159,10 @@ function updateLoginLogoutButton() {
 }
 
 // Gère la déconnexion de l'utilisateur
-function handleLogout() {
+function handleLogout(event) {
+  event.preventDefault();
   localStorage.removeItem("token");
-  window.location.reload();
+  window.location.href = "./html/login.html";
 }
 
 // Cache la barre de filtres pour les utilisateurs authentifiés
