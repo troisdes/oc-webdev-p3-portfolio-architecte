@@ -196,6 +196,7 @@ function addButtonModifier() {
 
   if (portfolioTitle) {
     // portfolioTitle.style.marginTop = "0";
+    portfolioTitle.classList.add("no-margin");
 
     const modifierContainer = document.createElement("div");
     modifierContainer.classList.add("modifier-container");
