@@ -49,8 +49,13 @@ document.addEventListener("click", (e) => {
 // Ouvrir la modale de galerie et afficher les travaux
 openGalleryBtn.addEventListener("click", async (e) => {
   e.preventDefault();
-  await displayGalleryWorks();
-  openModal();
+  try {
+    await displayGalleryWorks();
+    openModal();
+  } catch (error) {
+    console.error("Failed to load gallery:", error);
+    alert("Une erreur est survenue lors du chargement de la galerie");
+  }
 });
 
 // Événements pour la modale d'upload
