@@ -1,4 +1,4 @@
-// Éléments de la modal
+// Éléments de la modale
 const galleryModal = document.querySelector("#gallery-modal");
 const uploadModal = document.querySelector("#upload-modal");
 
@@ -9,18 +9,18 @@ const titleInput = document.querySelector("#photo-title");
 const categorySelect = document.querySelector("#photo-category");
 const submitBtn = document.querySelector(".btn-submit");
 
-// Boutons de la modal de galerie
+// Boutons de la modale de galerie
 const openGalleryBtn = document.querySelector(".open-modal");
 const closeGalleryBtn = document.querySelector("#gallery-modal .close-modal");
 const openUploadBtn = document.querySelector(".open-add-photo");
 
-// Boutons de la modal d'upload
+// Boutons de la modale d'upload
 const closeUploadBtn = document.querySelector("#upload-modal .close-modal");
 const backToGalleryBtn = document.querySelector(".back-modal");
 
 let isModalOpen = false;
 
-// Fonction pour ouvrir la modal
+// Fonction pour ouvrir la modale
 function openModal() {
   if (!isModalOpen) {
     isModalOpen = true;
@@ -28,14 +28,14 @@ function openModal() {
   }
 }
 
-// Fonction pour fermer la modal
+// Fonction pour fermer la modale
 function closeModal() {
   isModalOpen = false;
   galleryModal.close();
   uploadModal.close();
 }
 
-// Événement pour fermer la modal en cliquant à l'extérieur ou sur le bouton de fermeture
+// Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
   if (
     e.target.matches(".close-modal") ||
@@ -46,14 +46,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Ouvrir la modal de galerie et afficher les travaux
+// Ouvrir la modale de galerie et afficher les travaux
 openGalleryBtn.addEventListener("click", async (e) => {
   e.preventDefault();
   await displayGalleryWorks();
   openModal();
 });
 
-// Événements pour la modal d'upload
+// Événements pour la modale d'upload
 openUploadBtn.addEventListener("click", (e) => {
   e.preventDefault();
   closeModal();
