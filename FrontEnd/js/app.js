@@ -7,6 +7,7 @@ function validateElement(element, name) {
 }
 
 // Vérifie si l'utilisateur est authentifié en vérifiant la présence du token
+
 function checkAuthState() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -15,6 +16,8 @@ function checkAuthState() {
   }
   return true;
 }
+
+const isAuthenticated = checkAuthState();
 
 // Récupère et affiche les travaux depuis l'API
 // Crée les éléments HTML pour chaque projet dans la galerie principale
@@ -151,7 +154,7 @@ function updateLoginLogoutButton() {
     "Login button"
   );
 
-  const isAuthenticated = checkAuthState();
+  // const isAuthenticated = checkAuthState();
   if (isAuthenticated) {
     loginButton.textContent = "logout";
     loginButton.href = "login.html";
@@ -180,7 +183,7 @@ function hideFilterBar() {
 
 // Ajoute le bouton modifier pour les utilisateurs authentifiés
 function addButtonModifier() {
-  if (!checkAuthState()) {
+  if (!isAuthenticated) {
     console.log("Utilisateur non authentifié, bouton modifier ignoré");
     return;
   }
@@ -229,7 +232,7 @@ function initializeApp() {
     getWorks();
     getCategories();
 
-    if (checkAuthState()) {
+    if (isAuthenticated) {
       createEditionBanner();
       updateLoginLogoutButton();
       hideFilterBar();
