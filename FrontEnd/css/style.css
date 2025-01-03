@@ -496,7 +496,7 @@ a:hover {
   gap: 30px;
 }
 
-#portfolio h2 {
+#portfolio .no-margin {
   margin-top: 0;
 }
 
