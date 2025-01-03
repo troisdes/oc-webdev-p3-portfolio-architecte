@@ -496,6 +496,10 @@ a:hover {
   gap: 30px;
 }
 
+#portfolio h2 {
+  margin-top: 0;
+}
+
 /* Styles pour le bouton ouvrir modal */
 .open-modal {
   background: none;
