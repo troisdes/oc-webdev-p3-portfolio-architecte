@@ -52,31 +52,31 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
   submitButton.textContent = "Se connecter";
   submitButton.id = "seConnecter";
 
-  // Création du lien pour réinitialiser le mot de passe
+  // Création du lien pour le mot de passe oublié
   const forgotPassword = document.createElement("a");
   forgotPassword.href = "#";
   forgotPassword.id = "forgot-password";
   forgotPassword.textContent = "Mot de passe oublié";
 
-  // Assemblage des éléments de connexion
+  // Assemblage des éléments du formulaire de connexion
   connecter.appendChild(submitButton);
   connecter.appendChild(forgotPassword);
 
-  // Construction de la structure du formulaire
+  // Construction de la structure complète du formulaire
   form.appendChild(emailContainer);
   form.appendChild(passwordContainer);
   form.appendChild(connecter);
 
-  // Intégration des éléments dans la section de connexion
+  // Ajout des éléments dans la section de connexion
   loginSection.appendChild(h2);
   loginSection.appendChild(form);
 
-  // Gestion de la soumission du formulaire et processus d'authentification
+  // Gestion de la soumission du formulaire et authentification
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     try {
-      // Envoi des informations d'identification à l'API pour authentification
+      // Envoi des identifiants à l'API pour vérification
       const response = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
         throw new Error("Identifiants incorrects");
       }
 
-      // Sauvegarde du jeton d'authentification et redirection vers la page principale
+      // Stockage du token et redirection vers la page d'accueil
       const data = await response.json();
       localStorage.setItem("token", data.token);
       window.location.href = "../index.html";
