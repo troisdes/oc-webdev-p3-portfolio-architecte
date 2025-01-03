@@ -110,10 +110,11 @@ function filterWorks(event, categoryId) {
   // Affiche ou masque les projets selon la catégorie
   figures.forEach((figure) => {
     const figureCategoryId = figure.dataset.categoryId;
-    const shouldShow =
-      categoryId === "Tous" || figureCategoryId === categoryId.toString();
-
-    figure.style.display = shouldShow ? "block" : "none";
+    if (categoryId === "Tous" || figureCategoryId === categoryId.toString()) {
+      figure.style.display = "block";
+    } else {
+      figure.style.display = "none";
+    }
   });
 }
 
@@ -191,7 +192,7 @@ function addButtonModifier() {
   console.log("Titre du portfolio trouvé:", portfolioTitle);
 
   if (portfolioTitle) {
-    portfolioTitle.style.marginTop = "0";
+    // portfolioTitle.style.marginTop = "0";
 
     const modifierContainer = document.createElement("div");
     modifierContainer.classList.add("modifier-container");
