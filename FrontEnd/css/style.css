@@ -1,3 +1,6 @@
+* {
+  /* outline: 1px solid red; */
+}
 /* Réinitialisation des styles par défaut pour divers éléments HTML */
 /* http://meyerweb.com/eric/tools/css/reset/1   v2.0 | 201101261   License: none (public domain)/*/
 body,
@@ -130,15 +133,13 @@ table {
 }
 
 /** Fin de la réinitialisation des styles **/
-* {
-  /* outline: 1px solid red; */
-}
 
 /* Styles pour le corps de la page */
 body {
   line-height: 1;
   max-width: 1140px;
   margin: auto;
+  padding: 0 150px;
   font-family: "Work Sans";
   font-size: 14px;
   background-color: #fffef8;
@@ -291,6 +292,10 @@ a:hover {
   height: 40px;
   min-width: 100px;
   max-width: 200px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
 }
 
 .filter-btn:hover {
@@ -571,4 +576,51 @@ footer nav ul li {
 .delete-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+  /* #introduction {
+    flex-direction: column;
+  } */
+
+  /* #introduction img {
+    max-width: 100%;
+  } */
+
+  /* #introduction article {
+    margin-right: 0;
+    max-width: 80%;
+  } */
+
+  /* .gallery {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 50px;
+  } */
+
+  /* .category-filters {
+    flex-wrap: wrap;
+    padding: 0 20px;
+  } */
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  /* .gallery {
+    grid-template-columns: 1fr;
+    padding: 0 20px;
+  }*/
+
+  /* #contact {
+    width: 90%;
+  }*/
+
+  /* .category-filters {
+    gap: 5px;
+  } */
+
+  /* .filter-btn {
+    min-width: 80px;
+    padding: 8px;
+  } */
 }
