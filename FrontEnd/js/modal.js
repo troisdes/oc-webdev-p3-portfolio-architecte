@@ -1,4 +1,6 @@
-/*** 1. CONFIGURATION DE LA MODALE ***/
+/****************************************
+ * CONFIGURATION DE LA MODALE
+ ****************************************/
 // Éléments principaux des modales
 const galleryModal = document.querySelector("#gallery-modal");
 const uploadModal = document.querySelector("#upload-modal");
@@ -38,7 +40,12 @@ function closeModal() {
   resetUploadArea();
 }
 
-/*** 2. GESTION DE LA GALERIE ***/
+/****************************************
+ * GESTION DE LA GALERIE
+ * - Affichage des travaux
+ * - Suppression des éléments
+ * - Mise à jour du DOM
+ ****************************************/
 // Affichage des travaux dans la galerie
 async function displayGalleryWorks() {
   try {
@@ -149,11 +156,15 @@ function addWorkToDOM(work) {
   }
 }
 
-/*** 3. OPÉRATIONS DU FORMULAIRE ***/
-
+/****************************************
+ * GESTION DU FORMULAIRE
+ * - Réinitialisation
+ * - Validation
+ * - Soumission
+ ****************************************/
 // Fonction de réinitialisation du formulaire
 function resetUploadArea() {
-  // Restore the original upload-area content
+  // Restaurer le contenu original de la zone d'upload
   uploadArea.innerHTML = `
     <i class="far fa-image"></i>
     <label for="photo-input" class="btn-upload">+ Ajouter photo</label>
@@ -214,52 +225,36 @@ async function handleFormSubmission(e) {
     });
 
     if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error("Unauthorized: Please log in again.");
-      } else if (response.status === 500) {
-        throw new Error("Server error: Please try again later.");
-      } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      throw new Error(
+        response.status === 401 ? "Unauthorized" : "Server error"
+      );
     }
 
     const newWork = await response.json();
 
     addWorkToDOM(newWork);
 
-    // showNotification("Projet ajouté avec succès");
-
     uploadForm.reset();
     closeModal();
   } catch (error) {
-    console.error("Error uploading work:", error);
+    console.error("Erreur lors de l'envoi:", error);
     alert(error.message || "Erreur lors de l'ajout du projet");
   } finally {
     submitBtn.disabled = false;
   }
 }
 
-// Ajouter la fonctionnalité de prévisualisation d'image
-photoInput.addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      uploadArea.innerHTML = `
-  <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
-`;
-    };
-    reader.readAsDataURL(file);
-  }
-});
-
-/*** 4. OPÉRATIONS API ***/
+/****************************************
+ * APPELS API
+ * - Suppression des travaux
+ * - Gestion des erreurs
+ ****************************************/
 // Mettre à jour la fonction deleteWork
 async function deleteWork(id) {
   try {
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
     if (deleteBtn) {
-      deleteBtn.disabled = true; // Empêcher les doubles clics
+      deleteBtn.disabled = true; // Éviter les doubles clics
       deleteBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
     }
 
@@ -288,7 +283,7 @@ async function deleteWork(id) {
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
   } catch (error) {
-    console.error("Error deleting work:", error);
+    console.error("Erreur lors de la suppression:", error);
     alert("Erreur lors de la suppression");
 
     // Réactiver le bouton en cas d'erreur
@@ -300,7 +295,12 @@ async function deleteWork(id) {
   }
 }
 
-/*** 5. ÉCOUTEURS D'ÉVÉNEMENTS ***/
+/****************************************
+ * ÉCOUTEURS D'ÉVÉNEMENTS
+ * - Gestion des modales
+ * - Gestion des formulaires
+ * - Prévisualisation des images
+ ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
   if (
@@ -319,7 +319,7 @@ openGalleryBtn.addEventListener("click", async (e) => {
     await displayGalleryWorks();
     openModal();
   } catch (error) {
-    console.error("Failed to load gallery:", error);
+    console.error("Échec du chargement de la galerie:", error);
     alert("Une erreur est survenue lors du chargement de la galerie");
   }
 });
@@ -327,9 +327,9 @@ openGalleryBtn.addEventListener("click", async (e) => {
 // Événements pour la modale d'upload
 openUploadBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  galleryModal.close(); // Close only the gallery modal
+  galleryModal.close(); // Fermer uniquement la modale de galerie
   isModalOpen = true;
-  uploadModal.showModal(); // Open the upload modal
+  uploadModal.showModal(); // Ouvrir la modale d'upload
 });
 
 backToGalleryBtn.addEventListener("click", (e) => {
@@ -340,3 +340,17 @@ backToGalleryBtn.addEventListener("click", (e) => {
 
 // Événement pour la soumission du formulaire d'upload
 uploadForm.addEventListener("submit", handleFormSubmission);
+
+// Ajouter la fonctionnalité de prévisualisation d'image
+photoInput.addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      uploadArea.innerHTML = `
+  <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
+`;
+    };
+    reader.readAsDataURL(file);
+  }
+});
