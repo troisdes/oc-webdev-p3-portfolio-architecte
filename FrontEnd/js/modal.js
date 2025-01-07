@@ -1,9 +1,11 @@
-// Éléments de la modale
+/*** 1. CONFIGURATION DE LA MODALE ***/
+// Éléments principaux des modales
 const galleryModal = document.querySelector("#gallery-modal");
 const uploadModal = document.querySelector("#upload-modal");
 
 // Ajouter ces éléments après les déclarations de modal
 const uploadForm = document.querySelector("#upload-form");
+const uploadArea = document.querySelector(".upload-area");
 const photoInput = document.querySelector("#photo-input");
 const titleInput = document.querySelector("#photo-title");
 const categorySelect = document.querySelector("#photo-category");
@@ -33,58 +35,134 @@ function closeModal() {
   isModalOpen = false;
   galleryModal.close();
   uploadModal.close();
+  resetUploadArea();
 }
 
-// Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
-document.addEventListener("click", (e) => {
-  if (
-    e.target.matches(".close-modal") ||
-    e.target === galleryModal ||
-    e.target === uploadModal
-  ) {
-    closeModal();
-  }
-});
-
-// Ouvrir la modale de galerie et afficher les travaux
-openGalleryBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
+/*** 2. GESTION DE LA GALERIE ***/
+// Affichage des travaux dans la galerie
+async function displayGalleryWorks() {
   try {
-    await displayGalleryWorks();
-    openModal();
+    const galleryGrid = document.querySelector("#gallery-grid");
+    const response = await fetch("http://localhost:5678/api/works");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const works = await response.json();
+    galleryGrid.innerHTML = "";
+
+    works.forEach((work) => {
+      const figure = document.createElement("figure");
+      figure.classList.add("gallery-item");
+      figure.dataset.id = work.id; // Ajouter cette ligne
+
+      const img = document.createElement("img");
+      img.src = work.imageUrl;
+      img.alt = work.title;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("delete-btn");
+      deleteBtn.setAttribute("data-id", work.id);
+      deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+      // Ajouter un gestionnaire de clic pour le bouton de suppression
+      deleteBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+          await deleteWork(work.id);
+        }
+      });
+
+      figure.appendChild(img);
+      figure.appendChild(deleteBtn);
+      galleryGrid.appendChild(figure);
+    });
   } catch (error) {
-    console.error("Failed to load gallery:", error);
-    alert("Une erreur est survenue lors du chargement de la galerie");
+    console.error("Error displaying works:", error);
+    galleryGrid.innerHTML =
+      '<p class="error">Erreur lors du chargement des travaux</p>';
   }
-});
+}
 
-// Événements pour la modale d'upload
-openUploadBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeModal();
-  uploadModal.showModal();
-});
+// Supprimer un travail du DOM (modal et galerie principale)
+function removeWorkFromDOM(id) {
+  // Supprimer de la galerie de la modal
+  const modalItem = document.querySelector(`.gallery-item[data-id="${id}"]`);
+  if (modalItem) modalItem.remove();
 
-backToGalleryBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  closeModal();
-  openModal();
-});
+  // Supprimer de la galerie principale
+  const mainItem = document.querySelector(
+    `#main-gallery figure[data-id="${id}"]`
+  );
+  if (mainItem) mainItem.remove();
+}
 
-// Ajouter la fonctionnalité de prévisualisation d'image
-photoInput.addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const uploadArea = document.querySelector(".upload-area");
-      uploadArea.innerHTML = `
-        <img src="${e.target.result}" alt="Preview" style="max-height: 100%; max-width: 100%; object-fit: contain;">
-      `;
-    };
-    reader.readAsDataURL(file);
+// Mettre à jour les galeries (modal et principale) avec un nouveau travail
+function addWorkToDOM(work) {
+  // Mettre à jour la galerie principale
+  const mainGallery = document.querySelector("#main-gallery");
+  if (mainGallery) {
+    const figure = document.createElement("figure");
+    figure.dataset.id = work.id;
+    figure.dataset.categoryId = work.categoryId; // Ajouter categoryId
+
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+
+    const figcaption = document.createElement("figcaption");
+    figcaption.textContent = work.title;
+
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    mainGallery.appendChild(figure);
   }
-});
+
+  // Mettre à jour la galerie de la modal
+  const modalGallery = document.querySelector("#gallery-grid");
+  if (modalGallery) {
+    const figure = document.createElement("figure");
+    figure.classList.add("gallery-item");
+    figure.dataset.id = work.id;
+    figure.dataset.categoryId = work.categoryId; // Ajouter categoryId
+
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.setAttribute("data-id", work.id);
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+    deleteBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
+        await deleteWork(work.id);
+      }
+    });
+
+    figure.appendChild(img);
+    figure.appendChild(deleteBtn);
+    modalGallery.appendChild(figure);
+  }
+}
+
+/*** 3. OPÉRATIONS DU FORMULAIRE ***/
+
+// Fonction de réinitialisation du formulaire
+function resetUploadArea() {
+  // Restore the original upload-area content
+  uploadArea.innerHTML = `
+    <i class="far fa-image"></i>
+    <label for="photo-input" class="btn-upload">+ Ajouter photo</label>
+    <input type="file" id="photo-input" name="photo" accept="image/*" required>
+    <p class="upload-info">jpg, png : 4mo max</p>
+  `;
+
+  uploadForm.reset();
+}
 
 // Validation du formulaire
 function validateForm() {
@@ -165,22 +243,21 @@ async function handleFormSubmission(e) {
   }
 }
 
-// Événement pour la soumission du formulaire d'upload
-uploadForm.addEventListener("submit", handleFormSubmission);
+// Ajouter la fonctionnalité de prévisualisation d'image
+photoInput.addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      uploadArea.innerHTML = `
+  <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
+`;
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
-// Supprimer un travail du DOM (modal et galerie principale)
-function removeWorkFromDOM(id) {
-  // Supprimer de la galerie de la modal
-  const modalItem = document.querySelector(`.gallery-item[data-id="${id}"]`);
-  if (modalItem) modalItem.remove();
-
-  // Supprimer de la galerie principale
-  const mainItem = document.querySelector(
-    `#main-gallery figure[data-id="${id}"]`
-  );
-  if (mainItem) mainItem.remove();
-}
-
+/*** 4. OPÉRATIONS API ***/
 // Mettre à jour la fonction deleteWork
 async function deleteWork(id) {
   try {
@@ -227,99 +304,43 @@ async function deleteWork(id) {
   }
 }
 
-// Peupler la modal de galerie et ajouter le bouton de suppression
-async function displayGalleryWorks() {
+/*** 5. ÉCOUTEURS D'ÉVÉNEMENTS ***/
+// Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
+document.addEventListener("click", (e) => {
+  if (
+    e.target.matches(".close-modal") ||
+    e.target === galleryModal ||
+    e.target === uploadModal
+  ) {
+    closeModal();
+  }
+});
+
+// Ouvrir la modale de galerie et afficher les travaux
+openGalleryBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
   try {
-    const galleryGrid = document.querySelector("#gallery-grid");
-    const response = await fetch("http://localhost:5678/api/works");
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const works = await response.json();
-    galleryGrid.innerHTML = "";
-
-    works.forEach((work) => {
-      const figure = document.createElement("figure");
-      figure.classList.add("gallery-item");
-      figure.dataset.id = work.id; // Ajouter cette ligne
-
-      const img = document.createElement("img");
-      img.src = work.imageUrl;
-      img.alt = work.title;
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.classList.add("delete-btn");
-      deleteBtn.setAttribute("data-id", work.id);
-      deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-
-      // Ajouter un gestionnaire de clic pour le bouton de suppression
-      deleteBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
-          await deleteWork(work.id);
-        }
-      });
-
-      figure.appendChild(img);
-      figure.appendChild(deleteBtn);
-      galleryGrid.appendChild(figure);
-    });
+    await displayGalleryWorks();
+    openModal();
   } catch (error) {
-    console.error("Error displaying works:", error);
-    galleryGrid.innerHTML =
-      '<p class="error">Erreur lors du chargement des travaux</p>';
+    console.error("Failed to load gallery:", error);
+    alert("Une erreur est survenue lors du chargement de la galerie");
   }
-}
+});
 
-// Mettre à jour les galeries (modal et principale) avec un nouveau travail
-function addWorkToDOM(work) {
-  // Mettre à jour la galerie principale
-  const mainGallery = document.querySelector("#main-gallery");
-  if (mainGallery) {
-    const figure = document.createElement("figure");
-    figure.dataset.id = work.id;
-    figure.dataset.categoryId = work.categoryId; // Ajouter categoryId
+// Événements pour la modale d'upload
+openUploadBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  galleryModal.close(); // Close only the gallery modal
+  isModalOpen = true;
+  uploadModal.showModal(); // Open the upload modal
+});
 
-    const img = document.createElement("img");
-    img.src = work.imageUrl;
-    img.alt = work.title;
+backToGalleryBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal();
+  openModal();
+});
 
-    const figcaption = document.createElement("figcaption");
-    figcaption.textContent = work.title;
-
-    figure.appendChild(img);
-    figure.appendChild(figcaption);
-    mainGallery.appendChild(figure);
-  }
-
-  // Mettre à jour la galerie de la modal
-  const modalGallery = document.querySelector("#gallery-grid");
-  if (modalGallery) {
-    const figure = document.createElement("figure");
-    figure.classList.add("gallery-item");
-    figure.dataset.id = work.id;
-    figure.dataset.categoryId = work.categoryId; // Ajouter categoryId
-
-    const img = document.createElement("img");
-    img.src = work.imageUrl;
-    img.alt = work.title;
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.setAttribute("data-id", work.id);
-    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-
-    deleteBtn.addEventListener("click", async (e) => {
-      e.preventDefault();
-      if (confirm("Voulez-vous vraiment supprimer cet élément ?")) {
-        await deleteWork(work.id);
-      }
-    });
-
-    figure.appendChild(img);
-    figure.appendChild(deleteBtn);
-    modalGallery.appendChild(figure);
-  }
-}
+// Événement pour la soumission du formulaire d'upload
+uploadForm.addEventListener("submit", handleFormSubmission);
