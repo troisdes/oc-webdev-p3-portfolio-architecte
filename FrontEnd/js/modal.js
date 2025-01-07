@@ -368,7 +368,7 @@ photoInput.addEventListener("change", function (e) {
         uploadArea.innerHTML = `
         <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
       `;
-      }, 2000);
+      }, 1500);
     };
 
     reader.readAsDataURL(file);
