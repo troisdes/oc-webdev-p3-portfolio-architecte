@@ -565,33 +565,6 @@ footer nav ul li {
   padding: 0;
 }
 
-/* Styles pour les notifications */
-.notification {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  border-radius: 4px;
-  animation: fadeIn 0.3s ease;
-}
-
-.notification.success {
-  background: #4caf50;
-  color: white;
-}
-
-/* Animation pour les notifications */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Styles pour le bouton supprimer désactivé */
 .delete-btn:disabled {
   opacity: 0.5;
