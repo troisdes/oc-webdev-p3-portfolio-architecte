@@ -227,11 +227,7 @@ async function handleFormSubmission(e) {
 
     addWorkToDOM(newWork);
 
-    const notification = document.createElement("div");
-    notification.classList.add("notification", "success");
-    notification.textContent = "Projet ajouté avec succès";
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
+    // showNotification("Projet ajouté avec succès");
 
     uploadForm.reset();
     closeModal();
