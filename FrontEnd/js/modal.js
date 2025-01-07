@@ -345,12 +345,41 @@ uploadForm.addEventListener("submit", handleFormSubmission);
 photoInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
+    const validFile = ["image/jpeg", "image/png"];
+    if (!validFile.includes(file.type)) {
+      uploadArea.innerHTML = `<div class="error" role="alert">Type de fichier non supporté. Utilisez JPG ou PNG.</div>`;
+      return;
+    }
+
+    const maxSize = 4 * 1024 * 1024; // 4MB in bytes
+    if (file.size > maxSize) {
+      uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
+      return;
+    }
+
+    uploadArea.innerHTML = `
+    <div class="loader" role="status" aria-label="Chargement de l'aperçu">
+      <span class="loader-spinner"></span>
+    </div>
+  `;
     const reader = new FileReader();
     reader.onload = function (e) {
-      uploadArea.innerHTML = `
-  <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
-`;
+      setTimeout(() => {
+        uploadArea.innerHTML = `
+        <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
+      `;
+      }, 2000);
     };
+
     reader.readAsDataURL(file);
+
+    reader.onerror = function (error) {
+      console.error("Error reading file:", error);
+      uploadArea.innerHTML = `
+        <div class="error" role="alert">
+          Impossible de charger l'aperçu. Veuillez réessayer.
+        </div>
+      `;
+    };
   }
 });
