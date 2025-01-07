@@ -231,9 +231,16 @@ async function handleFormSubmission(e) {
     }
 
     const newWork = await response.json();
-
     addWorkToDOM(newWork);
 
+    // Create notification
+    const notification = document.createElement("div");
+    notification.classList.add("notification", "success", "fade-in");
+    notification.setAttribute("role", "alert");
+    notification.textContent = "Photo ajoutée avec succès !";
+    document.body.appendChild(notification);
+
+    // Only close modal after notification is handled
     uploadForm.reset();
     closeModal();
   } catch (error) {
