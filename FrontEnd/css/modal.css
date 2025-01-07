@@ -205,6 +205,32 @@
   font-family: "Work Sans";
 }
 
+/* Styles pour les notifications */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  animation: fadeIn 0.3s ease;
+}
+
+.notification.success {
+  background: #4caf50;
+  color: white;
+}
+
 /* Design réactif */
 @media (max-width: 768px) {
   .modal-content {
