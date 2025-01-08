@@ -51,10 +51,29 @@ function openModal() {
 }
 
 // Fonction pour fermer la modale
+// function closeModal() {
+//   isModalOpen = false;
+//   galleryModal.close();
+//   uploadModal.close();
+//   resetUploadArea();
+// }
+
 function closeModal() {
+  if (galleryModal.open) {
+    galleryModal.classList.add("closing");
+    setTimeout(() => {
+      galleryModal.classList.remove("closing");
+      galleryModal.close();
+    }, 500);
+  }
+  if (uploadModal.open) {
+    uploadModal.classList.add("closing");
+    setTimeout(() => {
+      uploadModal.classList.remove("closing");
+      uploadModal.close();
+    }, 500);
+  }
   isModalOpen = false;
-  galleryModal.close();
-  uploadModal.close();
   resetUploadArea();
 }
 
@@ -261,14 +280,13 @@ async function handleFormSubmission(e) {
 
     const newWork = await response.json();
     addWorkToDOM(newWork);
+    showNotification("Projet ajouté avec succès");
 
-    // Add delay before closing modal
-    setTimeout(async () => {
-      closeModal();
-      resetUploadArea();
-      document.querySelector(".add-photo-modal").close();
-      await getWorks();
-    }, 2000); // 2 second delay
+    // Progressive closing sequence
+    setTimeout(() => {
+      closeModal(); // Using existing fade out animation
+      getWorks(); // Refresh works after animation
+    }, 1000);
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     showNotification("Erreur lors de l'ajout du projet");
