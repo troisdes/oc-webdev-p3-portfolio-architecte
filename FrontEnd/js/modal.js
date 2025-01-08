@@ -36,19 +36,24 @@ function showNotification(message, type = "success") {
   notification.innerText = message;
   document.body.appendChild(notification);
 
-  // Afficher la notification
-  requestAnimationFrame(() => {
+  console.log("Notification created:", Date.now());
+  // Show with delay to ensure DOM update
+  setTimeout(() => {
     notification.classList.add("show");
-  });
+    console.log("Show class added:", Date.now());
+  }, 100);
 
-  // Masquer la notification après 3 secondes
+  // Hide after 5 seconds (increased from 3)
   setTimeout(() => {
     notification.classList.remove("show");
     notification.classList.add("hide");
+    console.log("Hide started:", Date.now());
+
+    // Remove element only after transition completes
     notification.addEventListener("transitionend", () => {
       notification.remove();
     });
-  }, 3000);
+  }, 5000);
 }
 
 // Fonction pour ouvrir la modale
