@@ -24,21 +24,24 @@ const backToGalleryBtn = document.querySelector(".back-modal");
 
 let isModalOpen = false;
 
-function showNotification(message) {
-  // Create notification element
+function showNotification(message, type = "success") {
   const notification = document.createElement("div");
-  notification.classList.add("notification");
-  notification.textContent = message;
-
-  // Add to DOM
+  notification.className = `notification ${type}`;
+  notification.innerText = message;
   document.body.appendChild(notification);
 
-  // Remove after 3 seconds
+  // Show notification
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  // Hide notification after 3 seconds
   setTimeout(() => {
-    notification.classList.add("hiding");
-    setTimeout(() => {
+    notification.classList.remove("show");
+    notification.classList.add("hide");
+    notification.addEventListener("transitionend", () => {
       notification.remove();
-    }, 500); // Match this with CSS animation duration
+    });
   }, 3000);
 }
 
@@ -282,11 +285,15 @@ async function handleFormSubmission(e) {
     addWorkToDOM(newWork);
     showNotification("Projet ajouté avec succès");
 
-    // Progressive closing sequence
+    // Séquence de fermeture progressive
+    uploadModal.classList.add("closing");
     setTimeout(() => {
-      closeModal(); // Using existing fade out animation
-      getWorks(); // Refresh works after animation
-    }, 1000);
+      uploadModal.classList.remove("closing");
+      uploadForm.reset();
+      resetUploadArea();
+      closeModal();
+      getWorks(); // Rafraîchir les travaux après l'animation
+    }, 500);
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
     showNotification("Erreur lors de l'ajout du projet");

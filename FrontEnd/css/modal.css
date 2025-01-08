@@ -9,11 +9,25 @@
   max-height: 670px;
   min-width: 300px;
   overflow: auto;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.modal.closing,
+.add-photo-modal.closing {
+  opacity: 0;
 }
 
 /* Fond de la modale */
 ::backdrop {
   background-color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.modal.closing::backdrop,
+.add-photo-modal.closing::backdrop {
+  opacity: 0;
 }
 
 /* Mise en page de la modale */
