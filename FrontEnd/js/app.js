@@ -8,13 +8,28 @@ function validateElement(element, name) {
 
 // Vérifie si l'utilisateur est authentifié en vérifiant la présence du token
 
+// function checkAuthState() {
+//   const token = localStorage.getItem("token");
+//   if (!token) {
+//     console.log("Pas de token trouvé");
+//     return false;
+//   }
+//   return true;
+// }
+
 function checkAuthState() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.log("Pas de token trouvé");
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("Connexion : Pas de 'token' trouvé");
+      return false;
+    }
+    console.log("Connexion : 'token' trouvé");
+    return true;
+  } catch (error) {
+    console.error("Erreur de connexion :", error);
     return false;
   }
-  return true;
 }
 
 const isAuthenticated = checkAuthState();
@@ -29,9 +44,12 @@ async function getWorks() {
 
   try {
     const response = await fetch("http://localhost:5678/api/works");
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    console.log("Statut de l'API (getWorks):", response.status);
+    if (!response.ok)
+      throw new Error(`Erreur HTTP ! statut : ${response.status}`);
 
     const works = await response.json();
+    console.log(`Récupération réussie de ${works.length} travaux`, works);
     galleryElement.innerHTML = "";
 
     works.forEach((work) => {
@@ -51,7 +69,7 @@ async function getWorks() {
       galleryElement.appendChild(figure);
     });
   } catch (error) {
-    console.error("Error fetching works:", error);
+    console.error("Erreur lors de la récupération des travaux :", error);
     galleryElement.innerHTML =
       '<p class="error">Erreur lors du chargement des travaux</p>';
   }
@@ -61,11 +79,15 @@ async function getWorks() {
 async function getCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories");
+    console.log("Statut de l'API (getCategories):", response.status);
     if (!response.ok) {
       throw new Error("La réponse du réseau n'était pas correcte");
     }
     const categoriesData = await response.json();
-    console.log('Données de "getCategories" récupérées :', categoriesData);
+    console.log(
+      `Récupération réussie de ${categoriesData.length} catégories :`,
+      categoriesData
+    );
 
     const catFilters = document.querySelector(".category-filters");
     if (!catFilters) {
