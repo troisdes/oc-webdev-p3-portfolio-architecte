@@ -203,18 +203,25 @@ function validateForm() {
 // Gestion de la soumission du formulaire
 async function handleFormSubmission(e) {
   e.preventDefault();
+  console.log("Début de la soumission du formulaire");
   submitBtn.disabled = true;
 
   try {
     validateForm();
+    console.log("Validation du formulaire réussie");
 
     const formData = new FormData();
     formData.append("image", photoInput.files[0]);
     formData.append("title", titleInput.value.trim());
     formData.append("category", categorySelect.value);
 
+    console.log("Envoi des données du formulaire à l'API...");
+
     const token = localStorage.getItem("token");
-    if (!token) throw new Error("Authentication required");
+    if (!token) {
+      alert("Connexion requise pour effectuer cette action");
+      throw new Error("Connexion requise");
+    }
 
     const response = await fetch("http://localhost:5678/api/works", {
       method: "POST",
@@ -224,9 +231,11 @@ async function handleFormSubmission(e) {
       body: formData,
     });
 
+    console.log("Statut de la réponse de l'upload:", response.status);
+
     if (!response.ok) {
       throw new Error(
-        response.status === 401 ? "Unauthorized" : "Server error"
+        response.status === 401 ? "Non autorisé" : "Erreur du serveur"
       );
     }
 
@@ -245,9 +254,10 @@ async function handleFormSubmission(e) {
     closeModal();
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
-    alert(error.message || "Erreur lors de l'ajout du projet");
+    alert(`Erreur lors de l'ajout: ${error.message}`);
   } finally {
     submitBtn.disabled = false;
+    console.log("Soumission du formulaire terminée");
   }
 }
 
@@ -267,7 +277,7 @@ async function deleteWork(id) {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      throw new Error("Authentication required");
+      throw new Error("Connexion requise");
     }
 
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -277,10 +287,16 @@ async function deleteWork(id) {
       },
     });
 
+    console.log(
+      `Statut de la réponse de suppression pour le travail ${id} :`,
+      response.status
+    );
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
+    console.log(`Travail ${id} supprimé avec succès`);
     removeWorkFromDOM(id);
 
     // Afficher une notification de succès
@@ -291,7 +307,7 @@ async function deleteWork(id) {
     setTimeout(() => notification.remove(), 3000);
   } catch (error) {
     console.error("Erreur lors de la suppression:", error);
-    alert("Erreur lors de la suppression");
+    alert(`Erreur lors de la suppression: ${error.message}`);
 
     // Réactiver le bouton en cas d'erreur
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
