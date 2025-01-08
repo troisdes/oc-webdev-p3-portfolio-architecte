@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
   // Gestion de la soumission du formulaire et authentification
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
+    console.log("Tentative de connexion en cours");
 
     try {
       // Envoi des identifiants à l'API pour vérification
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
           password: passwordInput.value,
         }),
       });
+      console.log("Statut de la réponse de connexion :", response.status);
 
       if (!response.ok) {
         throw new Error("Identifiants incorrects");
@@ -93,10 +95,11 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
       // Stockage du token et redirection vers la page d'accueil
       const data = await response.json();
       localStorage.setItem("token", data.token);
+      console.log("Connexion réussie, redirection...");
       window.location.href = "../index.html";
     } catch (error) {
       console.error("Erreur de connexion:", error);
-      alert("Erreur lors de la connexion");
+      alert("Erreur lors de la connexion: " + error.message);
     }
   });
 });
