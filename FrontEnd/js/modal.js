@@ -368,36 +368,43 @@ uploadForm.addEventListener("submit", handleFormSubmission);
 photoInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
+    console.log("Fichier sélectionné:", file);
+
     const validFile = ["image/jpeg", "image/png"];
     if (!validFile.includes(file.type)) {
+      console.log("Type de fichier non supporté:", file.type);
       uploadArea.innerHTML = `<div class="error" role="alert">Type de fichier non supporté. Utilisez JPG ou PNG.</div>`;
       return;
     }
 
     const maxSize = 4 * 1024 * 1024; // 4MB in bytes
     if (file.size > maxSize) {
+      console.log("Fichier trop volumineux:", file.size);
       uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
       return;
     }
 
+    console.log("Chargement de l'aperçu...");
     uploadArea.innerHTML = `
-    <div class="loader" role="status" aria-label="Chargement de l'aperçu">
-      <span class="loader-spinner"></span>
-    </div>
-  `;
+      <div class="loader" role="status" aria-label="Chargement de l'aperçu">
+        <span class="loader-spinner"></span>
+      </div>
+    `;
+
     const reader = new FileReader();
     reader.onload = function (e) {
+      console.log("Aperçu chargé avec succès");
       setTimeout(() => {
         uploadArea.innerHTML = `
-        <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
-      `;
+          <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
+        `;
       }, 1500);
     };
 
     reader.readAsDataURL(file);
 
     reader.onerror = function (error) {
-      console.error("Error reading file:", error);
+      console.error("Erreur lors de la lecture du fichier:", error);
       uploadArea.innerHTML = `
         <div class="error" role="alert">
           Impossible de charger l'aperçu. Veuillez réessayer.
