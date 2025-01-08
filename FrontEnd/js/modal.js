@@ -378,18 +378,20 @@ document.addEventListener("click", (e) => {
 });
 
 // Ouvrir la modale de galerie et afficher les travaux
-openGalleryBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  console.log("Ouverture de la modale de galerie...");
-  try {
-    await displayGalleryWorks();
-    console.log("Travaux de la galerie affichés avec succès");
-    openModal();
-  } catch (error) {
-    console.error("Échec du chargement de la galerie:", error);
-    alert("Une erreur est survenue lors du chargement de la galerie");
-  }
-});
+if (openGalleryBtn) {
+  openGalleryBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    console.log("Ouverture de la modale de galerie...");
+    try {
+      await displayGalleryWorks();
+      console.log("Travaux de la galerie affichés avec succès");
+      openModal();
+    } catch (error) {
+      console.error("Échec du chargement de la galerie:", error);
+      alert("Une erreur est survenue lors du chargement de la galerie");
+    }
+  });
+}
 
 // Événements pour la modale d'upload
 openUploadBtn.addEventListener("click", (e) => {
