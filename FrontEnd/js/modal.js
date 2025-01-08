@@ -24,6 +24,24 @@ const backToGalleryBtn = document.querySelector(".back-modal");
 
 let isModalOpen = false;
 
+function showNotification(message) {
+  // Create notification element
+  const notification = document.createElement("div");
+  notification.classList.add("notification");
+  notification.textContent = message;
+
+  // Add to DOM
+  document.body.appendChild(notification);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+    notification.classList.add("hiding");
+    setTimeout(() => {
+      notification.remove();
+    }, 500); // Match this with CSS animation duration
+  }, 3000);
+}
+
 // Fonction pour ouvrir la modale
 function openModal() {
   if (!isModalOpen) {
@@ -205,6 +223,8 @@ async function handleFormSubmission(e) {
   e.preventDefault();
   console.log("Début de la soumission du formulaire");
   submitBtn.disabled = true;
+  submitBtn.setAttribute("aria-disabled", "true");
+  submitBtn.title = "Please fill in all required fields";
 
   try {
     validateForm();
@@ -242,19 +262,16 @@ async function handleFormSubmission(e) {
     const newWork = await response.json();
     addWorkToDOM(newWork);
 
-    // Create notification
-    const notification = document.createElement("div");
-    notification.classList.add("notification", "success", "fade-in");
-    notification.setAttribute("role", "alert");
-    notification.textContent = "Photo ajoutée avec succès !";
-    document.body.appendChild(notification);
-
-    // Only close modal after notification is handled
-    uploadForm.reset();
-    closeModal();
+    // Add delay before closing modal
+    setTimeout(async () => {
+      closeModal();
+      resetUploadArea();
+      document.querySelector(".add-photo-modal").close();
+      await getWorks();
+    }, 2000); // 2 second delay
   } catch (error) {
     console.error("Erreur lors de l'envoi:", error);
-    alert(`Erreur lors de l'ajout: ${error.message}`);
+    showNotification("Erreur lors de l'ajout du projet");
   } finally {
     submitBtn.disabled = false;
     console.log("Soumission du formulaire terminée");
@@ -300,14 +317,12 @@ async function deleteWork(id) {
     removeWorkFromDOM(id);
 
     // Afficher une notification de succès
-    const notification = document.createElement("div");
-    notification.classList.add("notification", "success");
-    notification.textContent = "Projet supprimé avec succès";
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
+    showNotification("Projet supprimé avec succès !");
+    document.querySelector(".add-photo-modal").close();
+    await getWorks();
   } catch (error) {
     console.error("Erreur lors de la suppression:", error);
-    alert(`Erreur lors de la suppression: ${error.message}`);
+    showNotification(`Erreur lors de la suppression: ${error.message}`);
 
     // Réactiver le bouton en cas d'erreur
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
@@ -407,7 +422,7 @@ photoInput.addEventListener("change", function (e) {
         uploadArea.innerHTML = `
           <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
         `;
-      }, 1500);
+      }, 1000);
     };
 
     reader.readAsDataURL(file);
