@@ -117,18 +117,22 @@ async function getCategories() {
 
 // Filtre les projets affichés selon la catégorie sélectionnée
 function filterWorks(event, categoryId) {
+  const categoryName = event.currentTarget.textContent;
+  console.log("Filtrage des travaux pour la catégorie :", categoryId);
   const figures = document.querySelectorAll(".gallery figure");
   const buttons = document.querySelectorAll(".filter-btn");
 
   // Gestion de l'état actif des boutons de filtrage
   buttons.forEach((button) => button.classList.remove("active"));
   event.currentTarget.classList.add("active");
+  console.log("Bouton actif :", categoryName);
 
   // Affiche ou masque les projets selon la catégorie
   figures.forEach((figure) => {
     const figureCategoryId = figure.dataset.categoryId;
     if (categoryId === "Tous" || figureCategoryId === categoryId.toString()) {
       figure.style.display = "block";
+      console.log(`Affichage du projet ID: ${figure.dataset.id}`);
     } else {
       figure.style.display = "none";
     }
