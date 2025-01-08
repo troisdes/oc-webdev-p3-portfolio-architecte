@@ -73,8 +73,8 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
 
   // Gestion de la soumission du formulaire et authentification
   form.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    console.log("Tentative de connexion en cours");
+    event.preventDefault(); // Empêche le comportement par défaut du formulaire
+    console.log("Tentative de connexion en cours"); // Log de la tentative de connexion
 
     try {
       // Envoi des identifiants à l'API pour vérification
@@ -86,20 +86,20 @@ document.addEventListener("DOMContentLoaded", async function userLogin() {
           password: passwordInput.value,
         }),
       });
-      console.log("Statut de la réponse de connexion :", response.status);
+      console.log("Statut de la réponse de connexion :", response.status); // Log du statut de la réponse
 
       if (!response.ok) {
-        throw new Error("Identifiants incorrects");
+        throw new Error("Identifiants incorrects"); // Erreur si les identifiants sont incorrects
       }
 
       // Stockage du token et redirection vers la page d'accueil
       const data = await response.json();
-      localStorage.setItem("token", data.token);
-      console.log("Connexion réussie, redirection...");
-      window.location.href = "../index.html";
+      localStorage.setItem("token", data.token); // Stockage du token dans le localStorage
+      console.log("Connexion réussie, redirection..."); // Log de la réussite de la connexion
+      window.location.href = "../index.html"; // Redirection vers la page d'accueil
     } catch (error) {
-      console.error("Erreur de connexion:", error);
-      alert("Erreur lors de la connexion: " + error.message);
+      console.error("Erreur de connexion:", error); // Log de l'erreur de connexion
+      alert("Erreur lors de la connexion: " + error.message); // Alerte de l'erreur de connexion
     }
   });
 });
