@@ -1,3 +1,7 @@
+// Variable déclaration first
+const isAuthenticated = checkAuthState();
+
+// Function declarations
 // Vérifie si un élément du DOM existe et le renvoie, sinon lance une erreur
 function validateElement(element, name) {
   if (!element) {
@@ -7,16 +11,6 @@ function validateElement(element, name) {
 }
 
 // Vérifie si l'utilisateur est authentifié en vérifiant la présence du token
-
-// function checkAuthState() {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     console.log("Pas de token trouvé");
-//     return false;
-//   }
-//   return true;
-// }
-
 function checkAuthState() {
   try {
     const token = localStorage.getItem("token");
@@ -31,8 +25,6 @@ function checkAuthState() {
     return false;
   }
 }
-
-const isAuthenticated = checkAuthState();
 
 // Récupère et affiche les travaux depuis l'API
 // Crée les éléments HTML pour chaque projet dans la galerie principale
