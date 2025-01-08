@@ -1,27 +1,33 @@
 /****************************************
  * CONFIGURATION DE LA MODALE
  ****************************************/
-// Éléments principaux des modales
+// Éléments de la modale
 const galleryModal = document.querySelector("#gallery-modal");
 const uploadModal = document.querySelector("#upload-modal");
-
-// Ajouter ces éléments après les déclarations de modal
-const uploadForm = document.querySelector("#upload-form");
-const uploadArea = document.querySelector(".upload-area");
-const photoInput = document.querySelector("#photo-input");
-const titleInput = document.querySelector("#photo-title");
-const categorySelect = document.querySelector("#photo-category");
-const submitBtn = document.querySelector(".btn-submit");
 
 // Boutons de la modale de galerie
 const openGalleryBtn = document.querySelector(".open-modal");
 const closeGalleryBtn = document.querySelector("#gallery-modal .close-modal");
 const openUploadBtn = document.querySelector(".open-add-photo");
 
-// Boutons de la modale d'upload
+// Éléments de la modale d'upload
+const uploadForm = document.querySelector("#upload-form");
+const uploadArea = document.querySelector(".upload-area");
+const photoInput = document.querySelector("#photo-input");
+const titleInput = document.querySelector("#photo-title");
+const categorySelect = document.querySelector("#photo-category");
+const submitBtn = document.querySelector(".btn-submit");
 const closeUploadBtn = document.querySelector("#upload-modal .close-modal");
 const backToGalleryBtn = document.querySelector(".back-modal");
 
+// Modèle de loader
+const uploadAreaLoader = `
+  <div class="loader" role="status" aria-label="Chargement">
+    <span class="loader-spinner"></span>
+  </div>
+`;
+
+// État de la modale
 let isModalOpen = false;
 
 function showNotification(message, type = "success") {
@@ -30,12 +36,12 @@ function showNotification(message, type = "success") {
   notification.innerText = message;
   document.body.appendChild(notification);
 
-  // Show notification
+  // Afficher la notification
   requestAnimationFrame(() => {
     notification.classList.add("show");
   });
 
-  // Hide notification after 3 seconds
+  // Masquer la notification après 3 secondes
   setTimeout(() => {
     notification.classList.remove("show");
     notification.classList.add("hide");
@@ -54,12 +60,6 @@ function openModal() {
 }
 
 // Fonction pour fermer la modale
-// function closeModal() {
-//   isModalOpen = false;
-//   galleryModal.close();
-//   uploadModal.close();
-//   resetUploadArea();
-// }
 
 function closeModal() {
   if (galleryModal.open) {
@@ -447,6 +447,7 @@ photoInput.addEventListener("change", function (e) {
         uploadArea.innerHTML = `
           <img src="${e.target.result}" alt="Preview" class="upload-preview-image">
         `;
+        isLoading = false;
       }, 1000);
     };
 
@@ -459,6 +460,47 @@ photoInput.addEventListener("change", function (e) {
           Impossible de charger l'aperçu. Veuillez réessayer.
         </div>
       `;
+      isLoading = false;
     };
+  } else {
+    isLoading = false;
+  }
+});
+
+let isLoading = false;
+
+uploadArea.addEventListener("click", function (e) {
+  if (e.target === uploadArea || e.target.parentElement === uploadArea) {
+    if (isLoading) return; // Empêcher les clics multiples pendant le chargement
+
+    isLoading = true;
+    const originalContent = uploadArea.innerHTML;
+    uploadArea.innerHTML = uploadAreaLoader;
+
+    photoInput.click();
+
+    const handleFileSelect = () => {
+      // Garder le loader si un fichier est sélectionné, originalContent sera remplacé par l'aperçu
+      if (!photoInput.files.length) {
+        isLoading = false;
+        uploadArea.innerHTML = originalContent;
+      }
+      photoInput.removeEventListener("change", handleFileSelect);
+      window.removeEventListener("focus", handleFocus);
+    };
+
+    const handleFocus = () => {
+      setTimeout(() => {
+        if (!photoInput.files.length) {
+          isLoading = false;
+          uploadArea.innerHTML = originalContent;
+        }
+        photoInput.removeEventListener("change", handleFileSelect);
+        window.removeEventListener("focus", handleFocus);
+      }, 300);
+    };
+
+    photoInput.addEventListener("change", handleFileSelect);
+    window.addEventListener("focus", handleFocus);
   }
 });
