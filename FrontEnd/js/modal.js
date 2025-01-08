@@ -326,11 +326,13 @@ async function deleteWork(id) {
  ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
+  // console.log("Événement de clic détecté:", e.target);
   if (
     e.target.matches(".close-modal") ||
     e.target === galleryModal ||
     e.target === uploadModal
   ) {
+    console.log("Fermeture de la modale...");
     closeModal();
   }
 });
@@ -338,8 +340,10 @@ document.addEventListener("click", (e) => {
 // Ouvrir la modale de galerie et afficher les travaux
 openGalleryBtn.addEventListener("click", async (e) => {
   e.preventDefault();
+  console.log("Ouverture de la modale de galerie...");
   try {
     await displayGalleryWorks();
+    console.log("Travaux de la galerie affichés avec succès");
     openModal();
   } catch (error) {
     console.error("Échec du chargement de la galerie:", error);
@@ -350,6 +354,7 @@ openGalleryBtn.addEventListener("click", async (e) => {
 // Événements pour la modale d'upload
 openUploadBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  console.log("Ouverture de la modale d'upload...");
   galleryModal.close(); // Fermer uniquement la modale de galerie
   isModalOpen = true;
   uploadModal.showModal(); // Ouvrir la modale d'upload
@@ -357,12 +362,16 @@ openUploadBtn.addEventListener("click", (e) => {
 
 backToGalleryBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  console.log("Retour à la modale de galerie...");
   closeModal();
   openModal();
 });
 
 // Événement pour la soumission du formulaire d'upload
-uploadForm.addEventListener("submit", handleFormSubmission);
+uploadForm.addEventListener("submit", (e) => {
+  console.log("Événement de soumission du formulaire détecté");
+  handleFormSubmission(e);
+});
 
 // Ajouter la fonctionnalité de prévisualisation d'image
 photoInput.addEventListener("change", function (e) {
