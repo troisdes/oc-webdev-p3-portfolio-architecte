@@ -93,7 +93,7 @@ async function displayGalleryWorks() {
     const response = await fetch("http://localhost:5678/api/works");
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Erreur HTTP ! statut : ${response.status}`);
     }
 
     const works = await response.json();
@@ -126,7 +126,7 @@ async function displayGalleryWorks() {
       galleryGrid.appendChild(figure);
     });
   } catch (error) {
-    console.error("Error displaying works:", error);
+    console.error("Erreur lors de l'affichage des travaux :", error);
     galleryGrid.innerHTML =
       '<p class="error">Erreur lors du chargement des travaux</p>';
   }
@@ -246,7 +246,7 @@ async function handleFormSubmission(e) {
   console.log("Début de la soumission du formulaire");
   submitBtn.disabled = true;
   submitBtn.setAttribute("aria-disabled", "true");
-  submitBtn.title = "Please fill in all required fields";
+  submitBtn.title = "Veuillez remplir tous les champs requis";
 
   try {
     validateForm();
@@ -273,7 +273,7 @@ async function handleFormSubmission(e) {
       body: formData,
     });
 
-    console.log("Statut de la réponse de l'upload:", response.status);
+    console.log("Statut de la réponse de l'upload :", response.status);
 
     if (!response.ok) {
       throw new Error(
@@ -295,7 +295,7 @@ async function handleFormSubmission(e) {
       getWorks(); // Rafraîchir les travaux après l'animation
     }, 500);
   } catch (error) {
-    console.error("Erreur lors de l'envoi:", error);
+    console.error("Erreur lors de l'envoi :", error);
     showNotification("Erreur lors de l'ajout du projet");
   } finally {
     submitBtn.disabled = false;
@@ -335,7 +335,7 @@ async function deleteWork(id) {
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Erreur HTTP ! statut : ${response.status}`);
     }
 
     console.log(`Travail ${id} supprimé avec succès`);
@@ -346,8 +346,8 @@ async function deleteWork(id) {
     document.querySelector(".add-photo-modal").close();
     await getWorks();
   } catch (error) {
-    console.error("Erreur lors de la suppression:", error);
-    showNotification(`Erreur lors de la suppression: ${error.message}`);
+    console.error("Erreur lors de la suppression :", error);
+    showNotification(`Erreur lors de la suppression : ${error.message}`);
 
     // Réactiver le bouton en cas d'erreur
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
@@ -366,7 +366,7 @@ async function deleteWork(id) {
  ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
-  // console.log("Événement de clic détecté:", e.target);
+  // console.log("Événement de clic détecté :", e.target);
   if (
     e.target.matches(".close-modal") ||
     e.target === galleryModal ||
@@ -387,7 +387,7 @@ if (openGalleryBtn) {
       console.log("Travaux de la galerie affichés avec succès");
       openModal();
     } catch (error) {
-      console.error("Échec du chargement de la galerie:", error);
+      console.error("Échec du chargement de la galerie :", error);
       alert("Une erreur est survenue lors du chargement de la galerie");
     }
   });
@@ -419,18 +419,18 @@ uploadForm.addEventListener("submit", (e) => {
 photoInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
-    console.log("Fichier sélectionné:", file);
+    console.log("Fichier sélectionné :", file);
 
     const validFile = ["image/jpeg", "image/png"];
     if (!validFile.includes(file.type)) {
-      console.log("Type de fichier non supporté:", file.type);
+      console.log("Type de fichier non supporté :", file.type);
       uploadArea.innerHTML = `<div class="error" role="alert">Type de fichier non supporté. Utilisez JPG ou PNG.</div>`;
       return;
     }
 
     const maxSize = 4 * 1024 * 1024; // 4MB in bytes
     if (file.size > maxSize) {
-      console.log("Fichier trop volumineux:", file.size);
+      console.log("Fichier trop volumineux :", file.size);
       uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
       return;
     }
@@ -456,7 +456,7 @@ photoInput.addEventListener("change", function (e) {
     reader.readAsDataURL(file);
 
     reader.onerror = function (error) {
-      console.error("Erreur lors de la lecture du fichier:", error);
+      console.error("Erreur lors de la lecture du fichier :", error);
       uploadArea.innerHTML = `
         <div class="error" role="alert">
           Impossible de charger l'aperçu. Veuillez réessayer.
