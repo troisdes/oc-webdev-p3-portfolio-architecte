@@ -154,6 +154,12 @@ body {
   background-color: #fffef8;
 }
 
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Styles pour l'en-tête */
 header {
   display: flex;
@@ -662,55 +668,131 @@ footer nav ul li {
   cursor: not-allowed;
 }
 
-main {
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
+/* Desktop small */
+@media screen and (max-width: 1140px) {
+  body {
+    padding: 0 50px;
+  }
+
+  .gallery {
+    padding: 0;
+  }
 }
 
 /* Tablet */
-/* @media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
   #introduction {
     flex-direction: column;
+    margin-top: 80px;
+    gap: 40px;
+  }
+
+  #introduction figure {
+    margin-left: 0;
   }
 
   #introduction img {
     max-width: 100%;
   }
 
-   #introduction article {
+  #introduction article {
     margin-right: 0;
-    max-width: 80%;
+    max-width: 100%;
   }
 
-   .gallery {
+  .gallery {
     grid-template-columns: 1fr 1fr;
-    padding: 0 50px;
   }
 
   .category-filters {
     flex-wrap: wrap;
-    padding: 0 20px;
+    padding: 0;
+    gap: 8px;
   }
-} */
+}
 
 /* Mobile */
-/* @media screen and (max-width: 767px) {
-  .gallery {
-    grid-template-columns: 1fr;
+@media screen and (max-width: 767px) {
+  body {
     padding: 0 20px;
   }
 
-  #contact {
-    width: 90%;
+  header {
+    margin: 0;
   }
 
-  .category-filters {
-    gap: 5px;
+  #introduction {
+    margin-top: 50px;
+    gap: 30px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+  #contact,
+  #login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .filter-btn {
     min-width: 80px;
     padding: 8px;
+    font-size: 14px;
   }
-} */
+}
+
+/* Small Mobile */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0 10px;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  nav li {
+    margin-left: 0;
+  }
+
+  .category-filters {
+    gap: 5px;
+  }
+}
+
+/* Landscape Mode */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  body {
+    min-height: auto;
+  }
+
+  #introduction {
+    flex-direction: row;
+    margin-top: 20px;
+    gap: 20px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  #contact,
+  #login {
+    margin: 20px auto;
+  }
+
+  nav ul {
+    flex-direction: row;
+  }
+
+  form {
+    justify-content: center;
+    align-items: center;
+  }
+}
