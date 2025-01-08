@@ -1,7 +1,7 @@
-// Variable déclaration first
+// Déclaration de la variable d'authentification
 const isAuthenticated = checkAuthState();
 
-// Function declarations
+// Déclarations des fonctions
 // Vérifie si un élément du DOM existe et le renvoie, sinon lance une erreur
 function validateElement(element, name) {
   if (!element) {
