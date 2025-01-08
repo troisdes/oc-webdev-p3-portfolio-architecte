@@ -30,26 +30,27 @@ const uploadAreaLoader = `
 // État de la modale
 let isModalOpen = false;
 
+// Fonction pour afficher une notification
 function showNotification(message, type = "success") {
   const notification = document.createElement("div");
   notification.className = `notification ${type}`;
   notification.innerText = message;
   document.body.appendChild(notification);
 
-  console.log("Notification created:", Date.now());
-  // Show with delay to ensure DOM update
+  console.log("Notification créée :", Date.now());
+  // Afficher avec un délai pour assurer la mise à jour du DOM
   setTimeout(() => {
     notification.classList.add("show");
-    console.log("Show class added:", Date.now());
+    console.log("Classe 'show' ajoutée :", Date.now());
   }, 100);
 
-  // Hide after 5 seconds (increased from 3)
+  // Masquer après 5 secondes (augmenté de 3)
   setTimeout(() => {
     notification.classList.remove("show");
     notification.classList.add("hide");
-    console.log("Hide started:", Date.now());
+    console.log("Début du masquage :", Date.now());
 
-    // Remove element only after transition completes
+    // Supprimer l'élément seulement après la fin de la transition
     notification.addEventListener("transitionend", () => {
       notification.remove();
     });
@@ -65,7 +66,6 @@ function openModal() {
 }
 
 // Fonction pour fermer la modale
-
 function closeModal() {
   if (galleryModal.open) {
     galleryModal.classList.add("closing");
