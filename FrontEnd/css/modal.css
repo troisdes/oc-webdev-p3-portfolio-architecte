@@ -30,8 +30,7 @@
 .modal::backdrop,
 .add-photo-modal::backdrop {
   background: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 1; /* Set opacity to 1 */
   backdrop-filter: blur(0.5px);
   -webkit-backdrop-filter: blur(1px);
   z-index: 999;
@@ -46,12 +45,12 @@
 /* Closing states */
 .modal.closing,
 .add-photo-modal.closing {
-  opacity: 0;
+  opacity: 1; /* Set opacity to 1 */
 }
 
 .modal.closing::backdrop,
 .add-photo-modal.closing::backdrop {
-  opacity: 0;
+  opacity: 1; /* Set opacity to 1 */
 }
 
 /* Mise en page de la modale */
@@ -260,8 +259,7 @@
   font-size: 14px;
   font-weight: 500;
   text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1; /* Set opacity to 1 */
 }
 
 .notification.show {
@@ -270,7 +268,7 @@
 }
 
 .notification.hide {
-  opacity: 0;
+  opacity: 1; /* Set opacity to 1 */
   transform: translateX(-50%) translateY(-20px);
 }
 
