@@ -249,46 +249,7 @@ a:hover {
     transform: rotate(360deg);
   }
 }
-
-/* Notifications */
-.notification {
-  position: fixed;
-  top: 20px; /* Position at the top of the viewport */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  padding: 16px;
-  background: #1a1a1a;
-  color: white;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 100000; /* Ensure it's above all other elements */
-  font-family: "Work Sans";
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.notification.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.notification.hide {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-20px);
-}
-
-.notification.success {
-  background: #2ecc71;
-}
-
-.notification.error {
-  background: #e74c3c;
-}
-
+/* 
 dialog {
   opacity: 1;
   transition: opacity 0.5s ease;
@@ -306,29 +267,7 @@ dialog::backdrop {
 
 dialog.closing::backdrop {
   opacity: 0;
-}
-
-@keyframes slideInFromTop {
-  from {
-    transform: translate(-50%, -150%); /* Adjust for both axes */
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, -50%); /* Match final position */
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutToTop {
-  from {
-    transform: translate(-50%, -50%); /* Match initial position */
-    opacity: 1;
-  }
-  to {
-    transform: translate(-50%, -150%); /* Adjust for both axes */
-    opacity: 0;
-  }
-}
+} */
 
 /* Styles pour la section d'introduction */
 #introduction {
