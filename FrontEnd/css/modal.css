@@ -269,7 +269,7 @@
 }
 
 .notification.hide {
-  opacity: 1; /* Set opacity to 1 */
+  opacity: 0; /* Set opacity to 0 for fade out */
   transform: translateX(-50%) translateY(-20px);
 }
 
