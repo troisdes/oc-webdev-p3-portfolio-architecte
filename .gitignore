@@ -1,9 +1,6 @@
-.idea
-.history
-.vscode
+.history/
+.history/**
 *:[Zz]one.Identifier
 .env
-.old
-modale3.png
-app copy.js
-old_modal.js
+.old/
+.old/**
