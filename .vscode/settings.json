@@ -1,3 +1,17 @@
-{ 
-    "liveServer.settings.ignoreFiles": ["Backend/**"] 
+{
+  "liveServer.settings.ignoreFiles": [
+    "Backend/**",
+    "**/.history/**",
+    "**/.old/**"
+  ],
+
+  "search.exclude": {
+    "**/.history": true,
+    "**/.history/**": true
+  },
+
+  "files.exclude": {
+    "**/.history": true,
+    "**/.history/**": true
+  }
 }
