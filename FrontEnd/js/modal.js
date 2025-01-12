@@ -500,9 +500,9 @@ function showNotification(message, type = "success") {
 
   // Masquer après 3 secondes
   setTimeout(() => {
-    notification.classList.add("hide");
     notification.addEventListener("transitionend", () => {
       notification.remove();
     });
-  }, 3000);
+    notification.classList.add("hide");
+  }, 1500);
 }
