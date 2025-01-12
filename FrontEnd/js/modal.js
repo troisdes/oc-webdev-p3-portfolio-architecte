@@ -30,33 +30,6 @@ const uploadAreaLoader = `
 // État de la modale
 let isModalOpen = false;
 
-// Fonction pour afficher une notification
-function showNotification(message, type = "success") {
-  const notification = document.createElement("div");
-  notification.className = `notification ${type}`;
-  notification.innerText = message;
-  document.body.appendChild(notification);
-
-  console.log("Notification créée :", Date.now());
-  // Afficher avec un délai pour assurer la mise à jour du DOM
-  setTimeout(() => {
-    notification.classList.add("show");
-    console.log("Classe 'show' ajoutée :", Date.now());
-  }, 100);
-
-  // Masquer après 5 secondes (augmenté de 3)
-  setTimeout(() => {
-    notification.classList.remove("show");
-    notification.classList.add("hide");
-    console.log("Début du masquage :", Date.now());
-
-    // Supprimer l'élément seulement après la fin de la transition
-    notification.addEventListener("transitionend", () => {
-      notification.remove();
-    });
-  }, 5000);
-}
-
 // Fonction pour ouvrir la modale
 function openModal() {
   if (!isModalOpen) {
@@ -288,7 +261,6 @@ async function handleFormSubmission(e) {
 
     const newWork = await response.json();
     addWorkToDOM(newWork);
-    showNotification("Projet ajouté avec succès");
 
     // Séquence de fermeture progressive
     uploadModal.classList.add("closing");
@@ -301,7 +273,6 @@ async function handleFormSubmission(e) {
     }, 500);
   } catch (error) {
     console.error("Erreur lors de l'envoi :", error);
-    showNotification("Erreur lors de l'ajout du projet");
   } finally {
     submitBtn.disabled = false;
     console.log("Soumission du formulaire terminée");
@@ -346,13 +317,10 @@ async function deleteWork(id) {
     console.log(`Travail ${id} supprimé avec succès`);
     removeWorkFromDOM(id);
 
-    // Afficher une notification de succès
-    showNotification("Projet supprimé avec succès !");
     document.querySelector(".add-photo-modal").close();
     await getWorks();
   } catch (error) {
     console.error("Erreur lors de la suppression :", error);
-    showNotification(`Erreur lors de la suppression : ${error.message}`);
 
     // Réactiver le bouton en cas d'erreur
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
