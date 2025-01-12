@@ -5,6 +5,11 @@
 const galleryModal = document.querySelector("#gallery-modal");
 const uploadModal = document.querySelector("#upload-modal");
 
+// Ajouter un écouteur d'événement pour empêcher la soumission du formulaire de fermer la modale
+uploadModal.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
 // Boutons de la modale de galerie
 const openGalleryBtn = document.querySelector(".open-modal");
 const closeGalleryBtn = document.querySelector("#gallery-modal .close-modal");
@@ -45,17 +50,28 @@ function closeModal() {
     setTimeout(() => {
       galleryModal.classList.remove("closing");
       galleryModal.close();
-    }, 300); // Match the CSS transition duration
+    }, 300); // Correspond à la durée de la transition CSS
   }
   if (uploadModal.open) {
     uploadModal.classList.add("closing");
     setTimeout(() => {
       uploadModal.classList.remove("closing");
       uploadModal.close();
-    }, 300); // Match the CSS transition duration
+    }, 300); // Correspond à la durée de la transition CSS
   }
   isModalOpen = false;
   resetUploadArea();
+}
+
+function closeModalManually() {
+  if (uploadModal.open) {
+    uploadModal.classList.add("closing");
+    setTimeout(() => {
+      uploadModal.classList.remove("closing");
+      uploadModal.close();
+      resetForm();
+    }, 300);
+  }
 }
 
 /****************************************
@@ -221,6 +237,7 @@ function validateForm() {
 // Gestion de la soumission du formulaire
 async function handleFormSubmission(e) {
   e.preventDefault();
+
   console.log("Début de la soumission du formulaire");
   submitBtn.disabled = true;
   submitBtn.setAttribute("aria-disabled", "true");
@@ -239,7 +256,6 @@ async function handleFormSubmission(e) {
 
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("Connexion requise pour effectuer cette action");
       throw new Error("Connexion requise");
     }
 
@@ -251,8 +267,6 @@ async function handleFormSubmission(e) {
       body: formData,
     });
 
-    console.log("Statut de la réponse de l'upload :", response.status);
-
     if (!response.ok) {
       throw new Error(
         response.status === 401 ? "Non autorisé" : "Erreur du serveur"
@@ -261,22 +275,18 @@ async function handleFormSubmission(e) {
 
     const newWork = await response.json();
     addWorkToDOM(newWork);
-    showNotification("Projet ajouté avec succès");
 
-    // Séquence de fermeture progressive
-    uploadModal.classList.add("closing");
-    setTimeout(() => {
-      uploadModal.classList.remove("closing");
-      uploadForm.reset();
-      resetUploadArea();
-      closeModal();
-      getWorks(); // Rafraîchir les travaux après l'animation
-    }, 500);
+    // Réinitialiser le formulaire sans fermer la modale
+    resetForm();
+    resetUploadArea();
+    getWorks();
   } catch (error) {
     console.error("Erreur lors de l'envoi :", error);
     showNotification("Erreur lors de l'ajout du projet", "error");
   } finally {
     submitBtn.disabled = false;
+    submitBtn.removeAttribute("aria-disabled");
+    submitBtn.title = "";
     console.log("Soumission du formulaire terminée");
   }
 }
@@ -346,13 +356,14 @@ async function deleteWork(id) {
  ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
-  // console.log("Événement de clic détecté :", e.target);
+  // Fermer uniquement si on clique explicitement sur le bouton de fermeture ou l'arrière-plan de la modale
   if (
     e.target.matches(".close-modal") ||
-    e.target === galleryModal ||
-    e.target === uploadModal
+    (e.target === galleryModal && e.target === e.currentTarget) ||
+    (e.target === uploadModal && e.target === e.currentTarget)
   ) {
-    console.log("Fermeture de la modale...");
+    e.preventDefault();
+    e.stopPropagation();
     closeModal();
   }
 });
@@ -391,8 +402,12 @@ backToGalleryBtn.addEventListener("click", (e) => {
 
 // Événement pour la soumission du formulaire d'upload
 uploadForm.addEventListener("submit", (e) => {
+  e.preventDefault(); // Empêcher la soumission par défaut du formulaire
+  e.stopPropagation(); // Arrêter la propagation de l'événement
   console.log("Événement de soumission du formulaire détecté");
   handleFormSubmission(e);
+  // Afficher une notification de succès
+  showNotification("Projet ajouté avec succès");
 });
 
 // Ajouter la fonctionnalité de prévisualisation d'image
@@ -408,7 +423,7 @@ photoInput.addEventListener("change", function (e) {
       return;
     }
 
-    const maxSize = 4 * 1024 * 1024; // 4MB in bytes
+    const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
     if (file.size > maxSize) {
       console.log("Fichier trop volumineux :", file.size);
       uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
@@ -487,19 +502,19 @@ uploadArea.addEventListener("click", function (e) {
   }
 });
 
-/* Shows a notification message to the user */
+/* Affiche un message de notification à l'utilisateur */
 function showNotification(message, type = "success") {
   const notification = document.createElement("div");
   notification.className = `notification ${type}`;
   notification.innerText = message;
   document.body.appendChild(notification);
 
-  // Show notification
+  // Afficher la notification
   setTimeout(() => {
     notification.classList.add("show");
   }, 100);
 
-  // Hide after 3 seconds
+  // Masquer après 3 secondes
   setTimeout(() => {
     notification.classList.add("hide");
     notification.addEventListener("transitionend", () => {
