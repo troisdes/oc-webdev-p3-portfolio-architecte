@@ -261,6 +261,7 @@ async function handleFormSubmission(e) {
 
     const newWork = await response.json();
     addWorkToDOM(newWork);
+    showNotification("Projet ajouté avec succès");
 
     // Séquence de fermeture progressive
     uploadModal.classList.add("closing");
@@ -273,6 +274,7 @@ async function handleFormSubmission(e) {
     }, 500);
   } catch (error) {
     console.error("Erreur lors de l'envoi :", error);
+    showNotification("Erreur lors de l'ajout du projet", "error");
   } finally {
     submitBtn.disabled = false;
     console.log("Soumission du formulaire terminée");
@@ -316,11 +318,16 @@ async function deleteWork(id) {
 
     console.log(`Travail ${id} supprimé avec succès`);
     removeWorkFromDOM(id);
+    showNotification("Projet supprimé avec succès");
 
     document.querySelector(".add-photo-modal").close();
     await getWorks();
   } catch (error) {
     console.error("Erreur lors de la suppression :", error);
+    showNotification(
+      `Erreur lors de la suppression : ${error.message}`,
+      "error"
+    );
 
     // Réactiver le bouton en cas d'erreur
     const deleteBtn = document.querySelector(`button[data-id="${id}"]`);
@@ -479,3 +486,24 @@ uploadArea.addEventListener("click", function (e) {
     window.addEventListener("focus", handleFocus);
   }
 });
+
+/* Shows a notification message to the user */
+function showNotification(message, type = "success") {
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  notification.innerText = message;
+  document.body.appendChild(notification);
+
+  // Show notification
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 100);
+
+  // Hide after 3 seconds
+  setTimeout(() => {
+    notification.classList.add("hide");
+    notification.addEventListener("transitionend", () => {
+      notification.remove();
+    });
+  }, 3000);
+}
