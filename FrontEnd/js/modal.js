@@ -63,17 +63,6 @@ function closeModal() {
   resetUploadArea();
 }
 
-function closeModalManually() {
-  if (uploadModal.open) {
-    uploadModal.classList.add("closing");
-    setTimeout(() => {
-      uploadModal.classList.remove("closing");
-      uploadModal.close();
-      resetForm();
-    }, 300);
-  }
-}
-
 /****************************************
  * GESTION DE LA GALERIE
  * - Affichage des travaux
@@ -356,14 +345,13 @@ async function deleteWork(id) {
  ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
-  // Fermer uniquement si on clique explicitement sur le bouton de fermeture ou l'arrière-plan de la modale
+  // console.log("Événement de clic détecté :", e.target);
   if (
     e.target.matches(".close-modal") ||
-    (e.target === galleryModal && e.target === e.currentTarget) ||
-    (e.target === uploadModal && e.target === e.currentTarget)
+    e.target === galleryModal ||
+    e.target === uploadModal
   ) {
-    e.preventDefault();
-    e.stopPropagation();
+    console.log("Fermeture de la modale...");
     closeModal();
   }
 });
@@ -423,7 +411,7 @@ photoInput.addEventListener("change", function (e) {
       return;
     }
 
-    const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
+    const maxSize = 4 * 1024 * 1024; // 4MB en octets
     if (file.size > maxSize) {
       console.log("Fichier trop volumineux :", file.size);
       uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
