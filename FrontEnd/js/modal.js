@@ -72,14 +72,14 @@ function closeModal() {
     setTimeout(() => {
       galleryModal.classList.remove("closing");
       galleryModal.close();
-    }, 500);
+    }, 300); // Match the CSS transition duration
   }
   if (uploadModal.open) {
     uploadModal.classList.add("closing");
     setTimeout(() => {
       uploadModal.classList.remove("closing");
       uploadModal.close();
-    }, 500);
+    }, 300); // Match the CSS transition duration
   }
   isModalOpen = false;
   resetUploadArea();
