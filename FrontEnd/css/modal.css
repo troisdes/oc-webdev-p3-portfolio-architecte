@@ -26,14 +26,15 @@
   opacity: 1;
 }
 
-/* Modal Backdrop */
+/* Unified Backdrop Styles */
 .modal::backdrop,
 .add-photo-modal::backdrop {
   background: rgba(0, 0, 0, 0.3);
   opacity: 0;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(1px);
-  z-index: -1;
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(1px);
+  z-index: 999;
 }
 
 /* Backdrop appearing */
@@ -46,25 +47,6 @@
 .modal.closing,
 .add-photo-modal.closing {
   opacity: 0;
-}
-
-.modal.closing::backdrop,
-.add-photo-modal.closing::backdrop {
-  opacity: 0;
-}
-
-/* Fond de la modale */
-::backdrop {
-  background-color: rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
-}
-
-.modal[open]::backdrop,
-.add-photo-modal[open]::backdrop {
-  opacity: 1;
 }
 
 .modal.closing::backdrop,
