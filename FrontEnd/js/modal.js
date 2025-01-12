@@ -47,17 +47,13 @@ function openModal() {
 function closeModal() {
   if (galleryModal.open) {
     galleryModal.classList.add("closing");
-    setTimeout(() => {
-      galleryModal.classList.remove("closing");
-      galleryModal.close();
-    }, 300); // Correspond à la durée de la transition CSS
+    galleryModal.classList.remove("closing");
+    galleryModal.close();
   }
   if (uploadModal.open) {
     uploadModal.classList.add("closing");
-    setTimeout(() => {
-      uploadModal.classList.remove("closing");
-      uploadModal.close();
-    }, 300); // Correspond à la durée de la transition CSS
+    uploadModal.classList.remove("closing");
+    uploadModal.close();
   }
   isModalOpen = false;
   resetUploadArea();
