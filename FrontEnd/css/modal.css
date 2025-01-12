@@ -1,28 +1,109 @@
-/* Styles de base pour les modales */
+/* Base Modal Structure */
 .modal,
 .add-photo-modal {
-  border: none;
-  border-radius: 10px;
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
   background: white;
-  padding: 30px;
-  max-width: 630px;
-  max-height: 670px;
-  min-width: 300px;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 1000;
+  border: none;
   overflow: auto;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
+/* Notifications */
+.notification {
+  position: fixed;
+  top: 20px; /* Position at the top of the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  padding: 16px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001; /* Ensure it's above all other elements */
+  font-family: "Work Sans";
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.notification.hide {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-20px);
+}
+
+.notification.success {
+  background: black;
+}
+
+.notification.error {
+  background: #e74c3c;
+}
+
+/* Modal Variants */
+.modal--upload {
+  max-width: 600px;
+}
+/* Modal appearing */
+.modal[open],
+.add-photo-modal[open] {
+  opacity: 1;
+}
+
+/* Modal Backdrop */
+.modal::backdrop,
+.add-photo-modal::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(1px);
+  z-index: -1;
+}
+
+/* Backdrop appearing */
+.modal[open]::backdrop,
+.add-photo-modal[open]::backdrop {
+  opacity: 1;
+}
+
+/* Closing states */
 .modal.closing,
 .add-photo-modal.closing {
+  opacity: 0;
+}
+
+.modal.closing::backdrop,
+.add-photo-modal.closing::backdrop {
   opacity: 0;
 }
 
 /* Fond de la modale */
 ::backdrop {
   background-color: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.modal[open]::backdrop,
+.add-photo-modal[open]::backdrop {
   opacity: 1;
-  transition: opacity 0.5s ease;
 }
 
 .modal.closing::backdrop,
@@ -228,6 +309,15 @@
 
   #gallery-modal .modal-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .modal {
+    width: 95vw;
+    padding: 1rem;
+  }
+
+  .notification {
+    width: 90%;
   }
 }
 
