@@ -40,6 +40,7 @@ function openModal() {
   if (!isModalOpen) {
     isModalOpen = true;
     galleryModal.showModal();
+    galleryModal.addEventListener("click", handleBackdropClick);
   }
 }
 
@@ -49,14 +50,48 @@ function closeModal() {
     galleryModal.classList.add("closing");
     galleryModal.classList.remove("closing");
     galleryModal.close();
+    galleryModal.removeEventListener("click", handleBackdropClick);
   }
   if (uploadModal.open) {
     uploadModal.classList.add("closing");
     uploadModal.classList.remove("closing");
     uploadModal.close();
+    uploadModal.removeEventListener("click", handleBackdropClick);
   }
-  isModalOpen = false;
+  if (isModalOpen) {
+    galleryModal.close();
+    uploadModal.close();
+    isModalOpen = false;
+    console.log("Modale fermée");
+  }
   resetUploadArea();
+}
+
+/* Affiche un message de notification à l'utilisateur */
+function showNotification(message, type = "success") {
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  notification.innerText = message;
+  document.body.appendChild(notification);
+
+  // Afficher la notification
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 100);
+
+  // Masquer après 3 secondes
+  setTimeout(() => {
+    notification.classList.add("hide");
+    notification.addEventListener("transitionend", () => {
+      notification.remove();
+    });
+  }, 3000);
+}
+
+function handleBackdropClick(event) {
+  if (event.target === galleryModal || event.target === uploadModal) {
+    closeModal();
+  }
 }
 
 /****************************************
@@ -256,6 +291,8 @@ async function handleFormSubmission(e) {
       throw new Error(
         response.status === 401 ? "Non autorisé" : "Erreur du serveur"
       );
+    } else {
+      showNotification();
     }
 
     const newWork = await response.json();
@@ -341,13 +378,14 @@ async function deleteWork(id) {
  ****************************************/
 // Événement pour fermer la modale en cliquant à l'extérieur ou sur le bouton de fermeture
 document.addEventListener("click", (e) => {
-  // console.log("Événement de clic détecté :", e.target);
+  // Fermer uniquement si on clique explicitement sur le bouton de fermeture ou l'arrière-plan de la modale
   if (
     e.target.matches(".close-modal") ||
-    e.target === galleryModal ||
-    e.target === uploadModal
+    (e.target === galleryModal && e.target === e.currentTarget) ||
+    (e.target === uploadModal && e.target === e.currentTarget)
   ) {
-    console.log("Fermeture de la modale...");
+    e.preventDefault();
+    e.stopPropagation();
     closeModal();
   }
 });
@@ -385,13 +423,18 @@ backToGalleryBtn.addEventListener("click", (e) => {
 });
 
 // Événement pour la soumission du formulaire d'upload
-uploadForm.addEventListener("submit", (e) => {
-  e.preventDefault(); // Empêcher la soumission par défaut du formulaire
-  e.stopPropagation(); // Arrêter la propagation de l'événement
+uploadForm.addEventListener("submit", async (e) => {
   console.log("Événement de soumission du formulaire détecté");
-  handleFormSubmission(e);
-  // Afficher une notification de succès
-  showNotification("Projet ajouté avec succès");
+
+  try {
+    // Ajouter un délai avant de traiter la soumission du formulaire
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await handleFormSubmission(e);
+    // Afficher une notification de succès
+    // showNotification("Projet ajouté avec succès");
+  } catch (error) {
+    console.error("Erreur lors de la soumission:", error);
+  }
 });
 
 // Ajouter la fonctionnalité de prévisualisation d'image
@@ -399,7 +442,6 @@ photoInput.addEventListener("change", function (e) {
   const file = e.target.files[0];
   if (file) {
     console.log("Fichier sélectionné :", file);
-
     const validFile = ["image/jpeg", "image/png"];
     if (!validFile.includes(file.type)) {
       console.log("Type de fichier non supporté :", file.type);
@@ -407,7 +449,7 @@ photoInput.addEventListener("change", function (e) {
       return;
     }
 
-    const maxSize = 4 * 1024 * 1024; // 4MB en octets
+    const maxSize = 4 * 1024 * 1024; // 4 Mo en octets
     if (file.size > maxSize) {
       console.log("Fichier trop volumineux :", file.size);
       uploadArea.innerHTML = `<div class="error" role="alert">L'image ne doit pas dépasser 4Mo</div>`;
@@ -485,24 +527,3 @@ uploadArea.addEventListener("click", function (e) {
     window.addEventListener("focus", handleFocus);
   }
 });
-
-/* Affiche un message de notification à l'utilisateur */
-function showNotification(message, type = "success") {
-  const notification = document.createElement("div");
-  notification.className = `notification ${type}`;
-  notification.innerText = message;
-  document.body.appendChild(notification);
-
-  // Afficher la notification
-  setTimeout(() => {
-    notification.classList.add("show");
-  }, 100);
-
-  // Masquer après 3 secondes
-  setTimeout(() => {
-    notification.addEventListener("transitionend", () => {
-      notification.remove();
-    });
-    notification.classList.add("hide");
-  }, 1500);
-}
