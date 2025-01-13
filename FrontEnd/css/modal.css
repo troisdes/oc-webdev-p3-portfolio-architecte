@@ -12,8 +12,8 @@
   z-index: 1000;
   border: none;
   overflow: auto;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  /* opacity: 0;
+  transition: opacity 0.3s ease; */
 }
 
 /* Modal Variants */
