@@ -1,6 +1,7 @@
 # Portfolio-architecte-sophie-bluel
 
-Code du projet 6 d'intégrateur web.
+Ce projet est un portfolio pour un architecte, développé dans le cadre du parcours Développeur Web d'OpenClassrooms.
+Il présente les compétences et les projets réalisés par l'architecte.
 
 ## Information pour le lancer le code
 
