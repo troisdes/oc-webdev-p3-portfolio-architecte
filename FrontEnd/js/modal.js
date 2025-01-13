@@ -26,11 +26,7 @@ const closeUploadBtn = document.querySelector("#upload-modal .close-modal");
 const backToGalleryBtn = document.querySelector(".back-modal");
 
 // Modèle de loader
-const uploadAreaLoader = `
-  <div class="loader" role="status" aria-label="Chargement">
-    <span class="loader-spinner"></span>
-  </div>
-`;
+const uploadAreaLoader = `<span class="loader"></span>`;
 
 // État de la modale
 let isModalOpen = false;
@@ -428,7 +424,8 @@ uploadForm.addEventListener("submit", async (e) => {
 
   try {
     // Ajouter un délai avant de traiter la soumission du formulaire
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    uploadArea.innerHTML = `<span class="submit-loader"></span>`;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await handleFormSubmission(e);
     // Afficher une notification de succès
     // showNotification("Projet ajouté avec succès");
@@ -457,11 +454,7 @@ photoInput.addEventListener("change", function (e) {
     }
 
     console.log("Chargement de l'aperçu...");
-    uploadArea.innerHTML = `
-      <div class="loader" role="status" aria-label="Chargement de l'aperçu">
-        <span class="loader-spinner"></span>
-      </div>
-    `;
+    uploadArea.innerHTML = uploadAreaLoader;
 
     const reader = new FileReader();
     reader.onload = function (e) {
