@@ -1,6 +1,7 @@
 .history/
-# .history/**
+.history/**
 *:[Zz]one.Identifier
 .env
 .old/
 .old/**
+.vscode
