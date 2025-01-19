@@ -57,9 +57,9 @@ function closeModal() {
   if (isModalOpen) {
     galleryModal.close();
     uploadModal.close();
-    isModalOpen = false;
-    console.log("Modale fermée");
   }
+  isModalOpen = false;
+  console.log("Modale fermée");
   resetUploadArea();
 }
 
@@ -520,3 +520,5 @@ uploadArea.addEventListener("click", function (e) {
     window.addEventListener("focus", handleFocus);
   }
 });
+
+uploadModal.addEventListener("click", handleBackdropClick);
