@@ -4,4 +4,4 @@ Zone.Identifier
 .env
 .old/
 .old/**
-.vscode
+.vscode/
