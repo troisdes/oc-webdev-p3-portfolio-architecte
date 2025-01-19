@@ -1,6 +1,7 @@
 .history/
 .history/**
 Zone.Identifier
+*:Zone.Identifier
 .env
 .old/
 .old/**
