@@ -657,20 +657,29 @@ footer nav ul li {
     padding: 0;
     gap: 8px;
   }
+
+  footer nav ul {
+    margin-right: 50px;
+  }
+
+  #login {
+    margin-top: 100px;
+    margin-bottom: 100px;
+  }
 }
 
 /* Mobile */
 @media screen and (max-width: 767px) {
   body {
-    padding: 0 50px;
+    padding: 0 20px;
   }
 
   header {
-    margin: 50px 0;
+    margin: 30px 0;
   }
 
   #introduction {
-    margin-top: 140px;
+    margin-top: 60px;
     gap: 40px;
   }
 
@@ -679,17 +688,24 @@ footer nav ul li {
     padding: 0;
   }
 
+  footer nav ul {
+    margin-right: 20px;
+  }
+
   #contact,
   #login {
     width: 100%;
-    margin: auto;
-    margin-top: 60px;
+    max-width: 380px;
+    margin: 60px auto;
   }
 
-  #contact form {
+  #contact form,
+  #login-form {
     width: 100%;
-    max-width: 380px;
-    margin: 0 auto;
+  }
+
+  #connecter {
+    width: 100%;
   }
 
   .filter-btn {
@@ -705,6 +721,10 @@ footer nav ul li {
     padding: 0 20px;
   }
 
+  header {
+    margin: 20px 0;
+  }
+
   nav ul {
     flex-direction: column;
     gap: 15px;
@@ -716,7 +736,20 @@ footer nav ul li {
 
   .category-filters {
     gap: 10px;
-    margin: 50px 0;
+    margin: 30px 0;
+  }
+
+  footer nav ul {
+    margin-right: 20px;
+  }
+
+  #contact,
+  #login {
+    margin: 40px auto;
+  }
+
+  #login form {
+    max-width: 100%;
   }
 }
 
@@ -724,13 +757,13 @@ footer nav ul li {
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body {
     min-height: auto;
-    padding: 0 50px;
+    padding: 0 20px;
   }
 
   #introduction {
     flex-direction: row;
-    margin-top: 140px;
-    gap: 72px;
+    margin-top: 60px;
+    gap: 40px;
   }
 
   .gallery {
@@ -740,10 +773,14 @@ footer nav ul li {
 
   #contact,
   #login {
-    margin: 60px auto;
+    margin: 40px auto;
   }
 
   nav ul {
     flex-direction: row;
+  }
+
+  footer nav ul {
+    margin-right: 20px;
   }
 }
