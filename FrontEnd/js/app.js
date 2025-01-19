@@ -14,16 +14,16 @@ function validateElement(element, name) {
 function checkAuthState() {
   try {
     const token = localStorage.getItem("token");
-    if (!token) {
-      console.log("Connexion : Pas de 'token' trouvé");
-      return false;
+    if (token) {
+      console.log("Connexion : 'token' trouvé");
+      return true;
     }
-    console.log("Connexion : 'token' trouvé");
-    return true;
   } catch (error) {
     console.error("Erreur de connexion :", error);
     return false;
   }
+  console.log("Connexion: Pas de 'token' trouvé");
+  return false;
 }
 
 // Récupère et affiche les travaux depuis l'API
